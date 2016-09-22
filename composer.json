@@ -1,7 +1,17 @@
 {
-    "name": "dave/.checkout",
-    "license": "proprietary",
+    "name": "davidweichert/moka",
+    "description": "Moka is an application to crowdfund Cosmic Trigger Play. Unlike other crowdfunding applications it is not meant to collect money, but asks contributors for specific items or services they can pledge to give.",
+    "keywords": ["Crowdfunding", "Symfony", "Finance"],
+    "license": "MIT",
     "type": "project",
+    "authors": [
+      {
+        "name": "David Weichert",
+        "email": "info@davidweichert.de",
+        "homepage": "http://davidweichert.de",
+        "role": "Developer"
+      }
+    ],
     "autoload": {
         "psr-4": {
             "": "src/"
