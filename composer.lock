@@ -4,9 +4,57 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "334a919aaaa136eee7c48fba9d405c73",
-    "content-hash": "3e4033c5a7fa0fef22e8a0f8d9b3c75f",
+    "hash": "a28b38bbcb47a2fcd9dc29e6b9225954",
+    "content-hash": "f4399d34fc7ed63390dff28eb236e599",
     "packages": [
+        {
+            "name": "ddate/ddate",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dweichert/Ddate.git",
+                "reference": "39ef4422411e57a2dd31d0f82807961cd237e317"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dweichert/Ddate/zipball/39ef4422411e57a2dd31d0f82807961cd237e317",
+                "reference": "39ef4422411e57a2dd31d0f82807961cd237e317",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "EmperorNortonCommands\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "authors": [
+                {
+                    "name": "David Weichert",
+                    "email": "info@davidweichert.de",
+                    "homepage": "http://www.davidweichert.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Ddate converts Gregorian to Discordian dates.",
+            "keywords": [
+                "calendar",
+                "conversion",
+                "date",
+                "ddate",
+                "discordian"
+            ],
+            "time": "2016-03-16 07:23:13"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
