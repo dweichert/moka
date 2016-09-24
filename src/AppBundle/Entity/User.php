@@ -71,6 +71,33 @@ class User extends BaseUser
     protected $country;
 
     /**
+     * @var string
+     * @ORM\Column(name="phone", type="string", length=100)
+     */
+    protected $phone;
+
+    /**
+     * @var string
+     * @ORM\Column(name="mobile", type="string", length=100)
+     */
+    protected $mobile;
+
+    /**
+     * @var string
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    protected $url;
+
+    /**
+     * Twitter user names can be 15 characters long.
+     *
+     * @see https://support.twitter.com/articles/14609
+     * @var string
+     * @ORM\Column(name="twitter", type="string", length=15)
+     */
+    protected $twitter;
+
+    /**
      * @var DateTime|null
      * @ORM\Column(name="birthday", type="date")
      */
@@ -224,4 +251,77 @@ class User extends BaseUser
         $this->birthday = $birthday;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
+    /**
+     * @param string $mobile
+     * @return User
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     * @return User
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * @param mixed $twitter
+     * @return User
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+        return $this;
+    }
+
 }
