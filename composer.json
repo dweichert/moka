@@ -39,7 +39,10 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "ddate/ddate": "~1.0"
+        "ddate/ddate": "~1.0",
+        "fxp/composer-asset-plugin": "^1.2",
+        "bower-asset/bootstrap": "^3.3",
+        "bower-asset/fontawesome": "^4.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -70,6 +73,10 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        },
+        "asset-installer-paths": {
+            "npm-asset-library": "web/assets/vendor",
+            "bower-asset-library": "web/assets/vendor"
         }
     }
 }
