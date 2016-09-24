@@ -30,61 +30,61 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="firstname", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     protected $lastName;
 
     /**
      * @var string
-     * @ORM\Column(name="street1", type="string", length=255)
+     * @ORM\Column(name="street1", type="string", length=255, nullable=true)
      */
     protected $streetAddress;
 
     /**
      * @var string
-     * @ORM\Column(name="street2", type="string", length=255)
+     * @ORM\Column(name="street2", type="string", length=255, nullable=true)
      */
     protected $streetAddress2;
 
     /**
      * @var string
-     * @ORM\Column(name="postalcode", type="string", length=25)
+     * @ORM\Column(name="postalcode", type="string", length=25, nullable=true)
      */
     protected $postalCode;
 
     /**
      * @var string
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
     protected $city;
 
     /**
      * @var string
-     * @ORM\Column(name="country", type="string", length=255)
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
      */
     protected $country;
 
     /**
      * @var string
-     * @ORM\Column(name="phone", type="string", length=100)
+     * @ORM\Column(name="phone", type="string", length=100, nullable=true)
      */
     protected $phone;
 
     /**
      * @var string
-     * @ORM\Column(name="mobile", type="string", length=100)
+     * @ORM\Column(name="mobile", type="string", length=100, nullable=true)
      */
     protected $mobile;
 
     /**
      * @var string
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     protected $url;
 
@@ -93,13 +93,13 @@ class User extends BaseUser
      *
      * @see https://support.twitter.com/articles/14609
      * @var string
-     * @ORM\Column(name="twitter", type="string", length=15)
+     * @ORM\Column(name="twitter", type="string", length=15, nullable=true)
      */
     protected $twitter;
 
     /**
      * @var DateTime|null
-     * @ORM\Column(name="birthday", type="date")
+     * @ORM\Column(name="birthday", type="date", nullable=true)
      */
     protected $birthday;
 
