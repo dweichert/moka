@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cosmic Trigger Play – For the Love of Bob!{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Cosmic Trigger Play <small><em>For the Love of Bob!</em></small></h1>
+    </div>
+
+    <div class="row">
+        <div id="homepage-introduction" class="col-md-12">
+            <p>
+                Welcome to Cosmic Trigger Play – For the Love of Bob!
+            </p>
+            <p>
+                This is a crowdfunding application with a difference. Instead of asking you for
+                a contribution in cash, we would like to ask you to contribute materials and
+                services to help us staging the play in Santa Cruz in California!
+            </p>
+            <p>
+                <em>You can only see the performance, if you are involved!</em>
+            </p>
+            <p>
+                If you want to contribute, just click on the link next to the item. See below
+                a list of items and services that are requested:
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        {#<div id="homepage-today-is-ddate" class="col-md-12">{{ ddate() }}</div>#}
+    </div>
+
+{% endblock %}
