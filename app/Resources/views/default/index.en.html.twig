@@ -8,10 +8,18 @@
     </div>
 
     <div class="row">
-        <div id="homepage-introduction" class="col-md-12">
+        <div id="homepage-today-is-ddate" class="col-md-12 small ">
             <p>
-                Welcome to Cosmic Trigger Play – For the Love of Bob!
+                {{ ddate('Today\'s %{%A, the %e of %B%}, %Y. %N%nCelebrate %H', '', 'en') }}
             </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="homepage-introduction" class="col-md-12">
+            <h2>
+                Welcome to Cosmic Trigger Play – For the Love of Bob!
+            </h2>
             <p>
                 This is a crowdfunding application with a difference. Instead of asking you for
                 a contribution in cash, we would like to ask you to contribute materials and
@@ -27,8 +35,5 @@
         </div>
     </div>
 
-    <div class="row">
-        {#<div id="homepage-today-is-ddate" class="col-md-12">{{ ddate() }}</div>#}
-    </div>
 
 {% endblock %}
