@@ -1,0 +1,8 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}{{ 'profile.edit.title'|trans({}, 'FOSUserBundle') }}{% endblock title %}
+
+{% block fos_user_content %}
+<h1>{{ 'profile.edit.title'|trans({}, 'FOSUserBundle') }}</h1>
+
+{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+{% endblock fos_user_content %}

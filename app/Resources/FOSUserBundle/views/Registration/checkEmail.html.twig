@@ -1,0 +1,7 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title %}{{ 'registration.check_email_title'|trans({}, 'FOSUserBundle') }}{% endblock title %}
+
+{% block fos_user_content %}
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+    <p><a href="{{ path('homepage') }}">{{ 'registration.home'|trans({}, 'FOSUserBundle') }}</a></p>
+{% endblock fos_user_content %}

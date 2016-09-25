@@ -1,0 +1,8 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ 'registration.confirmed_title'|trans({}, 'FOSUserBundle') }}{% endblock title %}
+
+{% block fos_user_content %}
+    <p>{{ 'registration.confirmed'|trans({'%firstname%': user.firstname}, 'FOSUserBundle') }}</p>
+    <p><a href="{{ path('homepage') }}">{{ 'registration.home'|trans({}, 'FOSUserBundle') }}</a></p>
+{% endblock fos_user_content %}

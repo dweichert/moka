@@ -1,0 +1,28 @@
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <fieldset>
+        <legend>{{ 'profile.edit.personal'|trans({}, 'FOSUserBundle') }}</legend>
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.surname) }}
+        {{ form_row(form.birthday) }}
+        {{ form_row(form.current_password) }}
+    </fieldset>
+    <fieldset>
+        <legend>{{ 'profile.edit.settingsdatetime'|trans({}, 'FOSUserBundle') }}</legend>
+        {{ form_row(form.calendar) }}
+        {{ form_row(form.dateElementOrder) }}
+        {{ form_row(form.firstDayOfWeek) }}
+        {{ form_row(form.timezone) }}
+    </fieldset>
+    <fieldset>
+        <legend>{{ 'profile.edit.settingspreferences'|trans({}, 'FOSUserBundle') }}</legend>
+        {{ form_row(form.featureDiscordify) }}
+        {{ form_row(form._token) }}
+    </fieldset>
+    <div>
+        <input class="btn btn-primary" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+        <a href="{{ path('fos_user_profile_show') }}" class="btn btn-default" role="button">{{ 'profile.edit.cancel'|trans({}, 'FOSUserBundle') }}</a>
+    </div>
+</form>

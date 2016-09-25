@@ -1,0 +1,61 @@
+<div class="fos_user_user_show">
+    <table class="table table-striped">
+        <caption>{{ 'profile.show.personal'|trans({}, 'FOSUserBundle') }}</caption>
+        <tbody>
+        <tr>
+            <th width="40%" scope="row">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.firstname'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.surname'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.surname }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.birthday'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.birthday|formatDate(user.calendar, user.dateelementorder, app.request.locale) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <caption>{{ 'profile.show.settingsdatetime'|trans({}, 'FOSUserBundle') }}</caption>
+        <tbody>
+        <tr>
+            <th width="40%" scope="row">{{ 'profile.show.calendar'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.calendar|translateCalendar(app.request.locale) }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.dateelementorder'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.dateelementorder|displayDateElementOrder(app.request.locale) }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.firstdayofweek'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.firstdayofweek|translateWeekday(app.request.locale) }}</td>
+        </tr>
+        <tr>
+            <th scope="row">{{ 'profile.show.timezone'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.timezone }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <caption>{{ 'profile.show.settingspreferences'|trans({}, 'FOSUserBundle') }}</caption>
+        <tbody>
+        <tr>
+            <th width="40%" scope="row">{{ 'profile.show.featurediscordify'|trans({}, 'FOSUserBundle') }}</th>
+            <td>{{ user.featurediscordify ? 'profile.show.yes'|trans({}, 'FOSUserBundle') : 'profile.show.no'|trans({}, 'FOSUserBundle') }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary" role="button">{{ 'profile.show.edit'|trans({}, 'FOSUserBundle') }}</a>
+    <a href="{{ path('fos_user_change_password') }}" class="btn btn-primary" role="button">{{ 'profile.show.password'|trans({}, 'FOSUserBundle') }}</a>
+</div>
