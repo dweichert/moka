@@ -11,6 +11,7 @@
 namespace AppBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -103,9 +104,19 @@ class User extends BaseUser
      */
     protected $birthday;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="contributor")
+     */
+    protected $items;
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         parent::__construct();
+        $this->contributor = new ArrayCollection();
     }
 
     /**
@@ -324,4 +335,22 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param Item $item
+     * @return User
+     */
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
 }
