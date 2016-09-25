@@ -18,7 +18,7 @@ class DefaultController extends Controller
 
         return $this->render($view, [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-            'items' => $itemRepository->findAllWithNoContributor()
+            'items' => $itemRepository->findAllWithNoContributor(),
         ]);
     }
 

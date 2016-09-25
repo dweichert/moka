@@ -1,39 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cosmic Trigger Play – For the Love of Bob!{% endblock %}
+{% block title %}Beitrag nicht gefunden{% endblock %}
 
 {% block body %}
-    <div class="page-header">
-        <h1>Cosmic Trigger Play <small><em>For the Love of Bob!</em></small></h1>
-    </div>
-
     <div class="row">
-        <div id="homepage-today-is-ddate" class="col-md-12 small ">
-            <p>
-                {{ ddate('Heute ist %{%A, der %e %C%}, %Y. %N%nFeiert %H', '', 'de') }}
-            </p>
-        </div>
-    </div>
+        <p class="text-danger">Der Gegenstand bzw. die Dienstleistung, die Du beitragen wolltest, wurde nicht gefunden.</p>
 
-    <div class="row">
-        <div id="homepage-introduction" class="col-md-12">
-            <h2>
-                Willkommen bei Cosmic Trigger Play – For the Love of Bob!
-            </h2>
-            <p>
-                Dies ist eine etwas andere Crowdfundinganwendung. Statt Dich um Geld zu bitten,
-                möchten wir Dich bitten, Material und Dienstleistungen zu spenden, die uns helfen,
-                das Theaterstück in Santa Cruz in Kalifornien auf die Bühne zu bringen.
-            </p>
-            <p>
-                Wenn Du einen Beitrag leisten möchtest, klicke einfach auf den Link neben dem
-                Eintrag. In der folgenden Liste findest Du die Gegenstände und Dienstleistungen,
-                die gebraucht werden:
-            </p>
-        </div>
-    </div>
+        <p>Bitte wähle einen anderen Beitrag:</p>
 
-    <div class="row">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -65,6 +39,4 @@
             </tbody>
         </table>
     </div>
-
-
 {% endblock %}
