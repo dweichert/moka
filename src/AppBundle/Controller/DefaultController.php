@@ -14,9 +14,11 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $view = $request->getLocale() == 'de' ? ':default:index.de.html.twig' : ':default:index.en.html.twig';
+        $itemRepository = $this->getDoctrine()->getRepository('AppBundle:Item');
 
         return $this->render($view, [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'items' => $itemRepository->findAllWithNoContributor()
         ]);
     }
 
@@ -25,6 +27,6 @@ class DefaultController extends Controller
      */
     public function redirectAction(Request $request)
     {
-        return $this->redirectToRoute('homepage', array(), 301);
+        return $this->redirectToRoute('homepage', [], 301);
     }
 }

@@ -15,5 +15,13 @@ use Doctrine\ORM\EntityRepository;
 
 class ItemRepository extends EntityRepository
 {
+    public function findAllWithNoContributor()
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->where('i.contributor IS NULL');
 
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }

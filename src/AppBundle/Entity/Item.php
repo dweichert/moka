@@ -41,7 +41,7 @@ class Item
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -61,7 +61,7 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="items")
-     * @ORM\JoinColumn(name="contributor", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contributor", referencedColumnName="id", nullable=true)
      */
     private $contributor;
 
