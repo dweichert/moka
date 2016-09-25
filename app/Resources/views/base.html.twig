@@ -12,7 +12,7 @@
     </head>
     <body>
         {% block navigation %}
-        {# <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navigation">
@@ -23,11 +23,11 @@
                   </button>
                 </div>
                 <div id="main-navigation" class="collapse navbar-collapse">
-                    {{ knp_menu_render('DavidWeichertMenuBundle:Builder:mainMenu', {'currentAsLink': true, 'currentClass': 'active', 'template': 'DavidWeichertMenuBundle:Menu:knp_menu.html.twig'}) }}
-                    {{ knp_menu_render('DavidWeichertMenuBundle:Builder:rightMenu', {'currentAsLink': true, 'currentClass': 'active', 'template': 'DavidWeichertMenuBundle:Menu:knp_menu.html.twig'}) }}
+                    {{ knp_menu_render('AppBundle:Builder:mainMenu', {'currentAsLink': true, 'currentClass': 'active', 'template': 'knp_menu.html.twig'}) }}
+                    {{ knp_menu_render('AppBundle:Builder:rightMenu', {'currentAsLink': true, 'currentClass': 'active', 'template': 'knp_menu.html.twig'}) }}
                 </div>
             </div>
-        </nav> #}
+        </nav>
         {% endblock navigation %}
         <div class="container">
         {% block body %}
