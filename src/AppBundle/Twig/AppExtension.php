@@ -18,9 +18,9 @@ class AppExtension extends Twig_Extension
 {
     public function getFunctions()
     {
-        return array(
+        return [
             new Twig_SimpleFunction('ddate', array($this, 'ddate')),
-        );
+        ];
     }
 
     public function ddate($format = null, $date = null, $locale = 'en')
