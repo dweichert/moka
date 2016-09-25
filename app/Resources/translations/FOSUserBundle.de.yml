@@ -1,0 +1,152 @@
+# Group
+group:
+    edit:
+        submit: Gruppe aktualisieren
+    show:
+        name: Gruppenname
+    new:
+        submit: Gruppe erstellen
+    flash:
+        updated: Die Gruppe wurde aktualisiert
+        created: Die Gruppe wurde erstellt
+        deleted: Die Gruppe wurde gelöscht
+
+# Security
+"Bad credentials.": "Benutzername oder Passwort ungültig"
+
+security:
+    login:
+        title: Anmelden
+        username: "Benutzername:"
+        password: "Passwort:"
+        remember_me: Angemeldet bleiben
+        submit: Anmelden
+        register: "Neues Konto anlegen"
+        forgot: "Passwort vergessen?"
+
+# Profile
+profile:
+    show:
+        title: Konto
+        personal: Persönliche Daten
+        username: Benutzername
+        firstname: Vorname
+        surname: Nachname
+        email: E-Mail
+        birthday: Geburtstag
+        settingsdatetime: Datum und Uhrzeit
+        calendar: Kalender
+        dateelementorder: Reihenfolge der Datumselemente
+        firstdayofweek: Wochenbeginn
+        timezone: Zeitzone
+        edit: Bearbeiten
+        password: "Passwort ändern"
+        settingspreferences: "Vorlieben"
+        featurediscordify: "Diskordianismus"
+        yes: "Ja"
+        no: "Nein"
+    edit:
+        title: "Konto bearbeiten"
+        submit: Senden
+        cancel: Abbrechen
+        personal: Persönliche Daten
+        settingsdatetime: Datum und Uhrzeit
+        settingspreferences: Vorlieben
+    flash:
+        updated: Das Benutzerprofil wurde aktualisiert
+
+# Password change
+change_password:
+    submit: "Passwort ändern"
+    title: "Passwort ändern"
+    flash:
+        success: Das Passwort wurde geändert
+
+# Registration
+registration:
+    title: "Neues Konto anlegen"
+    cancel: Abbrechen
+    check_email_title: Eine E-Mail wurde versandt.
+    check_email: Eine E-Mail wurde an %email% versandt. Sie enthält einen Link, den Du anklicken musst, um Dein Benutzerkonto zu bestätigen.
+    confirmed_title: Willkommen!
+    confirmed: Herzlichen Glückwunsch %firstname%, Dein Benutzerkonto ist jetzt aktiviert.
+    back: Zurück.
+    home: zur Startseite
+    submit: Konto anlegen
+    flash:
+        user_created: Der Benutzer wurde erfolgreich erstellt
+    email:
+        subject: Willkommen %username%!
+        message: |
+            Hallo %username%!
+
+            Besuche bitte folgende Seite, um Dein Benutzerkonto zu bestätigen: %confirmationUrl%
+
+            Sollte diese E-Mail irrtümlich an diese Adresse versandt worden sein, besteht kein Anlass zur Sorge. Diese E-Mail Adresse wird nicht verwendet werden, wenn das Benutzerkonto nicht durch den Aufruf des Links aktiviert wird.
+
+
+            Mit besten Grüßen,
+            David Weichert
+            --
+            Impressum: http://www.davidweichert.com/de/contact
+
+# Password resetting
+resetting:
+    title: "Passwort zurücksetzen"
+    password_already_requested: Für diesen Benutzer wurde in den vergangenen 24 Stunden bereits ein neues Passwort beantragt.
+    check_email: Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Du anklicken musst, um Dein Passwort zurückzusetzen.
+    request:
+        invalid_username: Der Benutzername oder die E-Mail-Adresse "%username%" existiert nicht.
+        username: "Benutzername oder E-Mail-Adresse:"
+        submit: Passwort zurücksetzen
+    reset:
+        title: Passwort ändern
+        submit: Passwort ändern
+    flash:
+        success: Das Passwort wurde erfolgreich zurückgesetzt
+    email:
+        subject: Passwort zurücksetzen
+        message: |
+            Hallo %username%!
+
+            Besuche bitte folgende Seite, um Dein Passwort zurückzusetzen: %confirmationUrl%
+
+            Mit besten Grüßen,
+            David Weichert
+            --
+            Impressum: http://www.davidweichert.com/de/contact
+
+# Global strings
+layout:
+    logout: Abmelden
+    login: Anmelden
+    register: Registrieren
+    logged_in_as: Angemeldet als %username%
+
+# Form field labels
+form:
+    group_name: "Gruppenname:"
+    username: "Benutzername:"
+    firstname: "Vorname:"
+    surname: "Nachname:"
+    birthday: "Geburtstag:"
+    calendar: "Kalender:"
+    dateelementorder: "Reihenfolge der Datumselemente:"
+    firstdayofweek: "Wochenbeginn:"
+    timezone: "Zeitzone:"
+    promptchoice: "Bitte etwas auswählen"
+    gregorian: Gregorianisch
+    discordian: Diskordisch
+    monday: Montag
+    sunday: Sonntag
+    daymonthyear: "Tag–Monat–Jahr"
+    monthdayyear: "Monat–Tag–Jahr"
+    yearmonthday: "Jahr–Monat–Tag"
+    email: "E–Mail:"
+    current_password: "Derzeitiges Passwort:"
+    password: "Passwort:"
+    password_confirmation: "Passwort wiederholen:"
+    new_password: "Neues Passwort:"
+    new_password_confirmation: "Neues Passwort wiederholen:"
+    featurediscordify: "Diskordianismus"
+    acceptprivacypolicy: "Ich stimme der %start_open_a%%url%%end_open_a%Datenschutzerklärung%close_a% dieser Website zu."

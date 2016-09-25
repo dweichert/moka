@@ -1,0 +1,152 @@
+# Group
+group:
+    edit:
+        submit: Update group
+    show:
+        name: Group name
+    new:
+        submit: Create group
+    flash:
+        updated: The group has been updated
+        created: The group has been created
+        deleted: The group has been deleted
+
+# Security
+"Bad credentials.": "Invalid username or password"
+
+security:
+    login:
+        title: "Sign in"
+        username: "Username:"
+        password: "Password:"
+        remember_me: Keep me logged in
+        submit: Sign in
+        register: "Create a new account"
+        forgot: "Forgot your password?"
+
+# Profile
+profile:
+    show:
+        title: Account
+        personal: Personal Information
+        username: Username
+        firstname: First name
+        surname: Last name
+        email: Email
+        birthday: Birthday
+        settingsdatetime: Date and Time
+        calendar: Calendar
+        dateelementorder: Order of date elements
+        firstdayofweek: First day of week
+        timezone: Time zone
+        edit: Edit
+        password: "Change password"
+        settingspreferences: "Preferences"
+        featurediscordify: "Discordianism"
+        yes: "Yes"
+        no: "No"
+    edit:
+        title: "Edit account"
+        submit: Submit
+        cancel: Cancel
+        personal: Personal Information
+        settingsdatetime: Date and Time
+        settingspreferences: Preferences
+    flash:
+        updated: The profile has been updated
+
+# Password change
+change_password:
+    submit: "Change password"
+    title: "Change password"
+    flash:
+        success: The password has been changed
+
+# Registration
+registration:
+    title: "Create a new account"
+    cancel: Cancel
+    check_email_title: An email has been sent.
+    check_email: An email has been sent to %email%. It contains an activation link you must click to activate your account.
+    confirmed_title: Welcome!
+    confirmed: Congratulations %firstname%, your account is now activated.
+    back: Back.
+    home: to the homepage
+    submit: Create account
+    flash:
+        user_created: The user has been created successfully
+    email:
+        subject: Welcome %username%!
+        message: |
+            Hello %username%!
+
+            To finish activating your account - please visit %confirmationUrl%
+
+            If you received this email by error, don't worry. Your email address will not be used if the account is not activated by following the link.
+
+
+            Best regards,
+            David Weichert
+            --
+            Contact: http://www.davidweichert.com/en/contact
+
+# Password resetting
+resetting:
+    title: "Reset password"
+    password_already_requested: The password for this user has already been requested within the last 24 hours.
+    check_email: An email has been sent to %email%. It contains a link you must click to reset your password.
+    request:
+        invalid_username: The username or email address "%username%" does not exist.
+        username: "Username or email address:"
+        submit: Reset password
+    reset:
+        title: Change password
+        submit: Change password
+    flash:
+        success: The password has been reset successfully
+    email:
+        subject: Reset Password
+        message: |
+            Hello %username%!
+
+            To reset your password - please visit %confirmationUrl%
+
+            Regards,
+            David Weichert
+            --
+            Contact: http://www.davidweichert.com/en/contact
+
+# Global strings
+layout:
+    logout: Logout
+    login: Login
+    register: Register
+    logged_in_as: Logged in as %username%
+
+# Form field labels
+form:
+    group_name: "Group name:"
+    username: "Username:"
+    firstname: "First Name:"
+    surname: "Last Name:"
+    birthday: "Birthday:"
+    calendar: "Calendar:"
+    dateelementorder: "Order of date elements:"
+    firstdayofweek: "First day of week:"
+    timezone: "Time Zone:"
+    promptchoice: "Please choose an option"
+    gregorian: Gregorian
+    discordian: Discordian
+    monday: Monday
+    sunday: Sunday
+    daymonthyear: "Day–Month–Year"
+    monthdayyear: "Month–Day–Year"
+    yearmonthday: "Year–Month–Day"
+    email: "Email:"
+    current_password: "Current password:"
+    password: "Password:"
+    password_confirmation: "Retype password:"
+    new_password: "New password:"
+    new_password_confirmation: "Retype new password:"
+    featurediscordify: "Discordianism"
+    acceptprivacypolicy: 'I accept the %start_open_a%%url%%end_open_a%privacy policy%close_a% of this site.'

@@ -1,0 +1,37 @@
+fos_user:
+    username:
+        already_used: Dieser Benutzername wird bereits verwendet
+        blank: Bitte gib einen Benutzernamen ein
+        short: "[-Inf,Inf]Dieser Benutzername ist zu kurz"
+        long: "[-Inf,Inf]Dieser Benutzername ist zu lang"
+    email:
+        already_used: Diese E-Mail Adresse wird bereits verwendet
+        blank: Bitte gib Deine E-Mail Adresse ein
+        short: "[-Inf,Inf]Diese E-Mail Adresse ist zu kurz"
+        long: "[-Inf,Inf]Diese E-Mail Adresse ist zu lang"
+        invalid: Diese E-Mail Adresse ist ungültig
+    password:
+        blank: Bitte gib ein Passwort ein
+        short: "[-Inf,Inf]Das Passwort ist zu kurz"
+        mismatch: Die Passwörter stimmen nicht überein
+        number: Das Passwort muss mindestens eine Ziffer enthalten (0-9)
+        specialchar: Das Passwort muss mindestens ein Sonderzeichen enthalten (!?@#$%^#+*_-)
+    new_password:
+        blank: Bitte gib ein neues Passwort ein
+        short: "[-Inf,Inf]Das neue Passwort ist zu kurz"
+    current_password:
+        invalid: Das angegebene Passwort ist ungültig
+    group:
+        blank: Bitte gib einen Namen an
+        short: "[-Inf,Inf]Dieser Name ist zu kurz"
+        long: "[-Inf,Inf]Dieser Name ist zu lang"
+    firstname:
+        blank: "Bitte gib Deinen Vornamen ein"
+        short: "[-Inf,Inf]Dieser Vorname ist zu kurz"
+        long: "[-Inf,Inf]Dieser Vorname ist zu lang"
+    surname:
+        blank: "Bitte gib Deinen Nachnamen ein"
+        short: "[-Inf,Inf]Dieser Nachname ist zu kurz"
+        long: "[-Inf,Inf]Dieser Nachname ist zu lang"
+    acceptprivacypolicy:
+        invalid: "Sie müssen die Datenschutzerklärung akzeptieren, um eine Konto anzulegen."

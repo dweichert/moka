@@ -1,0 +1,37 @@
+fos_user:
+    username:
+        already_used: The username is already used
+        blank: Please enter a username
+        short: "[-Inf,Inf]The username is too short"
+        long: "[-Inf,Inf]The username is too long"
+    email:
+        already_used: The email is already used
+        blank: Please enter an email
+        short: "[-Inf,Inf]The email is too short"
+        long: "[-Inf,Inf]The email is too long"
+        invalid: The email is not valid
+    password:
+        blank: Please enter a password
+        short: "[-Inf,Inf]The password is too short"
+        mismatch: The entered passwords don't match
+        number: The entered password must contain at least one digit (0-9)
+        specialchar: The entered password must contain at least one special character (!?@#$%^#+*_-)
+    new_password:
+        blank: Please enter a new password
+        short: "[-Inf,Inf]The new password is too short"
+    current_password:
+        invalid: The entered password is invalid
+    group:
+        blank: Please enter a name
+        short: "[-Inf,Inf]The name is too short"
+        long: "[-Inf,Inf]The name is too long"
+    firstname:
+        blank: "Please enter your first name"
+        short: "[-Inf,Inf]This first name is too short"
+        long: "[-Inf,Inf]This first name is too long"
+    surname:
+        blank: "Please enter your last name"
+        short: "[-Inf,Inf]This last name is too short"
+        long: "[-Inf,Inf]This last name is too long"
+    acceptprivacypolicy:
+        invalid: "You must accept the privacy policy to create an account."
