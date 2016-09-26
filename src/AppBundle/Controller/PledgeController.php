@@ -13,28 +13,42 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PledgeController extends Controller
 {
     /**
-     * @Route("/{_locale}/pledge/{id}", requirements={"_locale" = "en|de", "id" = "\d+"}, name="pledge")
+     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="missing_items")
+     * @Method("GET")
      */
-    public function indexAction($id, Request $request)
+    public function indexAction()
+    {
+        return new Response('Items that can be pledged will be listed here!');
+    }
+
+    /**
+     * @Route("/{_locale}/pledge/{id}", requirements={"_locale" = "en|de", "id" = "\d+"}, name="pledge")
+     * @Method("POST")
+     */
+    public function pledgeAction($id, Request $request)
     {
         $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
-        if (is_null($item)) {
+        if (is_null($item))
+        {
             $view = $request->getLocale() == 'de' ? ':pledge:notfound.de.html.twig' : ':pledge:notfound.en.html.twig';
             return $this->render($view, [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
             ]);
         }
-        if ($item->getContributor()) {
+        if ($item->getContributor())
+        {
             $view = $request->getLocale() == 'de' ? ':pledge:forbidden.de.html.twig' : ':pledge:forbidden.en.html.twig';
             return $this->render($view, [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
             ]);
         }
@@ -47,7 +61,7 @@ class PledgeController extends Controller
         $em->flush();
 
         return $this->render($view, [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             'item' => $item,
             'items' => $contributor->getItems()->toArray(),
         ]);

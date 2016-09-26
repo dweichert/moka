@@ -15,6 +15,9 @@ use Doctrine\ORM\EntityRepository;
 
 class ItemRepository extends EntityRepository
 {
+    /**
+     * @return array
+     */
     public function findAllWithNoContributor()
     {
         $qb = $this->createQueryBuilder('i');
@@ -23,5 +26,29 @@ class ItemRepository extends EntityRepository
         return $qb
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllItemsCount()
+    {
+        return count($this->findAll());
+    }
+
+    /**
+     * @return int
+     */
+    public function getMissingItemsCount()
+    {
+        return count($this->findAllWithNoContributor());
+    }
+
+    /**
+     * @return int
+     */
+    public function getPledgedItemsCount()
+    {
+        return $this->getAllItemsCount() - $this->getMissingItemsCount();
     }
 }
