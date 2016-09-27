@@ -1,23 +1,8 @@
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+<form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
     {{ form_row(form.username) }}
     {{ form_row(form.email) }}
     {{ form_row(form.plainPassword) }}
-    {{ form_row(form.firstname) }}
-    {{ form_row(form.surname) }}
-    {{ form_row(form.birthday) }}
-    {{ form_row(form.calendar) }}
-    {{ form_row(form.dateElementOrder) }}
-    {{ form_row(form.firstDayOfWeek) }}
-    {{ form_row(form.timezone) }}
-    {{
-        form_row(form.acceptPrivacyPolicy)
-        | trans({'%start_open_a%': '<a href="'})
-        | trans({'%end_open_a%': '">'})
-        | trans({'%close_a%': '</a>'})
-        | trans({'%url%': path('privacy')})
-        | raw
-    }}
     {{ form_row(form._token) }}
     <div>
         <input class="btn btn-primary" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
