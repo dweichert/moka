@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +20,7 @@ class ItemController extends Controller
 {
     /**
      * @Route("/{_locale}/item/add", requirements={"_locale" = "en|de"}, name="item_add")
+     * @Method("POST")
      */
     public function addAction(Request $request)
     {
@@ -41,6 +43,7 @@ class ItemController extends Controller
 
     /**
      * @Route("/{_locale}/item/edit", requirements={"_locale" = "en|de"}, name="item_edit")
+     * @Method("POST")
      */
     public function editAction(Request $request)
     {
@@ -49,6 +52,7 @@ class ItemController extends Controller
 
     /**
      * @Route("/{_locale}/item/delete", requirements={"_locale" = "en|de"}, name="item_delete")
+     * @Method("POST")
      */
     public function deleteAction(Request $request)
     {
