@@ -69,7 +69,7 @@ registration:
     check_email_title: Eine E-Mail wurde versandt.
     check_email: Eine E-Mail wurde an %email% versandt. Sie enthält einen Link, den Du anklicken musst, um Dein Benutzerkonto zu bestätigen.
     confirmed_title: Willkommen!
-    confirmed: Herzlichen Glückwunsch %firstname%, Dein Benutzerkonto ist jetzt aktiviert.
+    confirmed: Herzlichen Glückwunsch %name%, Dein Benutzerkonto ist jetzt aktiviert.
     back: Zurück.
     home: zur Startseite
     submit: Konto anlegen
