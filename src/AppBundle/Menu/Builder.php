@@ -22,6 +22,9 @@ class Builder implements ContainerAwareInterface
 
     private $translations = [
         'Home' => 'Startseite',
+        'Sign in' => 'Anmelden',
+        'Account' => 'Konto',
+        'Logout' => 'Abmelden',
     ];
 
     /**
@@ -34,28 +37,61 @@ class Builder implements ContainerAwareInterface
      */
     private $user;
 
+    /**
+     * @var string
+     */
+    private $locale;
+
     public function mainMenu(FactoryInterface $factory, array $options)
     {
-        $locale = $this->getRouterRequestContext()->getParameter('_locale');
-        $menu = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav navbar-nav bs-navbar-collapse')));
-        $menu->addChild('Home', array('route' => 'homepage', 'label' => $this->getLabel($locale, 'Home')));
+        $menu = $factory->createItem(
+            'root', ['childrenAttributes' => ['class' => 'nav navbar-nav bs-navbar-collapse']]
+        );
+        $menu->addChild('Home', ['route' => 'homepage', 'label' => $this->getLabel('Home')]);
 
         return $menu;
     }
 
     public function rightMenu(FactoryInterface $factory, array $options)
     {
-        $baseurl = $this->getRouterRequestContext()->getBaseUrl();
-        $pathinfo = $this->getRouterRequestContext()->getPathinfo();
-        $locale = $this->getRouterRequestContext()->getParameter('_locale');
+        $menu = $factory->createItem(
+            'root', ['childrenAttributes' => ['class' => 'nav navbar-nav bs-navbar-collapse navbar-right']]
+        );
 
-        $menu = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav navbar-nav bs-navbar-collapse navbar-right')));
+        if (!$this->getUser()) {
+            $menu->addChild('Login', ['route' => 'fos_user_security_login', 'label' => $this->getLabel('Sign in')])
+                ->setAttribute('icon', 'fa fa-user');
+        } else {
+            $userMenuItem = $menu
+                ->addChild('CurrentUser', ['label' => $this->getDisplayName()])
+                ->setAttribute('dropdown', true)
+                ->setAttribute('icon', 'fa fa-user');
+            $userMenuItem->addChild(
+                'Profile', [
+                    'route' => 'fos_user_profile_show',
+                    'label' => $this->getLabel('Account')
+                ]
+            );
+            $userMenuItem->addChild(
+                'Logout', [
+                    'route' => 'fos_user_security_logout',
+                    'label' => $this->getLabel('Logout')
+                ]
+            );
+        }
+        $menu->addChild(
+            'Language Toggler', [
+                'uri' => $this->getLanguageTogglerUri(),
+                'label' => $this->getLanguageTogglerLinktext()
+            ]
+        );
 
-        $menu->addChild('Language Toggler', array('uri' => $this->getLanguageTogglerUri($baseurl, $pathinfo, $locale), 'label' => $this->getLanguageTogglerLinktext($locale)));
-        //$menu->addChild();
         return $menu;
     }
 
+    /**
+     * @return RequestContext
+     */
     private function getRouterRequestContext()
     {
         if (is_null($this->routerRequestContext)) {
@@ -83,9 +119,40 @@ class Builder implements ContainerAwareInterface
         return $this->user;
     }
 
-    private function getLabel($locale, $englishLabel)
+    /**
+     * Returns first and lastname if present, else user name.
+     *
+     * @return string
+     */
+    private function getDisplayName()
     {
-        switch ($locale) {
+        $displayName = $this->getUser()->getFirstName() . ' ' . $this->getUser()->getLastName();
+        if (' ' != $displayName) {
+            return $displayName;
+        }
+
+        return $this->getUser()->getUsername();
+    }
+
+    /**
+     * @return string
+     */
+    private function getLocale()
+    {
+        if (is_null($this->locale)) {
+            $this->locale = $this->getRouterRequestContext()->getParameter('_locale') ?: 'en';
+        }
+
+        return $this->locale;
+    }
+
+    /**
+     * @param $englishLabel
+     * @return string
+     */
+    private function getLabel($englishLabel)
+    {
+        switch ($this->getLocale()) {
             case 'de':
                 return $this->translations[$englishLabel];
             default:
@@ -93,10 +160,13 @@ class Builder implements ContainerAwareInterface
         }
     }
 
-    private function getLanguageTogglerUri($baseurl, $pathinfo, $locale)
+    /**
+     * @return string
+     */
+    private function getLanguageTogglerUri()
     {
-        $parts = explode('/', $pathinfo);
-        switch ($locale) {
+        $parts = explode('/', $this->getRouterRequestContext()->getPathinfo());
+        switch ($this->getLocale()) {
             case 'en':
                 $parts[1] = 'de';
                 break;
@@ -105,14 +175,17 @@ class Builder implements ContainerAwareInterface
                 break;
         }
         $uri = implode('/', $parts);
-        $uri = $baseurl . $uri;
+        $uri = $this->getRouterRequestContext()->getBaseUrl() . $uri;
 
         return $uri;
     }
 
-    private function getLanguageTogglerLinktext($locale)
+    /**
+     * @return string
+     */
+    private function getLanguageTogglerLinktext()
     {
-        switch ($locale) {
+        switch ($this->getLocale()) {
             case 'en':
                 return 'Deutsch';
                 break;
