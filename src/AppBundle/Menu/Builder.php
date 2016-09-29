@@ -10,9 +10,11 @@
 
 namespace AppBundle\Menu;
 
+use AppBundle\Entity\User;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Routing\RequestContext;
 
 class Builder implements ContainerAwareInterface
 {
@@ -22,9 +24,19 @@ class Builder implements ContainerAwareInterface
         'Home' => 'Startseite',
     ];
 
+    /**
+     * @var RequestContext
+     */
+    private $routerRequestContext;
+
+    /**
+     * @var User
+     */
+    private $user;
+
     public function mainMenu(FactoryInterface $factory, array $options)
     {
-        $locale = $this->container->get('router.request_context')->getParameter('_locale');
+        $locale = $this->getRouterRequestContext()->getParameter('_locale');
         $menu = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav navbar-nav bs-navbar-collapse')));
         $menu->addChild('Home', array('route' => 'homepage', 'label' => $this->getLabel($locale, 'Home')));
 
@@ -33,14 +45,42 @@ class Builder implements ContainerAwareInterface
 
     public function rightMenu(FactoryInterface $factory, array $options)
     {
-        $baseurl = $this->container->get('router.request_context')->getBaseUrl();
-        $pathinfo = $this->container->get('router.request_context')->getPathinfo();
-        $locale = $this->container->get('router.request_context')->getParameter('_locale');
+        $baseurl = $this->getRouterRequestContext()->getBaseUrl();
+        $pathinfo = $this->getRouterRequestContext()->getPathinfo();
+        $locale = $this->getRouterRequestContext()->getParameter('_locale');
 
         $menu = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav navbar-nav bs-navbar-collapse navbar-right')));
 
         $menu->addChild('Language Toggler', array('uri' => $this->getLanguageTogglerUri($baseurl, $pathinfo, $locale), 'label' => $this->getLanguageTogglerLinktext($locale)));
+        //$menu->addChild();
         return $menu;
+    }
+
+    private function getRouterRequestContext()
+    {
+        if (is_null($this->routerRequestContext)) {
+            $this->routerRequestContext = $this->container->get('router.request_context');
+        }
+
+        return $this->routerRequestContext;
+    }
+
+    /**
+     * Returns user entity or false, if no user is logged in.
+     *
+     * @return User|bool
+     */
+    private function getUser()
+    {
+        if (is_null($this->user)) {
+            $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
+        }
+
+        if ($this->user === 'anon.') {
+            return false;
+        }
+
+        return $this->user;
     }
 
     private function getLabel($locale, $englishLabel)
