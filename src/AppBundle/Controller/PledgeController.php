@@ -16,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PledgeController extends Controller
 {
@@ -24,9 +23,14 @@ class PledgeController extends Controller
      * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="missing_items")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return new Response('Items that can be pledged will be listed here!');
+        return $this->render(
+            $request->getLocale() == 'de' ? 'pledge/index.de.html.twig' : 'pledge/index.en.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
+            ]
+        );
     }
 
     /**

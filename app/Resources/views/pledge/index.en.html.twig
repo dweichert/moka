@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of items you can pledge to contribute{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ dump(items) }}
+        </div>
+    </div>
+{% endblock %}
