@@ -66,7 +66,9 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    spool:
+        type: %mailer_spooltype%
+        path: %mailer_spooldir%
 
 # FOS User Bundle
 fos_user:

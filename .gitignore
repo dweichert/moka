@@ -12,6 +12,10 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
+!var/mailer
+!/var/mailer/spool
+/var/mailer/spool/*
+!var/mailer/spool/.gitkeep
 /vendor/
 /web/bundles/
 /web/assets/vendor/
