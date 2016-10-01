@@ -1,11 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}List of items you can pledge to contribute{% endblock %}
-
 {% block body %}
     <div class="row">
         <div class="col-md-12">
-            {{ dump(items) }}
+            <p>Hallo! Wie nett von Dir, dass Du Dich informierst, was uns fehlt,
+                um die Show auf die Bühne zu bringen. Bitte hilf uns, indem Du
+                versprichst, etwas beizutragen.</p>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Beschreibung</th>
+                        <th>Benötigt bis</th>
+                        <th><i class="fa fa-cog" aria-hidden="true"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        {% if item.url is empty %}
+                        <td>{{ item.name }}</td>
+                        {% else %}
+                        <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
+                        {% endif %}
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.due|date("d.m.Y")}}</td>
+                        <td><a href="{{ path('pledge', {'id': item.id}) }}">Beitrag verprechen</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
