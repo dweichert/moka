@@ -95,6 +95,7 @@ resetting:
     title: "Passwort zurücksetzen"
     password_already_requested: Für diesen Benutzer wurde in den vergangenen 24 Stunden bereits ein neues Passwort beantragt.
     check_email: Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Du anklicken musst, um Dein Passwort zurückzusetzen.
+    home: zur Startseite
     request:
         invalid_username: Der Benutzername oder die E-Mail-Adresse "%username%" existiert nicht.
         username: "Benutzername oder E-Mail-Adresse:"
