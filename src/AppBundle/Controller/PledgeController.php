@@ -12,33 +12,37 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
 use AppBundle\Entity\User;
+use Assert\Assertion;
+use Assert\AssertionFailedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class PledgeController extends Controller
 {
     /**
-     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="missing_items")
-     * @Method("GET")
+     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge")
+     * @Method("POST")
      */
     public function indexAction(Request $request)
     {
-        return $this->render(
-            $request->getLocale() == 'de' ? 'pledge/index.de.html.twig' : 'pledge/index.en.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
-                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
-            ]
-        );
-    }
+        $token = $request->request->get('_csrf_token');
+        $csrfToken = new CsrfToken('missing_items', $token);
+        if (!$this->isCsrfTokenValid('missing_items', $csrfToken)) {
+            $this->addFlash('error', 'Invalid request, please try again.');
+            return $this->redirectToRoute('missing_items');
+        }
 
-    /**
-     * @Route("/{_locale}/pledge/{id}", requirements={"_locale" = "en|de", "id" = "\d+"}, name="pledge")
-     * @Method("POST")
-     */
-    public function pledgeAction($id, Request $request)
-    {
+        try {
+            $id = $request->get('pledged-item');
+            Assertion::integerish($id);
+        } catch (AssertionFailedException $e) {
+            $this->addFlash('error', 'Invalid item, please try again.');
+            return $this->redirectToRoute('missing_items');
+        }
+
         $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
         if (is_null($item))
         {

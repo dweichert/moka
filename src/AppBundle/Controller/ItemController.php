@@ -19,6 +19,20 @@ use Symfony\Component\HttpFoundation\Request;
 class ItemController extends Controller
 {
     /**
+     * @Route("/{_locale}/item/list", requirements={"_locale" = "en|de"}, name="missing_items")
+     * @Method("GET")
+     */
+    public function indexAction(Request $request)
+    {
+        return $this->render(
+            $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
+            ]
+        );
+    }
+
+    /**
      * @Route("/{_locale}/item/add", requirements={"_locale" = "en|de"}, name="item_add")
      * @Method("POST")
      */
