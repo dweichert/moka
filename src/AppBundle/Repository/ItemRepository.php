@@ -22,6 +22,7 @@ class ItemRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('i');
         $qb->where('i.contributor IS NULL');
+        $qb->orderBy('i.name', 'ASC');
 
         return $qb
             ->getQuery()
