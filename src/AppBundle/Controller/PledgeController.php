@@ -46,20 +46,27 @@ class PledgeController extends Controller
         $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
         if (is_null($item))
         {
-            $view = $request->getLocale() == 'de' ? ':pledge:notfound.de.html.twig' : ':pledge:notfound.en.html.twig';
-            return $this->render($view, [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
-                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
-            ]);
+            $this->addFlash('error', 'Could not find pledged item, please try again.');
+            return $this->redirectToRoute('missing_items');
         }
+
         if ($item->getContributor())
         {
-            $view = $request->getLocale() == 'de' ? ':pledge:forbidden.de.html.twig' : ':pledge:forbidden.en.html.twig';
-            return $this->render($view, [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
-                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
-            ]);
+            $this->addFlash('error', 'Item has already been pledged by someone else. Please choose another item.');
+            return $this->redirectToRoute('missing_items');
         }
+
+        var_dump($request->get('user-street-address-1'));
+        var_dump($request->get('user-street-address-2'));
+        var_dump($request->get('user-postal-code'));
+        var_dump($request->get('user-city'));
+        var_dump($request->get('user-country'));
+        var_dump($request->get('user-phone'));
+        var_dump($request->get('user-mobile'));
+
+        die;
+
+
         $view = $request->getLocale() == 'de' ? ':pledge:success.de.html.twig' : ':pledge:success.en.html.twig';
         /** @var User $contributor */
         $contributor = $this->getUser();

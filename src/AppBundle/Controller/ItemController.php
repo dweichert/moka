@@ -24,10 +24,12 @@ class ItemController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $user = $this->getUser();
         return $this->render(
             $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
                 'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
+                'user' => $user
             ]
         );
     }
