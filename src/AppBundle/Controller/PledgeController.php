@@ -14,6 +14,7 @@ use AppBundle\Entity\Item;
 use AppBundle\Entity\User;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
+use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,29 +57,61 @@ class PledgeController extends Controller
             return $this->redirectToRoute('missing_items');
         }
 
-        var_dump($request->get('user-street-address-1'));
-        var_dump($request->get('user-street-address-2'));
-        var_dump($request->get('user-postal-code'));
-        var_dump($request->get('user-city'));
-        var_dump($request->get('user-country'));
-        var_dump($request->get('user-phone'));
-        var_dump($request->get('user-mobile'));
-
-        die;
-
-
-        $view = $request->getLocale() == 'de' ? ':pledge:success.de.html.twig' : ':pledge:success.en.html.twig';
+        $objectManager = $this->getDoctrine()->getManager();
         /** @var User $contributor */
         $contributor = $this->getUser();
+        if (!$contributor) {
+            $this->addFlash('error', 'Could not determine user data, please try again.');
+            return $this->redirectToRoute('missing_items');
+        }
+
+        $this->updateAddressData($contributor, $request, $objectManager);
         $item->setContributor($contributor);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($item);
-        $em->flush();
+        $objectManager->persist($item);
+        $objectManager->flush();
+
+        $view = $request->getLocale() == 'de' ? ':pledge:success.de.html.twig' : ':pledge:success.en.html.twig';
 
         return $this->render($view, [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             'item' => $item,
             'items' => $contributor->getItems()->toArray(),
         ]);
+    }
+
+    private function updateAddressData(User $user, Request $request, ObjectManager $objectManager)
+    {
+        $changed = false;
+        if ($user->getStreetAddress() == $request->get('user-street-address-1')) {
+            $user->setStreetAddress($request->get('user-street-address-1'));
+            $changed = true;
+        }
+        if ($user->getStreetAddress2() == $request->get('user-street-address-2')) {
+            $user->setStreetAddress2($request->get('user-street-address-2'));
+            $changed = true;
+        }
+        if ($user->getPostalCode() == $request->get('user-postal-code')) {
+            $user->setPostalCode($request->get('user-postal-code'));
+            $changed = true;
+        }
+        if ($user->getCity() == $request->get('user-city')) {
+            $user->setCity($request->get('user-city'));
+            $changed = true;
+        }
+        if ($user->getCountry() == $request->get('user-country')) {
+            $user->setCountry($request->get('user-country'));
+            $changed = true;
+        }
+        if ($user->getPhone() == $request->get('user-phone')) {
+            $user->setPhone($request->get('user-phone'));
+            $changed = true;
+        }
+        if ($user->getMobile() == $request->get('user-mobile')) {
+            $user->setMobile($request->get('user-mobile'));
+            $changed = true;
+        }
+        if ($changed) {
+            $objectManager->persist($user);
+        }
     }
 }
