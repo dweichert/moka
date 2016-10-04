@@ -57,7 +57,6 @@ class PledgeController extends Controller
             return $this->redirectToRoute('missing_items');
         }
 
-        $objectManager = $this->getDoctrine()->getManager();
         /** @var User $contributor */
         $contributor = $this->getUser();
         if (!$contributor) {
@@ -65,6 +64,7 @@ class PledgeController extends Controller
             return $this->redirectToRoute('missing_items');
         }
 
+        $objectManager = $this->getDoctrine()->getManager();
         $this->updateAddressData($contributor, $request, $objectManager);
         $item->setContributor($contributor);
         $objectManager->persist($item);
@@ -82,31 +82,31 @@ class PledgeController extends Controller
     private function updateAddressData(User $user, Request $request, ObjectManager $objectManager)
     {
         $changed = false;
-        if ($user->getStreetAddress() == $request->get('user-street-address-1')) {
+        if ($user->getStreetAddress() != $request->get('user-street-address-1')) {
             $user->setStreetAddress($request->get('user-street-address-1'));
             $changed = true;
         }
-        if ($user->getStreetAddress2() == $request->get('user-street-address-2')) {
+        if ($user->getStreetAddress2() != $request->get('user-street-address-2')) {
             $user->setStreetAddress2($request->get('user-street-address-2'));
             $changed = true;
         }
-        if ($user->getPostalCode() == $request->get('user-postal-code')) {
+        if ($user->getPostalCode() != $request->get('user-postal-code')) {
             $user->setPostalCode($request->get('user-postal-code'));
             $changed = true;
         }
-        if ($user->getCity() == $request->get('user-city')) {
+        if ($user->getCity() != $request->get('user-city')) {
             $user->setCity($request->get('user-city'));
             $changed = true;
         }
-        if ($user->getCountry() == $request->get('user-country')) {
+        if ($user->getCountry() != $request->get('user-country')) {
             $user->setCountry($request->get('user-country'));
             $changed = true;
         }
-        if ($user->getPhone() == $request->get('user-phone')) {
+        if ($user->getPhone() != $request->get('user-phone')) {
             $user->setPhone($request->get('user-phone'));
             $changed = true;
         }
-        if ($user->getMobile() == $request->get('user-mobile')) {
+        if ($user->getMobile() != $request->get('user-mobile')) {
             $user->setMobile($request->get('user-mobile'));
             $changed = true;
         }

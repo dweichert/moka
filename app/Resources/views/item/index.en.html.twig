@@ -9,13 +9,13 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
                 <input type="hidden" id="pledged-item" name="pledged-item">
                 <input type="hidden" id="data-confirmed" name="data-confirmed">
-                <input type="hidden" id="user-street-address-1" name="user-street-address-1">
-                <input type="hidden" id="user-street-address-1" name="user-street-address-2">
-                <input type="hidden" id="user-postal-code" name="user-postal-code">
-                <input type="hidden" id="user-city" name="user-city">
-                <input type="hidden" id="user-country" name="user-country">
-                <input type="hidden" id="user-phone" name="user-phone">
-                <input type="hidden" id="user-mobile" name="user-mobile">
+                <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
+                <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
+                <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
+                <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
+                <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
+                <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
+                <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
