@@ -24,6 +24,15 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 class PledgeController extends Controller
 {
     /**
+     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge_redirect")
+     * @Method("GET")
+     */
+    public function redirectAction()
+    {
+        return $this->redirectToRoute('missing_items');
+    }
+
+    /**
      * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge")
      * @Method("POST")
      */
