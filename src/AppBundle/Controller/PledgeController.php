@@ -24,12 +24,24 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 class PledgeController extends Controller
 {
     /**
-     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge_redirect")
+     * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge_list")
      * @Method("GET")
      */
-    public function redirectAction()
+    public function listAction(Request $request)
     {
-        return $this->redirectToRoute('missing_items');
+        /** @var User $contributor */
+        $contributor = $this->getUser();
+        if (!$contributor) {
+            $this->addFlash('error', 'Could not determine user data, please try again.');
+            return $this->redirectToRoute('missing_items');
+        }
+
+        $view = $request->getLocale() == 'de' ? ':pledge:list.de.html.twig' : ':pledge:list.en.html.twig';
+
+        return $this->render($view, [
+            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+            'items' => $contributor->getItems()->toArray(),
+        ]);
     }
 
     /**

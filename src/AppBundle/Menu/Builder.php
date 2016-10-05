@@ -25,6 +25,7 @@ class Builder implements ContainerAwareInterface
         'Sign in' => 'Anmelden',
         'Account' => 'Konto',
         'Logout' => 'Abmelden',
+        'My pledged items' => 'Meine Beiträge',
     ];
 
     /**
@@ -70,6 +71,12 @@ class Builder implements ContainerAwareInterface
                 'Profile', [
                     'route' => 'fos_user_profile_show',
                     'label' => $this->getLabel('Account')
+                ]
+            );
+            $userMenuItem->addChild(
+                'My Pledged Items', [
+                    'route' => 'pledge_list',
+                    'label' => $this->getLabel('My pledged items')
                 ]
             );
             $userMenuItem->addChild(
