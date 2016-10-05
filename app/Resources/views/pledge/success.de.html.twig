@@ -4,31 +4,38 @@
 
 {% block body %}
     <div class="row">
-        <p class="text-success">Danke für {{ item.name }}!</p>
+        <div class="col-md-12">
+            <p class="text-success">Danke für {{ item.name }}!</p>
 
-        <p>Du hast zugesagt, folgende Gegenstände bzw. Dienstleistungen beizutragen:</p>
+            <p>Du hast zugesagt, folgende Gegenstände bzw. Dienstleistungen beizutragen:</p>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Beschreibung</th>
-                    <th>Benötigt bis</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for pledgeditem in items %}
-                <tr>
-                    {% if pledgeditem.url is empty %}
-                    <td>{{ pledgeditem.name }}</td>
-                    {% else %}
-                    <td><a href="{{ pledgeditem.url }}" title="{{ pledgeditem.url }}" target="_blank">{{ pledgeditem.name }}</a></td>
-                    {% endif %}
-                    <td>{{ pledgeditem.description }}</td>
-                    <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Beschreibung</th>
+                        <th>Benötigt bis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pledgeditem in items %}
+                    <tr>
+                        {% if pledgeditem.url is empty %}
+                        <td>{{ pledgeditem.name }}</td>
+                        {% else %}
+                        <td><a href="{{ pledgeditem.url }}" title="{{ pledgeditem.url }}" target="_blank">{{ pledgeditem.name }}</a></td>
+                        {% endif %}
+                        <td>{{ pledgeditem.description }}</td>
+                        <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Schau, <a href="{{ path('missing_items') }}">was sonst noch fehlt</a>.</p>
+        </div>
     </div>
 {% endblock %}
