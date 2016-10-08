@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<form id= "missing-items-form" name="missing-items" method="post" action="{{ path('pledge') }}">
     <div class="row">
         <div class="col-md-12">
             <p>Hallo! Wie nett von Dir, dass Du Dich informierst, was uns fehlt,
                 um die Show auf die Bühne zu bringen. Bitte hilf uns, indem Du
                 versprichst, etwas beizutragen.</p>
-            <form name="missing_items" method="post" action="{{ path('pledge') }}">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
                 <input type="hidden" id="pledged-item" name="pledged-item">
                 <input type="hidden" id="data-confirmed" name="data-confirmed">
@@ -49,7 +49,6 @@
                 </table>
         </div>
     </div>
-    <!-- @TODO Translations -->
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
