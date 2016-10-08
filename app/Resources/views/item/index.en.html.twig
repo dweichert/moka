@@ -17,6 +17,8 @@
                 <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
                 <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
                 <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
+                {% else %}
+                <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
                 {% endif %}
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -131,10 +133,11 @@
             });
             $('.item-pledge').click(function () {
                 $('#pledged-item').val($(this).attr('data-id'));
-                if (!$('#data-confirmed').val()) {
+                console.log($('#user-not-authenticated').val());
+                if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
                     $('#contact-modal').modal('show');
+                    return false;
                 } else {
-
                     $('#missing-items-form').submit();
                 }
             });
