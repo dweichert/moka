@@ -39,7 +39,6 @@ class PledgeController extends Controller
         $view = $request->getLocale() == 'de' ? ':pledge:list.de.html.twig' : ':pledge:list.en.html.twig';
 
         return $this->render($view, [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             'items' => $contributor->getItems()->toArray(),
         ]);
     }
@@ -126,7 +125,6 @@ class PledgeController extends Controller
         $view = $request->getLocale() == 'de' ? ':pledge:success.de.html.twig' : ':pledge:success.en.html.twig';
 
         return $this->render($view, [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
             'item' => $item,
             'items' => $contributor->getItems()->toArray(),
         ]);

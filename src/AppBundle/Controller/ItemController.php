@@ -25,9 +25,11 @@ class ItemController extends Controller
     public function indexAction(Request $request)
     {
         $user = $this->getUser();
+        if (!$user) {
+            $request->getSession()->set('_security.main.target_path', $this->generateUrl('missing_items'));
+        }
         return $this->render(
             $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
                 'user' => $user
             ]
@@ -42,7 +44,6 @@ class ItemController extends Controller
     {
         return $this->render(
             $request->getLocale() == 'de' ? 'item/admin.de.html.twig' : 'item/admin.en.html.twig', [
-                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
                 'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAll()
             ]
         );
