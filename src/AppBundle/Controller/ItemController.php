@@ -35,7 +35,21 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/item/add", requirements={"_locale" = "en|de"}, name="item_add")
+     * @Route("/{_locale}/admin/item/list", requirements={"_locale" = "en|de"}, name="item_list")
+     * @Method("GET")
+     */
+    public function adminListAction(Request $request)
+    {
+        return $this->render(
+            $request->getLocale() == 'de' ? 'item/admin.de.html.twig' : 'item/admin.en.html.twig', [
+                'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
+                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAll()
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{_locale}/admin/item/add", requirements={"_locale" = "en|de"}, name="item_add")
      * @Method("POST")
      */
     public function addAction(Request $request)
@@ -58,7 +72,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/item/edit", requirements={"_locale" = "en|de"}, name="item_edit")
+     * @Route("/{_locale}/admin/item/edit", requirements={"_locale" = "en|de"}, name="item_edit")
      * @Method("POST")
      */
     public function editAction(Request $request)
@@ -67,7 +81,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/item/delete", requirements={"_locale" = "en|de"}, name="item_delete")
+     * @Route("/{_locale}/admin/item/delete", requirements={"_locale" = "en|de"}, name="item_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request)

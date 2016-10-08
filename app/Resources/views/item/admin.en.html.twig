@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <span id="add-item">
+                    <button title="add" class="btn btn-xs btn-primary item-add"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <a href="#">Add item</a>
+                </span>
+            </p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Required by</th>
+                        <th>Contributor</th>
+                        <th><i class="fa fa-cog" aria-hidden="true"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        {% if item.url is empty %}
+                        <td>{{ item.name }}</td>
+                        {% else %}
+                        <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
+                        {% endif %}
+                        <td>{{ item.description }}</td>
+                        <td>
+                            {% if item.contributor is not empty %}
+                                <a href="#">{{ item.contributor.username }}</a>
+                            {% else %}
+                                - not pledged yet -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.due is not empty %}
+                                {{ item.due|date("d.m.Y")}}
+                            {% else %}
+                                - no due date -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button id="edit-{{ item.id }}" title="edit" class="btn btn-xs btn-success item-edit" data-id="{{ item.id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button id="delete-{{ item.id }}" title="delete" class="btn btn-xs btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock body %}
+
+

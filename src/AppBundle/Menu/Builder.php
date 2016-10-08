@@ -11,7 +11,9 @@
 namespace AppBundle\Menu;
 
 use AppBundle\Entity\User;
+use AppBundle\Repository\UserRepository;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Routing\RequestContext;
@@ -26,6 +28,8 @@ class Builder implements ContainerAwareInterface
         'Account' => 'Konto',
         'Logout' => 'Abmelden',
         'My pledged items' => 'Meine Beiträge',
+        'Administration' => 'Administration',
+        'Items' => 'Beiträge'
     ];
 
     /**
@@ -49,6 +53,7 @@ class Builder implements ContainerAwareInterface
             'root', ['childrenAttributes' => ['class' => 'nav navbar-nav bs-navbar-collapse']]
         );
         $menu->addChild('Home', ['route' => 'homepage', 'label' => $this->getLabel('Home')]);
+        $this->addAdminMenu($menu);
 
         return $menu;
     }
@@ -94,6 +99,24 @@ class Builder implements ContainerAwareInterface
         );
 
         return $menu;
+    }
+
+    private function addAdminMenu(ItemInterface $mainMenu)
+    {
+        if (!$this->getUser()) {
+            return;
+        }
+        if (in_array(UserRepository::ROLE_ADMIN, $this->getUser()->getRoles())) {
+            $adminMenuItem = $mainMenu
+                ->addChild('Administration', ['label' => $this->getLabel('Administration')])
+                ->setAttribute('dropdown', true);
+            $adminMenuItem->addChild(
+                'Items', [
+                    'route' => 'item_list',
+                    'label' => $this->getLabel('Items')
+                ]
+            );
+        }
     }
 
     /**

@@ -15,5 +15,6 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
 }
