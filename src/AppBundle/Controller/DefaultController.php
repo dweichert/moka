@@ -27,7 +27,6 @@ class DefaultController extends Controller
             $status = 'success';
         }
         return $this->render($view, [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
             'percent' => $percent,
             'status' => $status
         ]);

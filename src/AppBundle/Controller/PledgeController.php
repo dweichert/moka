@@ -116,6 +116,8 @@ class PledgeController extends Controller
             return $this->redirectToRoute('missing_items');
         }
 
+        $request->getSession()->set('address_confirmed', true);
+
         $objectManager = $this->getDoctrine()->getManager();
         $this->updateAddressData($contributor, $request, $objectManager);
         $item->setContributor($contributor);
