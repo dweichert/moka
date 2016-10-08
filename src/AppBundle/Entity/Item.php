@@ -178,7 +178,7 @@ class Item
      *
      * @return Item
      */
-    public function setContributor(User $contributor)
+    public function setContributor(User $contributor = null)
     {
         $this->contributor = $contributor;
 

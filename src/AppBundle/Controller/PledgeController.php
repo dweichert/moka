@@ -45,6 +45,40 @@ class PledgeController extends Controller
     }
 
     /**
+     * @Route("/{_locale}/pledge/cancel", requirements={"_locale" = "en|de"}, name="cancel_pledge")
+     * @Method("POST")
+     */
+    public function cancelAction(Request $request)
+    {
+        $token = $request->request->get('_csrf_token');
+        $csrfToken = new CsrfToken('cancel_item', $token);
+        if (!$this->isCsrfTokenValid('cancel_item', $csrfToken)) {
+            $this->addFlash('error', 'Invalid request, please try again.');
+            return $this->redirectToRoute('pledge_list');
+        }
+
+        try {
+            $id = $request->get('cancelled-item');
+            Assertion::integerish($id);
+        } catch (AssertionFailedException $e) {
+            $this->addFlash('error', 'Invalid item, please try again.');
+            return $this->redirectToRoute('pledge_list');
+        }
+
+        $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
+        if (is_null($item)) {
+            $this->addFlash('error', 'Could not find pledged item, please try again.');
+            return $this->redirectToRoute('pledge_list');
+        }
+
+        $item->setContributor(null);
+        $this->getDoctrine()->getManager()->persist($item);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('pledge_list');
+    }
+
+    /**
      * @Route("/{_locale}/pledge", requirements={"_locale" = "en|de"}, name="pledge")
      * @Method("POST")
      */
@@ -66,14 +100,12 @@ class PledgeController extends Controller
         }
 
         $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
-        if (is_null($item))
-        {
+        if (is_null($item)) {
             $this->addFlash('error', 'Could not find pledged item, please try again.');
             return $this->redirectToRoute('missing_items');
         }
 
-        if ($item->getContributor())
-        {
+        if ($item->getContributor()) {
             $this->addFlash('error', 'Item has already been pledged by someone else. Please choose another item.');
             return $this->redirectToRoute('missing_items');
         }
