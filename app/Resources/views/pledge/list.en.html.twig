@@ -9,9 +9,12 @@
         </div>
     </div>
     {% else %}
+    <form id="cancel-pledge-form" name="cancel-plege" method="post" action="{{ path('cancel_pledge') }}">
     <div class="row">
         <div class="col-md-12">
-            <p>You have pledged the following items:</p>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('cancel_item') }}">
+            <input type="hidden" id="cancelled-item" name="cancelled-item">
+            <p>You pledged the following items:</p>
 
             <table class="table table-bordered table-striped">
                 <thead>
@@ -19,6 +22,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Required by</th>
+                        <th><i class="fa fa-cog" aria-hidden="true"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,16 +35,55 @@
                         {% endif %}
                         <td>{{ pledgeditem.description }}</td>
                         <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
+                        <td><button id="cancel-{{ pledgeditem.id }}" class="btn btn-xs btn-primary item-cancel" data-id="{{ pledgeditem.id }}">Cancel pledge</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    </form>
     <div class="row">
         <div class="col-md-12">
             <p>Check out the other <a href="{{ path('missing_items') }}">missing items</a>.</p>
         </div>
     </div>
+    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="cancel-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="cancel-modal-label" class="modal-title">Cancel pledge</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to cancel your pledge?</p>
+                </div>
+                <div class="modal-footer">
+                    <p>
+                        <button id="cancel-submit-yes" class="btn btn-danger">Cancel pledge</button>
+                        <button id="cancel-submit-no" class="btn btn-success">Don't cancel</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
-{% endblock %}
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('.item-cancel').click(function () {
+                $('#cancelled-item').val($(this).attr('data-id'));
+                $('#cancel-modal').modal('show');
+                return false;
+            });
+            $('#cancel-submit-yes').click(function () {
+                $('#cancel-pledge-form').submit();
+            });
+            $('#cancel-submit-no').click(function () {
+                $('#cancel-modal').modal('hide');
+            });
+        });
+    </script>
+{% endblock javascripts%}
