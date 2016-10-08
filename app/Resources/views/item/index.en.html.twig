@@ -6,50 +6,50 @@
         <div class="col-md-12">
             <p>Hi! How nice of you to check out what we need to get the show going.
                 Please help us by pledging to contribute items.</p>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
-                <input type="hidden" id="pledged-item" name="pledged-item">
-                <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
-                {% if user is not empty %}
-                <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
-                <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
-                <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
-                <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
-                <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
-                <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
-                <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
-                {% else %}
-                <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
-                {% endif %}
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Required by</th>
-                            <th><i class="fa fa-cog" aria-hidden="true"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in items %}
-                        <tr>
-                            {% if item.url is empty %}
-                            <td>{{ item.name }}</td>
-                            {% else %}
-                            <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
-                            {% endif %}
-                            <td>{{ item.description }}</td>
-                            <td>
-                                {% if item.due is not empty %}
-                                    {{ item.due|date("d.m.Y")}}
-                                {% else %}
-                                    - no due date -
-                                {% endif %}
-                            </td>
-                            <td><button id="pledge-{{ item.id }}" class="btn btn-xs btn-primary item-pledge" data-id="{{ item.id }}">Pledge item</button></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
+            <input type="hidden" id="pledged-item" name="pledged-item">
+            <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
+            {% if user is not empty %}
+            <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
+            <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
+            <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
+            <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
+            <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
+            <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
+            <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
+            {% else %}
+            <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
+            {% endif %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Required by</th>
+                        <th><i class="fa fa-cog" aria-hidden="true"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                <tr>
+                    {% if item.url is empty %}
+                    <td>{{ item.name }}</td>
+                    {% else %}
+                    <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
+                    {% endif %}
+                    <td>{{ item.description }}</td>
+                    <td>
+                    {% if item.due is not empty %}
+                    {{ item.due|date("d.m.Y")}}
+                    {% else %}
+                    - no due date -
+                    {% endif %}
+                    </td>
+                    <td><button id="pledge-{{ item.id }}" class="btn btn-xs btn-primary item-pledge" data-id="{{ item.id }}">Pledge item</button></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">
@@ -133,7 +133,6 @@
             });
             $('.item-pledge').click(function () {
                 $('#pledged-item').val($(this).attr('data-id'));
-                console.log($('#user-not-authenticated').val());
                 if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
                     $('#contact-modal').modal('show');
                     return false;

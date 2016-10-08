@@ -29,7 +29,8 @@ class Builder implements ContainerAwareInterface
         'Logout' => 'Abmelden',
         'My pledged items' => 'Meine Beiträge',
         'Administration' => 'Administration',
-        'Items' => 'Beiträge'
+        'Items' => 'Beiträge',
+        'Cosmic Trigger' => 'Kosmischer Auslöser',
     ];
 
     /**
@@ -53,6 +54,7 @@ class Builder implements ContainerAwareInterface
             'root', ['childrenAttributes' => ['class' => 'nav navbar-nav bs-navbar-collapse']]
         );
         $menu->addChild('Home', ['route' => 'homepage', 'label' => $this->getLabel('Home')]);
+        $menu->addChild('Cosmic Trigger', ['route' => 'missing_items', 'label' => $this->getLabel('Cosmic Trigger')]);
         $this->addAdminMenu($menu);
 
         return $menu;
