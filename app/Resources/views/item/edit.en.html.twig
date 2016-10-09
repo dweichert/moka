@@ -25,11 +25,16 @@
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
                 <select class="form-control" id="item-contributor">
+                    {% if item.contributor is empty %}
+                        <option value="0" selected="selected">- not pledged yet -</option>
+                    {% else %}
+                        <option value="0">- not pledged yet -</option>
+                    {% endif %}
                     {% for user in users %}
-                        {% if user.username == item.contributor.username %}
-                        <option selected="selected">{{ getDisplayName(user) }}</option>
+                        {% if item.contributor is not empty and user.username == item.contributor.username %}
+                        <option value="{{ user.id }}" selected="selected">{{ getDisplayName(user) }}</option>
                         {% else %}
-                        <option>{{ getDisplayName(user) }}</option>
+                        <option value="{{ user.id }}">{{ getDisplayName(user) }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>

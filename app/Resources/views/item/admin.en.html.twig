@@ -33,7 +33,7 @@
                             <td>{{ item.description }}</td>
                             <td>
                                 {% if item.contributor is not empty %}
-                                    <a href="#">{{ item.contributor.username }}</a>
+                                    <a href="#">{{ getDisplayName(item.contributor) }}</a>
                                 {% else %}
                                     - not pledged yet -
                                 {% endif %}
