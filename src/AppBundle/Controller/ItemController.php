@@ -55,7 +55,7 @@ class ItemController extends Controller
 
     /**
      * @Route("/{_locale}/admin/item/add", requirements={"_locale" = "en|de"}, name="item_add")
-     * @Method("POST")
+     * @Method("GET")
      */
     public function addAction(Request $request)
     {
@@ -77,12 +77,20 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/admin/item/edit", requirements={"_locale" = "en|de"}, name="item_edit")
-     * @Method("POST")
+     * @Route("/{_locale}/admin/item/{id}/edit", requirements={"_locale" = "en|de", "id" = "\d+"}, name="item_edit")
+     * @Method("GET")
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request, $id)
     {
+        $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
+        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
 
+        return $this->render(
+            $request->getLocale() == 'de' ? 'item/edit.de.html.twig' : 'item/edit.en.html.twig', [
+                'item' => $item,
+                'users' => $users
+            ]
+        );
     }
 
     /**
@@ -116,5 +124,14 @@ class ItemController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('item_list');
+    }
+
+    /**
+     * @Route("/{_locale}/admin/item/save", requirements={"_locale" = "en|de"}, name="item_save")
+     * @Method("POST")
+     */
+    public function saveAction(Request $request)
+    {
+
     }
 }

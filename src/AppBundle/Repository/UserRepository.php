@@ -11,10 +11,21 @@
 namespace AppBundle\Repository;
 
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER = 'ROLE_USER';
+
+    /**
+     * Find all order by username ASC.
+     *
+     * @return User[]
+     */
+    public function findAll()
+    {
+        return $this->findBy([], ['username' => 'ASC']);
+    }
 }

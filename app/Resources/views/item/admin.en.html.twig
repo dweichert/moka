@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form id="administrate-items-form" name="administrate-items-form" method="post">
+    <form id="administrate-items-form" name="administrate-items-form" method="post" action="{{ path('item_delete') }}">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('administrate-items') }}">
         <input type="hidden" name="current-data-id" id="current-data-id">
-        <input type="hidden" name="add-path" id="add-path" value="{{ path('item_add') }}">
-        <input type="hidden" name="edit-path" id="edit-path" value="{{ path('item_edit') }}">
-        <input type="hidden" name="delete-path" id="delete-path" value="{{ path('item_delete') }}">
         <div class="row">
             <div class="col-md-12">
                 <p>
@@ -49,7 +46,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <button id="edit-{{ item.id }}" title="edit" class="btn btn-xs btn-success item-edit" data-id="{{ item.id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="edit" class="btn btn-xs btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <button id="delete-{{ item.id }}" title="delete" class="btn btn-xs btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </td>
                         </tr>
@@ -94,7 +91,6 @@
             });
             $('#delete-submit-yes').click(function () {
                 var administrateItemsForm = $('#administrate-items-form');
-                administrateItemsForm.attr('action', $('#delete-path').val())
                 administrateItemsForm.submit();
             });
         });

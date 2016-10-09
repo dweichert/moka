@@ -48,13 +48,16 @@ class AppExtension extends Twig_Extension
     /**
      * Outputs first name if set, else username.
      *
-     * @param User $user
+     * @param User $user OPTIONAL
      * @return string
      */
-    public function getDisplayName(User $user)
+    public function getDisplayName(User $user=null)
     {
+        if (is_null($user)) {
+            return '';
+        }
         if (strlen($user->getFirstName())) {
-            return $user->getFirstName();
+            return $user->getFirstName() . ' ' . $user->getLastName();
         } else {
             return $user->getUsername();
         }

@@ -11,12 +11,21 @@
 namespace AppBundle\Repository;
 
 
+use AppBundle\Entity\Item;
 use Doctrine\ORM\EntityRepository;
 
 class ItemRepository extends EntityRepository
 {
     /**
-     * @return array
+     * @return Item[]
+     */
+    public function findAll()
+    {
+        return $this->findBy([], ['name' => 'ASC']);
+    }
+
+    /**
+     * @return Item[]
      */
     public function findAllWithNoContributor()
     {
