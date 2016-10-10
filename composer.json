@@ -44,6 +44,7 @@
         "bower-asset/bootstrap": "^3.3",
         "bower-asset/fontawesome": "^4.6",
         "bower-asset/bootstrap-validator": "0.11",
+        "bower-asset/eonasdan-bootstrap-datetimepicker": "^4.17",
         "knplabs/knp-menu-bundle": "^2.1",
         "beberlei/assert": "^2.6"
     },
