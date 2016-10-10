@@ -49,7 +49,7 @@ class PledgeController extends Controller
      */
     public function cancelAction(Request $request)
     {
-        $token = $request->request->get('_csrf_token');
+        $token = $request->get('_csrf_token');
         $csrfToken = new CsrfToken('cancel_item', $token);
         if (!$this->isCsrfTokenValid('cancel_item', $csrfToken)) {
             $this->addFlash('error', 'Invalid request, please try again.');
@@ -83,7 +83,7 @@ class PledgeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $token = $request->request->get('_csrf_token');
+        $token = $request->get('_csrf_token');
         $csrfToken = new CsrfToken('missing_items', $token);
         if (!$this->isCsrfTokenValid('missing_items', $csrfToken)) {
             $this->addFlash('error', 'Invalid request, please try again.');

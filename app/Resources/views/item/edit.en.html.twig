@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
 {% block body %}
 <form id="edit-item-form" name="edit-item-form" method="post" action="{{ path('item_save') }}">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('edit-item') }}">
+    <input type="hidden" name="item-id" value="{{ item.id }}">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -11,20 +17,26 @@
             </div>
             <div class="form-group">
                 <label for="item-description">Description:</label>
-                <textarea id="item-description" class="form-control" maxlength="255" rows="5" name="item-name">{{ item.description }}</textarea>
+                <textarea id="item-description" class="form-control" maxlength="255" rows="5" name="item-description">{{ item.description }}</textarea>
             </div>
             <div class="form-group">
                 <label for="item-url">URL:</label>
                 <input id="item-url" class="form-control" maxlength="255" type="text" name="item-url" value="{{ item.url }}">
             </div>
-            <!-- @TODO implement date picker -->
             <div class="form-group">
                 <label for="item-due-date">Required by:</label>
-                <input id="item-due-date" type="text" class="form-control" disabled="disabled" value="{{ item.due|date("d.m.Y") }}">
+                <div class="form-group">
+                    <div class='input-group date' id='item-due-date-input'>
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('d/m/Y') }}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
-                <select class="form-control" id="item-contributor">
+                <select class="form-control" id="item-contributor" name="item-contributor">
                     {% if item.contributor is empty %}
                         <option value="0" selected="selected">- not pledged yet -</option>
                     {% else %}
@@ -39,7 +51,23 @@
                     {% endfor %}
                 </select>
             </div>
+            <button type="submit" class="btn btn-default btn-primary">Submit</button>
         </div>
     </div>
 </form>
 {% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('assets/vendor/moment/min/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#item-due-date-input').datetimepicker({
+            locale: '{{ app.request.getLocale() }}',
+            format: 'L',
+            defaultDate: $('#item-due-date').attr('data-default-date')
+        });
+    });
+</script>
+{% endblock %}

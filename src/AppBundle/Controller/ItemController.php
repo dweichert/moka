@@ -99,7 +99,7 @@ class ItemController extends Controller
      */
     public function deleteAction(Request $request)
     {
-        $token = $request->request->get('_csrf_token');
+        $token = $request->get('_csrf_token');
         $csrfToken = new CsrfToken('administrate-items', $token);
         if (!$this->isCsrfTokenValid('administrate-items', $csrfToken)) {
             $this->addFlash('error', 'Invalid request, please try again.');
@@ -132,6 +132,79 @@ class ItemController extends Controller
      */
     public function saveAction(Request $request)
     {
+        $token = $request->get('_csrf_token');
+        $csrfToken = new CsrfToken('edit-item', $token);
+        if (!$this->isCsrfTokenValid('edit-item', $csrfToken)) {
+            $this->addFlash('error', 'Invalid request, please try again.');
+            return $this->redirectToRoute('item_list');
+        }
 
+        try {
+            $id = $request->get('item-id');
+            Assertion::integerish($id);
+        } catch (AssertionFailedException $e) {
+            $this->addFlash('error', 'Invalid item, please try again.');
+            return $this->redirectToRoute('item_list');
+        }
+
+        $item = $this->getDoctrine()->getRepository('AppBundle:Item')->find($id);
+        if (is_null($item)) {
+            $this->addFlash('error', 'Could not find item, please try again.');
+            return $this->redirectToRoute('item_list');
+        }
+
+        if ($item->getName() != $request->get('item-name')) {
+            $item->setName($request->get('item-name'));
+        }
+
+        if ($item->getDescription() != $request->get('item-description')) {
+            $item->setDescription($request->get('item-description'));
+        }
+
+        if ($item->getUrl() != $request->get('item-url')) {
+            $item->setUrl($request->get('item-url'));
+        }
+
+        if ($this->canSetContributor($item, $request->get('item-contributor'))) {
+            $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
+            if (is_null($user)) {
+                $this->addFlash(
+                    'error',
+                    sprintf(
+                        'Could not find contributor user ID: %d. Please try again',
+                        $request->get('item-contributor')
+                    )
+                );
+                $this->redirectToRoute('item_list');
+            }
+            $item->setContributor($user);
+        }
+
+        $this->getDoctrine()->getManager()->persist($item);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('item_list');
+    }
+
+    /**
+     * Can the contributor be set?
+     *
+     * @param Item $item
+     * @param string $contributorInput
+     * @return bool
+     */
+    private function canSetContributor(Item $item, $contributorInput)
+    {
+        if (1 > $contributorInput) {
+            return false;
+        }
+        if (!$item->getContributor()) {
+            return true;
+        }
+        if (!$item->getContributor()->getId() == $contributorInput) {
+            return false;
+        }
+
+        return true;
     }
 }
