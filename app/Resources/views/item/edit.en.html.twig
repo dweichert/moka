@@ -3,6 +3,11 @@
 {% block stylesheets %}
 {{ parent() }}
 <link href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+<style type="text/css">
+    #due-date-input {
+        margin-top: 1em;
+    }
+</style>
 {% endblock stylesheets %}
 
 {% block body %}
@@ -25,7 +30,11 @@
             </div>
             <div class="form-group">
                 <label for="item-due-date">Required by:</label>
-                <div class="form-group">
+                {%  if item.due is empty %}
+                <div id="due-date-toggle">
+                    <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none" checked="checked">no due date</label>
+                </div>
+                <div id="due-date-input" class="form-group" style="display: none">
                     <div class='input-group date' id='item-due-date-input'>
                         <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('d/m/Y') }}" />
                         <span class="input-group-addon">
@@ -33,6 +42,19 @@
                         </span>
                     </div>
                 </div>
+                {% else %}
+                <div id="due-date-toggle">
+                    <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none" checked="checked">no due date</label>
+                </div>
+                <div id="due-date-input" class="form-group">
+                    <div class='input-group date' id='item-due-date-input'>
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('d/m/Y') }}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
@@ -67,6 +89,14 @@
             locale: '{{ app.request.getLocale() }}',
             format: 'L',
             defaultDate: $('#item-due-date').attr('data-default-date')
+        });
+        $('#item-due-date-none').change(function () {
+            var itemDueInput = $('#due-date-input');
+            if (itemDueInput.is(":visible")) {
+                itemDueInput.hide();
+            } else {
+                itemDueInput.show();
+            }
         });
     });
 </script>

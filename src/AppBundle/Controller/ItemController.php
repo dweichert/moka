@@ -13,6 +13,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Item;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -59,7 +60,7 @@ class ItemController extends Controller
      */
     public function addAction(Request $request)
     {
-        $date = new \DateTime();
+        $date = new DateTime();
         $date->setDate(2016, 10, 23);
         $date->setTime(0, 0, 0);
         $item = new Item();
@@ -165,6 +166,12 @@ class ItemController extends Controller
             $item->setUrl($request->get('item-url'));
         }
 
+        if ($request->get('item-due-date-none')) {
+            $this->setDueDate($item, $request);
+        } else {
+            $this->unsetDueDate($item);
+        }
+
         if ($this->canSetContributor($item, $request->get('item-contributor'))) {
             $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
             if (is_null($user)) {
@@ -184,6 +191,31 @@ class ItemController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('item_list');
+    }
+
+    /**
+     * @param Item $item
+     * @param Request $request
+     */
+    private function setDueDate(Item $item, Request $request) {
+        $inputDate = DateTime::createFromFormat('d/m/Y', $request->get('item-due-date'));;
+
+        if ($item->getDue() == $inputDate) {
+            return;
+        }
+
+        $item->setDue($inputDate);
+    }
+
+    /**
+     * @param Item $item
+     */
+    private function unsetDueDate(Item $item) {
+        if (!$item->getDue()) {
+            return;
+        }
+
+        $item->setDue(null);
     }
 
     /**
