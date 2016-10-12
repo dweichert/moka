@@ -11,65 +11,43 @@
 {% endblock stylesheets %}
 
 {% block body %}
-<form id="edit-item-form" name="edit-item-form" method="post" action="{{ path('item_update') }}">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('edit-item') }}">
-    <input type="hidden" name="item-id" value="{{ item.id }}">
+<form id="edit-item-form" name="edit-item-form" method="post" action="{{ path('item_save') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('add-item') }}">
+    <input type="hidden" name="add-new" value="true">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <label for="item-name">Name:</label>
-                <input id="item-name" class="form-control" maxlength="255" type="text" name="item-name" value="{{ item.name }}">
+                <input id="item-name" class="form-control" maxlength="255" type="text" name="item-name" placeholder="MacGuffin">
             </div>
             <div class="form-group">
                 <label for="item-description">Description:</label>
-                <textarea id="item-description" class="form-control" maxlength="255" rows="5" name="item-description">{{ item.description }}</textarea>
+                <textarea id="item-description" class="form-control" maxlength="255" rows="5" name="item-description"></textarea>
             </div>
             <div class="form-group">
                 <label for="item-url">URL:</label>
-                <input id="item-url" class="form-control" maxlength="255" type="text" name="item-url" value="{{ item.url }}">
+                <input id="item-url" class="form-control" maxlength="255" type="text" name="item-url" placeholder="http://www.example.com">
             </div>
             <div class="form-group">
                 <label for="item-due-date">Required by:</label>
-                {%  if item.due is empty %}
                 <div id="due-date-toggle">
                     <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none" checked="checked">no due date</label>
                 </div>
                 <div id="due-date-input" class="form-group" style="display: none">
                     <div class='input-group date' id='item-due-date-input'>
-                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('m/d/Y') }}" />
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="11/23/2017"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
-                {% else %}
-                <div id="due-date-toggle">
-                    <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none">no due date</label>
-                </div>
-                <div id="due-date-input" class="form-group">
-                    <div class='input-group date' id='item-due-date-input'>
-                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('m/d/Y') }}" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-                {% endif %}
             </div>
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
                 <select class="form-control" id="item-contributor" name="item-contributor">
-                    {% if item.contributor is empty %}
-                        <option value="0" selected="selected">- not pledged yet -</option>
-                    {% else %}
-                        <option value="0">- not pledged yet -</option>
-                    {% endif %}
+                    <option value="0" selected="selected">- not pledged yet -</option>
                     {% for user in users %}
-                        {% if item.contributor is not empty and user.username == item.contributor.username %}
-                        <option value="{{ user.id }}" selected="selected">{{ getDisplayName(user) }}</option>
-                        {% else %}
-                        <option value="{{ user.id }}">{{ getDisplayName(user) }}</option>
-                        {% endif %}
+                    <option value="{{ user.id }}">{{ getDisplayName(user) }}</option>
                     {% endfor %}
                 </select>
             </div>

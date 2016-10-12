@@ -60,21 +60,13 @@ class ItemController extends Controller
      */
     public function addAction(Request $request)
     {
-        $date = new DateTime();
-        $date->setDate(2016, 10, 23);
-        $date->setTime(0, 0, 0);
-        $item = new Item();
-        $item
-            ->setName('Nail varnish')
-            ->setDescription('')
-            ->setDue($date)
-            ->setUrl('')
-            ->setContributor($this->getDoctrine()->getRepository('AppBundle:User')->find(1));
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($item);
-        $em->flush();
+        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
 
-        exit;
+        return $this->render(
+            $request->getLocale() == 'de' ? 'item/add.de.html.twig' : 'item/add.en.html.twig', [
+                'users' => $users
+            ]
+        );
     }
 
     /**
@@ -132,6 +124,56 @@ class ItemController extends Controller
      * @Method("POST")
      */
     public function saveAction(Request $request)
+    {
+        $token = $request->get('_csrf_token');
+        $csrfToken = new CsrfToken('add-item', $token);
+        if (!$this->isCsrfTokenValid('add-item', $csrfToken)) {
+            $this->addFlash('error', 'Invalid request, please try again.');
+            return $this->redirectToRoute('item_list');
+        }
+
+        $item = new Item();
+
+        $item->setName($request->get('item-name'));
+
+        if ($item->getDescription() != $request->get('item-description')) {
+            $item->setDescription($request->get('item-description'));
+        }
+
+        if ($item->getUrl() != $request->get('item-url')) {
+            $item->setUrl($request->get('item-url'));
+        }
+
+        if (!$request->get('item-due-date-none')) {
+            $this->setDueDate($item, $request);
+        }
+
+        if ($request->get('item-contributor')) {
+            $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
+            if (is_null($user)) {
+                $this->addFlash(
+                    'error',
+                    sprintf(
+                        'Could not find contributor user ID: %d. Please try again',
+                        $request->get('item-contributor')
+                    )
+                );
+                $this->redirectToRoute('item_list');
+            }
+            $item->setContributor($user);
+        }
+
+        $this->getDoctrine()->getManager()->persist($item);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('item_list');
+    }
+
+    /**
+     * @Route("/{_locale}/admin/item/update", requirements={"_locale" = "en|de"}, name="item_update")
+     * @Method("POST")
+     */
+    public function updateAction(Request $request)
     {
         $token = $request->get('_csrf_token');
         $csrfToken = new CsrfToken('edit-item', $token);
