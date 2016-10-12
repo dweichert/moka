@@ -166,7 +166,7 @@ class ItemController extends Controller
             $item->setUrl($request->get('item-url'));
         }
 
-        if ($request->get('item-due-date-none')) {
+        if (!$request->get('item-due-date-none')) {
             $this->setDueDate($item, $request);
         } else {
             $this->unsetDueDate($item);
@@ -194,11 +194,11 @@ class ItemController extends Controller
     }
 
     /**
-     * @param Item $item
+     * @param Item &$item
      * @param Request $request
      */
-    private function setDueDate(Item $item, Request $request) {
-        $inputDate = DateTime::createFromFormat('d/m/Y', $request->get('item-due-date'));;
+    private function setDueDate(Item &$item, Request $request) {
+        $inputDate = DateTime::createFromFormat('m/d/Y', $request->get('item-due-date'));;
 
         if ($item->getDue() == $inputDate) {
             return;
@@ -208,9 +208,9 @@ class ItemController extends Controller
     }
 
     /**
-     * @param Item $item
+     * @param Item &$item
      */
-    private function unsetDueDate(Item $item) {
+    private function unsetDueDate(Item &$item) {
         if (!$item->getDue()) {
             return;
         }
