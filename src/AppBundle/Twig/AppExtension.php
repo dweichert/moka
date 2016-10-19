@@ -13,6 +13,7 @@ namespace AppBundle\Twig;
 use AppBundle\Entity\User;
 use EmperorNortonCommands\lib\Ddate;
 use Twig_Extension;
+use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 
 class AppExtension extends Twig_Extension
@@ -22,6 +23,13 @@ class AppExtension extends Twig_Extension
         return [
             new Twig_SimpleFunction('ddate', [$this, 'ddate']),
             new Twig_SimpleFunction('getDisplayName', [$this, 'getDisplayName']),
+        ];
+    }
+
+    public function getFilters()
+    {
+        return [
+            new Twig_SimpleFilter('abbreviate', [$this, 'abbreviateFilter']),
         ];
     }
 
@@ -61,6 +69,21 @@ class AppExtension extends Twig_Extension
         } else {
             return $user->getUsername();
         }
+    }
+
+    /**
+     * Abbreviates string.
+     *
+     * @param string $string
+     * @param int $maxChars OPTIONAL
+     * @return string
+     */
+    public function abbreviateFilter($string, $maxChars = 7) {
+        $strlen = strlen($string);
+        if ($strlen > $maxChars) {
+            return substr($string, 0, 3) . '…' . substr($string, -3);
+        }
+        return $string;
     }
 
     public function getName()
