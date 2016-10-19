@@ -8,11 +8,11 @@
             <div class="col-md-12">
                 <p>
                     <span id="add-item">
-                        <a href="{{ path('item_add') }}" title="add" class="btn btn-xs btn-primary item-add" role="button"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <a href="{{ path('item_add') }}" title="add" class="btn btn-primary item-add" role="button"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         <a href="{{ path('item_add') }}">Add item</a>
                     </span>
                 </p>
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped typed-style">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -48,8 +48,8 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="edit" class="btn btn-xs btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                <button id="delete-{{ item.id }}" title="delete" class="btn btn-xs btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="edit" class="btn btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <button id="delete-{{ item.id }}" title="delete" class="btn btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </td>
                         </tr>
                         {% endfor %}

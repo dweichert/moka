@@ -16,7 +16,7 @@
             <input type="hidden" id="cancelled-item" name="cancelled-item">
             <p>You pledged the following items:</p>
 
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped typed-style">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -35,7 +35,17 @@
                         {% endif %}
                         <td>{{ pledgeditem.description }}</td>
                         <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
-                        <td><button id="cancel-{{ pledgeditem.id }}" class="btn btn-xs btn-primary item-cancel" data-id="{{ pledgeditem.id }}">Cancel pledge</button></td>
+                        <td>
+                            <div id="cancel-{{ pledgeditem.id }}" data-id="{{ pledgeditem.id }}" title="Cancel your pledge" class="cancel-pledge item-cancel" target="_blank">
+                                <div class="jigsaw cancel-pledged">
+                                    <span class="t cancel-pledged"></span>
+                                    <span class="r cancel-pledged"></span>
+                                    <span class="b cancel-pledged-inverse"></span>
+                                    <span class="l cancel-pledged-inverse"></span>
+                                    <span class="text">Cancel</span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -45,7 +55,7 @@
     </form>
     <div class="row">
         <div class="col-md-12">
-            <p>Check out the other <a href="{{ path('missing_items') }}">missing items</a>.</p>
+            <p>Check out the other <a href="{{ path('missing_items') }}">missing pieces</a>.</p>
         </div>
     </div>
     <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="cancel-modal-label" aria-hidden="true">

@@ -16,7 +16,7 @@
             <input type="hidden" id="cancelled-item" name="cancelled-item">
             <p>Du hast zugesagt, folgende Gegenstände bzw. Dienstleistungen beizutragen:</p>
 
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped typed-style">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -35,7 +35,17 @@
                         {% endif %}
                         <td>{{ pledgeditem.description }}</td>
                         <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
-                        <td><button id="cancel-{{ pledgeditem.id }}" class="btn btn-xs btn-primary item-cancel" data-id="{{ pledgeditem.id }}">Beitrag stornieren</button></td>
+                        <td>
+                            <div id="cancel-{{ pledgeditem.id }}" data-id="{{ pledgeditem.id }}" title="Ziehe Deinen Betrag zurück" class="cancel-pledge item-cancel" target="_blank">
+                                <div class="jigsaw cancel-pledged">
+                                    <span class="t cancel-pledged"></span>
+                                    <span class="r cancel-pledged"></span>
+                                    <span class="b cancel-pledged-inverse"></span>
+                                    <span class="l cancel-pledged-inverse"></span>
+                                    <span class="text">Storno</span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -45,7 +55,7 @@
     </form>
     <div class="row">
         <div class="col-md-12">
-            <p>Schau, <a href="{{ path('missing_items') }}">was sonst noch fehlt</a>.</p>
+            <p>Schau, <a href="{{ path('missing_items') }}">welche Teile noch fehlen</a>.</p>
         </div>
     </div>
     <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="cancel-modal-label" aria-hidden="true">
@@ -55,7 +65,7 @@
                     <h4 id="cancel-modal-label" class="modal-title">Beitrag stornieren</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Möchtest Du wirklich Deinen Betrag stornieren?</p>
+                    <p>Möchtest Du wirklich Deinen Betrag zurückziehen?</p>
                 </div>
                 <div class="modal-footer">
                     <p>

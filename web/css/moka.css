@@ -9,6 +9,14 @@ table.typed-style > tbody > tr > td {
     vertical-align: middle;
 }
 
+a.cancel-pledge {
+    text-decoration: none;
+}
+
+.item-cancel {
+    cursor: pointer;
+}
+
 .jigsaw {
     font-family: 'Special Elite', monospace;
     line-height: 1.5px;
@@ -41,6 +49,16 @@ table.typed-style > tbody > tr > td {
 }
 
 .pledged-inverse {
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+.cancel-pledged {
+    background-color: #FF3333;
+    color: #FCFCCC;
+}
+
+.cancel-pledged-inverse {
     background-color: #FFFFFF;
     color: #333333;
 }
