@@ -31,6 +31,7 @@ class Builder implements ContainerAwareInterface
         'Administration' => 'Administration',
         'Items' => 'Beiträge',
         'Cosmic Trigger' => 'Kosmischer Auslöser',
+        'Background' => 'Hintergrund',
     ];
 
     /**
@@ -55,6 +56,7 @@ class Builder implements ContainerAwareInterface
         );
         $menu->addChild('Home', ['route' => 'homepage', 'label' => $this->getLabel('Home')]);
         $menu->addChild('Cosmic Trigger', ['route' => 'missing_items', 'label' => $this->getLabel('Cosmic Trigger')]);
+        $menu->addChild('Background', ['uri' => 'http://cosmictriggerplay.com', 'label' => $this->getLabel('Background')]);
         $this->addAdminMenu($menu);
 
         return $menu;
