@@ -20,7 +20,7 @@
             {% else %}
             <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
             {% endif %}
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped typed-style">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -45,7 +45,25 @@
                     - no due date -
                     {% endif %}
                     </td>
-                    <td><button id="pledge-{{ item.id }}" class="btn btn-xs btn-primary item-pledge" data-id="{{ item.id }}">Pledge item</button></td>
+                    <td>
+                        {% if item.contributor is empty %}
+                        <div id="pledge-{{ item.id }}" class="jigsaw pledge item-pledge" data-id="{{ item.id }}">
+                              <span class="t pledge"></span>
+                              <span class="r pledge"></span>
+                              <span class="b pledge-inverse"></span>
+                              <span class="l pledge-inverse"></span>
+                          <span class="text" title="Pledge your piece of the puzzle">Pledge</span>
+                        </div>
+                        {% else %}
+                        <div class="jigsaw pledged">
+                              <span class="t pledged"></span>
+                              <span class="r pledged"></span>
+                              <span class="b pledged-inverse"></span>
+                              <span class="l pledged-inverse"></span>
+                          <span class="text" title="Pledged by {{ item.contributor.firstname }}">{{ item.contributor.firstname|abbreviate }}</span>
+                        </div>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>

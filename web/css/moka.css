@@ -1,0 +1,99 @@
+table.typed-style td, table.typed-style th {
+    font-family: 'Special Elite', monospace;
+    line-height: 1.5px;
+    height: 1.7em;
+    letter-spacing: 1.5px;
+}
+
+table.typed-style > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.jigsaw {
+    font-family: 'Special Elite', monospace;
+    line-height: 1.5px;
+    vertical-align: middle;
+    text-align: center;
+    letter-spacing: 1.5px;
+    width: 10em;
+    height: 1.7em;
+    margin: .5em;
+    position: relative;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+}
+
+.pledge {
+    background-color: #33CC00;
+    color: #663366;
+    cursor: pointer;
+}
+
+.pledge-inverse {
+    background-color: #FFFFFF;
+    color: #663366;
+}
+
+.pledged {
+    background-color: #FF3333;
+    color: #FCFCCC;
+}
+
+.pledged-inverse {
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+div.jigsaw .text {
+  display: block;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 0.8em 0 0 1.2em;
+  position: relative;
+  background: transparent !important;
+}
+
+.jigsaw .t {
+ width: 1em;
+  height: 1em;
+  position: absolute;
+  top: -0.8em;
+  left: 2em;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  border-radius: 4em;
+}
+
+.jigsaw .r {
+ width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 0.35em;
+  left: 9.8em;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  border-radius: 4em;
+}
+
+.jigsaw .b {
+ width: .8em;
+  height: .8em;
+  position: absolute;
+  top: 1em;
+  left: 1.4em;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  border-radius: 4em;
+}
+
+.jigsaw .l {
+ width: .8em;
+  height: .8em;
+  position: absolute;
+  top: 0.5em;
+  left: -0.1em;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  border-radius: 4em;
+}

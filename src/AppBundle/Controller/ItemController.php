@@ -34,7 +34,7 @@ class ItemController extends Controller
         }
         return $this->render(
             $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
-                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor(),
+                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAll(),
                 'user' => $user,
                 'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false)
             ]
