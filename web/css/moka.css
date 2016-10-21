@@ -1,10 +1,32 @@
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Special+Elite);
+@import url(http://fonts.googleapis.com/css?family=Lobster);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+
+/* General Appearance */
+body {
+    font-family: "Droid Sans", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Lobster, cursive;
+}
+
+/* Smallprint on home page */
 div#smallprint {
     margin-top: 2em;
 }
 
+/* Menu item PLEDGE */
 .navbar-nav>li>a.pledge-menu-item {
     color: #FCFCCC;
     background-color: #FF3333;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-nav>.active>a.pledge-menu-item {
+    color: #FF3333;
+    background-color: #FCFCCC;
     font-weight: bold;
 }
 
@@ -14,6 +36,7 @@ div#smallprint {
     font-weight: bold;
 }
 
+/* Used in copy text on home page as visual reference to menu item */
 .pledge-button-like-link {
     color: #FCFCCC;
     background-color: #FF3333;
@@ -28,6 +51,7 @@ div#smallprint {
     font-weight: bold;
 }
 
+/* Tables */
 table.typed-style td, table.typed-style th {
     font-family: 'Special Elite', monospace;
     line-height: 1.5px;
@@ -39,6 +63,7 @@ table.typed-style > tbody > tr > td {
     vertical-align: middle;
 }
 
+/* Jigsaw-shaped controls */
 a.cancel-pledge {
     text-decoration: none;
 }
