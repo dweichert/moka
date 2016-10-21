@@ -60,7 +60,7 @@
                               <span class="r pledged"></span>
                               <span class="b pledged-inverse"></span>
                               <span class="l pledged-inverse"></span>
-                          <span class="text" title="Gespendet von {{ item.contributor.firstname }}">{{ item.contributor.firstname|abbreviate }}</span>
+                          <span class="text" title="Gespendet von {{ getDisplayName(item.contributor, 1) }}">{{ getDisplayName(item.contributor, 1)|abbreviate }}</span>
                         </div>
                         {% endif %}
                     </td>
