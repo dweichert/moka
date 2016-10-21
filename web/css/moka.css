@@ -1,3 +1,33 @@
+div#smallprint {
+    margin-top: 2em;
+}
+
+.navbar-nav>li>a.pledge-menu-item {
+    color: #FCFCCC;
+    background-color: #FF3333;
+    font-weight: bold;
+}
+
+.navbar-nav>li>a.pledge-menu-item:hover, .navbar-nav>li>a.pledge-menu-item:active {
+    color: #FF3333;
+    background-color: #FCFCCC;
+    font-weight: bold;
+}
+
+.pledge-button-like-link {
+    color: #FCFCCC;
+    background-color: #FF3333;
+    font-weight: bold;
+    margin: 0.1em;
+    padding: 0.2em;
+}
+
+.pledge-button-like-link:hover, .pledge-button-like-link:active {
+    color: #FF3333;
+    background-color: #FCFCCC;
+    font-weight: bold;
+}
+
 table.typed-style td, table.typed-style th {
     font-family: 'Special Elite', monospace;
     line-height: 1.5px;

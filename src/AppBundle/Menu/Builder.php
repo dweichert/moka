@@ -30,7 +30,7 @@ class Builder implements ContainerAwareInterface
         'My pledged items' => 'Meine Beiträge',
         'Administration' => 'Administration',
         'Items' => 'Beiträge',
-        'Your piece of the puzzle' => 'Dein Puzzleteil',
+        'PLEDGE' => 'SPENDEN',
         'Background' => 'Hintergrund',
     ];
 
@@ -55,7 +55,9 @@ class Builder implements ContainerAwareInterface
             'root', ['childrenAttributes' => ['class' => 'nav navbar-nav bs-navbar-collapse']]
         );
         $menu->addChild('Home', ['route' => 'homepage', 'label' => $this->getLabel('Home')]);
-        $menu->addChild('Cosmic Trigger', ['route' => 'missing_items', 'label' => $this->getLabel('Your piece of the puzzle')]);
+        $menu
+            ->addChild('Cosmic Trigger', ['route' => 'missing_items', 'label' => $this->getLabel('PLEDGE')])
+            ->setLinkAttributes(['class' => 'pledge-menu-item', 'title' => 'Horkos is Waiting…']);
         $menu->addChild('Background', ['uri' => 'http://cosmictriggerplay.com', 'label' => $this->getLabel('Background')]);
         $this->addAdminMenu($menu);
 

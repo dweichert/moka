@@ -2,93 +2,53 @@
 
 {% block body %}
     <div class="page-header">
-        <h1>Cosmic Trigger Play <small><em>For the Love of Bob!</em></small></h1>
+        <div class="col-md-12">
+            <h1>Cosmic Trigger <small><em>The Santa Cruz Pilgrimage</em></small></h1>
+        </div>
     </div>
 
     <div class="row">
-        <div id="homepage-today-is-ddate" class="col-md-12 small ">
-            <p>
+        <div id="homepage-today-is-ddate" class="col-md-12">
+            <p class="small">
                 {{ ddate('Today\'s %{%A, the %e of %B%}, %Y. %N%nCelebrate %H', '', 'en') }}
             </p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-2 small">
-            <p>{{ percent }}% of target reached</p>
-        </div>
-        <div class="col-md-10">
-            <div class="progress">
-              <div class="progress-bar progress-bar-{{ status }} progress-bar-striped" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%">
-                <span class="sr-only">{{ percent }}% Complete</span>
-              </div>
-            </div>
+        <div class="col-md-12">
+            <blockquote>
+              <p>Everyone carries a piece of the puzzle. Nobody comes into your life by mere coincidence. Trust your instincts. Do the unexpected. Find the Others.</p>
+              <footer>Dr Timothy Leary</footer>
+            </blockquote>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
+            <p>We are the crew of performers, artists, musicians, magicians and Discordians who have been making waves in the UK with our production of Robert Anton Wilson’s Cosmic Trigger.</p>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="{{ asset('img/placeholder1.png') }}" alt="Placeholder 1" width="500" height="350">
-                        <div class="carousel-caption">
-                            Caption 1
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('img/placeholder2.png') }}" alt="Placeholder 2" width="500" height="350">
-                        <div class="carousel-caption">
-                            Caption 2
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('img/placeholder3.png') }}" alt="Placeholder 3" width="500" height="350">
-                        <div class="carousel-caption">
-                            Caption 3
-                        </div>
-                    </div>
-                </div>
+            <p>For the 10th anniversary of Bob’s death, we have been instructed by signs, synchronicity, sigils and silliness to embark upon a pilgrimage to Santa Cruz and create an offering of our production. And since the mayor of Santa Cruz declared the day Bob maybe made contact with Sirius ‘Robert Anton Wilson Day’, we intend to perform this on July 23rd 2017.</p>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            <p>However, the agents of Greyface won’t fund our efforts, but the show, as we know, must go on…</p>
+
+            <p>So – here’s the plan. Should you dare to press the button marked <a title="Horkos is Waiting…" href="{{ path('missing_items') }}" class="pledge-button-like-link">PLEDGE</a>, you will find a list of absolutely everything we need to make the full bells-and-whistles production. Can you bring tools, or costumes, or lights,  or perform, or put one of us up – or bring us love on a Tuesday afternoon?</p>
+
+            <p>Listen, we’re coming anyway – a few of the hard apple core. We’ll be there the 13th-23rd July. So something will happen on July 23rd 2017, but on what scale of loveliness and magic, is entirely up to you. Will it be a read-through on the beach? Or will it be the fully costumed, lit, musically inspiring, Greatest Show on Planet World?</p>
+
+            <p>We discovered recently that Horkos, the son of Eris is the keeper of the sacred oath – and we can tell you, he ain’t one to be messed with – so be sure to pledge only if you are fully committed to finding the Others, spreading the magic, and keeping the lasagna flying.</p>
+
+            <p>We have discovered in the UK that a performance of Cosmic Trigger is like a ‘poulice of Weird’ – wherever it is applied it will draw out all the surrounding weirdness. And we gotta find that weird – we need it to have a chance of coping with the winds that are a-blowin.</p>
+
+            <p>So please, pledge now For The Love of Bob.</p>
         </div>
     </div>
 
-    <div class="row">
-        <div id="homepage-introduction" class="col-md-12">
-            <h2>
-                Welcome!
-            </h2>
-            <p>
-                This is a crowdfunding application with a difference. Instead of asking you for
-                a contribution in cash, we would like to ask you to contribute materials and
-                services to help us staging the play in Santa Cruz in California!
-            </p>
-            <p>
-                If you want to help us, check out the <a href="{{ path('missing_items') }}">list of
-                items</a> you can pledge to contribute.
-            </p>
-            <p>
-                <a href="{{ path('fos_user_registration_register', {'_locale': 'en'}) }}">Join us</a> now by creating an account to
-                receive up-to-date news and become part of the community.
-            </p>
+    <div id="smallprint" class="row">
+        <div class="col-md-12">
+            <p class="small">In order to pledge to anything on the list you will need to create an account – this is literally just your email and name. Once you pledge we’ll ask for a few more details and be in touch nearer the time to work out the logistics. To be clear, no money is changing hands for this production – we are all coming at our own expense for the love of Bob; and asking everyone involved in the US to volunteer their time, talents, expertise and tools towards the creation of the show, and, as importantly, towards the linking of the transatlantic tribes.</p>
+
+            <p class="small">We believe that the period of 13th-23rd July in Santa Cruz may develop into a larger festival of Bob across the town. So if you’re planning any Bob-related fun, do consider bringing it to Santa Cruz over those ten days.</p>
         </div>
     </div>
 
