@@ -11,6 +11,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
+use AppBundle\Repository\UserRepository;
 use Assert\Assertion;
 use Assert\AssertionFailedException;
 use DateTime;
@@ -166,7 +167,7 @@ class ItemController extends Controller
                         $request->get('item-contributor')
                     )
                 );
-                $this->redirectToRoute('item_list');
+                return $this->redirectToRoute('item_list');
             }
             $item->setContributor($user);
         }
@@ -239,20 +240,7 @@ class ItemController extends Controller
             return $this->redirectToRoute('item_list');
         }
 
-        if ($this->canSetContributor($item, $request->get('item-contributor'))) {
-            $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
-            if (is_null($user)) {
-                $this->addFlash(
-                    'error',
-                    sprintf(
-                        'Could not find contributor user ID: %d. Please try again',
-                        $request->get('item-contributor')
-                    )
-                );
-                $this->redirectToRoute('item_list');
-            }
-            $item->setContributor($user);
-        }
+        $this->updateContributor($item, $request);
 
         $this->getDoctrine()->getManager()->persist($item);
         $this->getDoctrine()->getManager()->flush();
@@ -295,25 +283,34 @@ class ItemController extends Controller
     }
 
     /**
-     * Can the contributor be set?
-     *
-     * @param Item $item
-     * @param string $contributorInput
-     * @return bool
+     * @param Item &$item
+     * @param Request $request
      */
-    private function canSetContributor(Item $item, $contributorInput)
+    private function updateContributor(Item &$item, Request $request)
     {
-        if (1 > $contributorInput) {
-            return false;
-        }
-        if (!$item->getContributor()) {
-            return true;
-        }
-        if (!$item->getContributor()->getId() == $contributorInput) {
-            return false;
+        $contributorInput = $request->get('item-contributor');
+
+        if (0 == $contributorInput && $item->getContributor()) {
+            $item->setContributor(null);
+            return;
         }
 
-        return true;
+        $foundContributorUserObj = $this->getDoctrine()->getRepository('AppBundle:User')->find($contributorInput);
+        if (!$foundContributorUserObj) {
+            return;
+        }
+
+
+        if (!$item->getContributor()) {
+            $item->setContributor($foundContributorUserObj);
+            return;
+        }
+
+        if ($item->getContributor()->getId() == $contributorInput) {
+            return;
+        }
+
+        $item->setContributor($foundContributorUserObj);
     }
 
     /**
