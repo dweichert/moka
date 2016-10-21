@@ -222,7 +222,8 @@ class ItemController extends Controller
         }
 
         if (!$request->get('item-due-date-none')) {
-            if (!$this->setDueDate($item, $request)) {
+            $hasChanged = $this->setDueDate($item, $request);
+            if (!$hasChanged) {
                 $disabledChecks[] = 'due-date';
             }
         } else {
@@ -260,7 +261,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Returns true if a change occurred.
+     * Returns true if date check is required.
      *
      * @param Item &$item
      * @param Request $request
@@ -273,8 +274,8 @@ class ItemController extends Controller
             $format = 'm/d/Y';
         }
         $inputDate = DateTime::createFromFormat($format, $request->get('item-due-date'));
-
-        if ($item->getDue() == $inputDate) {
+        $itemDueDate = $item->getDue();
+        if (!is_null($itemDueDate) && $itemDueDate->format($format) == $inputDate->format($format)) {
             return false;
         }
         $item->setDue($inputDate);
