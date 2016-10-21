@@ -40,9 +40,9 @@
                             </td>
                             <td>
                                 {% if item.due is not empty and date(item.due) < date() %}
-                                    <strong><span class="text-danger">{{ item.due|date("d.m.Y")}}</span></strong>
+                                    <strong><span class="text-danger">{{ item.due|date("m/d/Y")}}</span></strong>
                                 {% elseif item.due is not empty %}
-                                    {{ item.due|date("d.m.Y") }}
+                                    {{ item.due|date("m/d/Y") }}
                                 {% else %}
                                     - no due date -
                                 {% endif %}

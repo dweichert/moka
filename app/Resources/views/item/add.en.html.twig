@@ -11,22 +11,24 @@
 {% endblock stylesheets %}
 
 {% block body %}
-<form id="edit-item-form" name="edit-item-form" method="post" action="{{ path('item_save') }}">
+<form id="add-item-form" name="add-item-form" method="post" action="{{ path('item_save') }}">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('add-item') }}">
     <input type="hidden" name="add-new" value="true">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <label for="item-name">Name:</label>
-                <input id="item-name" class="form-control" maxlength="255" type="text" name="item-name" placeholder="MacGuffin">
+                <input id="item-name" class="form-control" required data-minlength="2" minlength="2" maxlength="255"  data-error="Validation error" data-required-error="The item must have a name" data-minlength-error="The item name must have at least 2 characters" data-match-error="The item name must have no more than 255 characters" type="text" name="item-name" placeholder="MacGuffin">
+                <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
                 <label for="item-description">Description:</label>
-                <textarea id="item-description" class="form-control" maxlength="255" rows="5" name="item-description"></textarea>
+                <textarea id="item-description" class="form-control" rows="5" name="item-description"></textarea>
             </div>
             <div class="form-group">
                 <label for="item-url">URL:</label>
-                <input id="item-url" class="form-control" maxlength="255" type="text" name="item-url" placeholder="http://www.example.com">
+                <input id="item-url" class="form-control" pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" data-minlength="11" minlength="11" maxlength="255" type="text" data-error="Validation error" data-minlength-error="The URL must have at least 11 characters" data-match-error="The item URL must have no more than 255 characters" data-pattern-error="The given URL must be valid and start with either http:// or https://" name="item-url" placeholder="http://www.example.com">
+                <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
                 <label for="item-due-date">Required by:</label>
@@ -35,7 +37,7 @@
                 </div>
                 <div id="due-date-input" class="form-group" style="display: none">
                     <div class='input-group date' id='item-due-date-input'>
-                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="11/23/2017"/>
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="07/13/2017"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -59,14 +61,19 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script src="{{ asset('assets/vendor/bootstrap-validator/dist/validator.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/moment/min/moment-with-locales.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function () {
+        var addItemForm = $('#add-item-form');
+        addItemForm.validator();
+        addItemForm.validator().on('submit', function (e) {});
         $('#item-due-date-input').datetimepicker({
             locale: '{{ app.request.getLocale() }}',
             format: 'L',
-            defaultDate: $('#item-due-date').attr('data-default-date')
+            defaultDate: $('#item-due-date').attr('data-default-date'),
+            minDate: moment()
         });
         $('#item-due-date-none').change(function () {
             var itemDueInput = $('#due-date-input');

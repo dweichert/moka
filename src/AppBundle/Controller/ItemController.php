@@ -132,6 +132,14 @@ class ItemController extends Controller
             return $this->redirectToRoute('item_list');
         }
 
+        $inputDataErrors = $this->getInputDataErrors($request);
+        if (!empty($inputDataErrors)) {
+            foreach ($inputDataErrors as $error) {
+                $this->addFlash('error', $error);
+            }
+            return $this->redirectToRoute('item_list');
+        }
+
         $item = new Item();
 
         $item->setName($request->get('item-name'));
@@ -175,6 +183,7 @@ class ItemController extends Controller
      */
     public function updateAction(Request $request)
     {
+        $disabledChecks = [];
         $token = $request->get('_csrf_token');
         $csrfToken = new CsrfToken('edit-item', $token);
         if (!$this->isCsrfTokenValid('edit-item', $csrfToken)) {
@@ -198,6 +207,8 @@ class ItemController extends Controller
 
         if ($item->getName() != $request->get('item-name')) {
             $item->setName($request->get('item-name'));
+        } else {
+            $disabledChecks[] = 'name';
         }
 
         if ($item->getDescription() != $request->get('item-description')) {
@@ -206,12 +217,25 @@ class ItemController extends Controller
 
         if ($item->getUrl() != $request->get('item-url')) {
             $item->setUrl($request->get('item-url'));
+        } else {
+            $disabledChecks[] = 'url';
         }
 
         if (!$request->get('item-due-date-none')) {
-            $this->setDueDate($item, $request);
+            if (!$this->setDueDate($item, $request)) {
+                $disabledChecks[] = 'due-date';
+            }
         } else {
             $this->unsetDueDate($item);
+            $disabledChecks[] = 'due-date';
+        }
+
+        $inputDataErrors = $this->getInputDataErrors($request, $disabledChecks);
+        if (!empty($inputDataErrors)) {
+            foreach ($inputDataErrors as $error) {
+                $this->addFlash('error', $error);
+            }
+            return $this->redirectToRoute('item_list');
         }
 
         if ($this->canSetContributor($item, $request->get('item-contributor'))) {
@@ -236,17 +260,26 @@ class ItemController extends Controller
     }
 
     /**
+     * Returns true if a change occurred.
+     *
      * @param Item &$item
      * @param Request $request
+     * @return bool
      */
     private function setDueDate(Item &$item, Request $request) {
-        $inputDate = DateTime::createFromFormat('m/d/Y', $request->get('item-due-date'));;
+        if ('de' == $request->getLocale()) {
+            $format = 'd.m.Y';
+        } else {
+            $format = 'm/d/Y';
+        }
+        $inputDate = DateTime::createFromFormat($format, $request->get('item-due-date'));
 
         if ($item->getDue() == $inputDate) {
-            return;
+            return false;
         }
-
         $item->setDue($inputDate);
+
+        return true;
     }
 
     /**
@@ -280,5 +313,48 @@ class ItemController extends Controller
         }
 
         return true;
+    }
+
+    /**
+     * @param Request $request
+     * @param string[] $disabledChecks
+     * @return string[]
+     */
+    private function getInputDataErrors(Request $request, $disabledChecks = [])
+    {
+        $errors = [];
+
+        if (!in_array('name', $disabledChecks)) {
+            $itemName = $request->get('item-name');
+            if (!strlen($itemName))
+            {
+                $errors[] = 'Item name must be set';
+            }
+            if (strlen($itemName < 2))
+            {
+                $errors[] = 'Item name must be at least 2 characters.';
+            }
+            if (strlen($itemName) > 255)
+            {
+                $errors[] = 'Item name must not be longer than 255 characters.';
+            }
+        }
+        if (!in_array('url', $disabledChecks)) {
+            $itemUrl = $request->get('item-url');
+            if (strlen($itemUrl) && filter_var($itemUrl, FILTER_VALIDATE_URL) === false)
+            {
+                $errors[] = sprintf('"%s" is not a valid URL.', $itemUrl);
+            }
+        }
+
+        if (!in_array('due-date', $disabledChecks)) {
+            $itemDueDate = $request->get('item-due-date-none') ? '' : DateTime::createFromFormat('m/d/Y', $request->get('item-due-date'));
+            if (is_object($itemDueDate) && $itemDueDate->getTimestamp() < time())
+            {
+                $errors[] = 'The due date must lie in the future.';
+            }
+        }
+
+        return $errors;
     }
 }

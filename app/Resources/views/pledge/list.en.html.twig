@@ -34,7 +34,7 @@
                         <td><a href="{{ pledgeditem.url }}" title="{{ pledgeditem.url }}" target="_blank">{{ pledgeditem.name }}</a></td>
                         {% endif %}
                         <td>{{ pledgeditem.description }}</td>
-                        <td>{{ pledgeditem.due|date("d.m.Y")}}</td>
+                        <td>{{ pledgeditem.due|date("m/d/Y")}}</td>
                         <td>
                             <div id="cancel-{{ pledgeditem.id }}" data-id="{{ pledgeditem.id }}" title="Cancel your pledge" class="cancel-pledge item-cancel" target="_blank">
                                 <div class="jigsaw cancel-pledged">

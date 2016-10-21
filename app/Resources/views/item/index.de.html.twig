@@ -94,36 +94,37 @@
                 <div class="modal-body" id="dw-enlarged-img-container">
                     <div class="form-group has-feedback">
                         <label for="street-address-1">Stra&szlig;e und Hausnummer</label>
-                        <input required minlength="2" maxlength="255" data-error="Validation error" data-required-error="Street address is required" data-match-error="Steet address must have at least 2 characters" type="text" class="form-control" id="street-address-1" placeholder="1400 E Martin Luther King Jr" value="{{ user.streetAddress }}">
+                        <input required data-minlength="2" minlength="2" maxlength="255" data-error="Validierungsfehler" data-required-error="Straße ist ein Pflichtfeld" data-minlength-error="Die Straße muss wenigstens 2 Zeichen haben" data-match-error="Die Straße darf höchstens 255 Zeichen haben" type="text" class="form-control" id="street-address-1" placeholder="1400 E Martin Luther King Jr" value="{{ user.streetAddress }}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
                         <label for="street-address-2">Stra&szlig;e und Hausnummer (zus&auml;tzlich)</label>
-                        <input  maxlength="255" type="text" class="form-control" id="street-address-2" value="{{ user.streetAddress2 }}">
+                        <input  maxlength="255" data-match-error="Die Straße darf höchstens 255 Zeichen haben" type="text" class="form-control" id="street-address-2" value="{{ user.streetAddress2 }}">
+                        <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="postal-code">Postleitzahl</label>
-                        <input required minlength="2" maxlength="30" data-error="Validation error" data-required-error="Postal code is required" data-match-error="Postal code must have at least 2 and maximum 30 characters" type="text" class="form-control" id="postal-code" placeholder="TX 78644" value="{{ user.postalCode }}">
+                        <input required data-minlength="2" minlength="2" maxlength="30" data-error="Validierungsfehler" data-required-error="Postleitzahl ist ein Pflichtfeld" data-minlength-error="Die Postleitzahl muss mindestens 2 Zeichen haben" data-match-error="Die Postleitzahl darf höchstens 30 Zeichen haben" type="text" class="form-control" id="postal-code" placeholder="TX 78644" value="{{ user.postalCode }}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="city">Ort</label>
-                        <input required minlength="2" maxlength="255" data-error="Validation error" data-required-error="City is required" data-match-error="City must have at least 2 characters" type="text" class="form-control" id="city" placeholder="Lockhart, Mad Dog County" value="{{ user.city }}">
+                        <input required data-minlength="2" minlength="2" maxlength="255" data-error="Validierungsfehler" data-required-error="Stadt ist ein Pflichtfeld" data-minlength-error="Die Stadt muss mindestens 2 Zeichen haben" data-match-error="Die Stadt darf höchstens 255 Zeichen haben" type="text" class="form-control" id="city" placeholder="Lockhart, Mad Dog County" value="{{ user.city }}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="country">Land</label>
-                        <input required minlength="2" maxlength="255" data-error="Validation error" data-required-error="Country is required" data-match-error="Country must have at least 2 characters" type="text" class="form-control" id="country" placeholder="United States of America" value="{{ user.country }}">
+                        <input required data-minlength="2" minlength="2" maxlength="255" data-error="Validierungsfehler" data-required-error="Land ist ein Pflichtfeld" data-minlength-error="Das Land muss mindestens 2 Zeichen haben" data-match-error="Das Land darf nicht mehr als 255 Zeichen haben" type="text" class="form-control" id="country" placeholder="United States of America" value="{{ user.country }}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="phone">Telefon</label>
-                        <input pattern="^\+{0,2}([\d\ \-\(\)])+" maxlength="50" data-error="Validation error" data-pattern-error="Phone number must not cotain invalid characters" type="tel" class="form-control" id="phone" placeholder="+1 512-398-3480" value="{{ user.phone }}">
+                        <input pattern="^\+{0,2}([\d\ \-\(\)])+" maxlength="50" data-error="Validierungsfehler" data-pattern-error="Die Telefonnummer darf nur gültige Zeichen enthalten" type="tel" class="form-control" id="phone" placeholder="+1 512-398-3480" value="{{ user.phone }}">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group has-feedback">
                         <label for="mobile">Mobil</label>
-                        <input pattern="^\+{0,2}([\d\ \-\(\)])+" maxlength="50" data-error="Validation error" data-pattern-error="Mobile number must not cotain invalid characters" type="tel" class="form-control" id="mobile" placeholder="+1 732-757-2923" value="{{ user.mobile }}">
+                        <input pattern="^\+{0,2}([\d\ \-\(\)])+" maxlength="50" data-error="Validierungsfehler" data-pattern-error="Die Mobilnummer darf nur gültige Zeichen enthalten" type="tel" class="form-control" id="mobile" placeholder="+1 732-757-2923" value="{{ user.mobile }}">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>

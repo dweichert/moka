@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+<style type="text/css">
+    #due-date-input {
+        margin-top: 1em;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block body %}
+<form id="edit-item-form" name="edit-item-form" method="post" action="{{ path('item_update') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('edit-item') }}">
+    <input type="hidden" name="item-id" value="{{ item.id }}">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="item-name">Name:</label>
+                <input id="item-name" class="form-control" required data-minlength="2" minlength="2" maxlength="255" data-error="Validierungsfehler" data-required-error="Name ist ein Pflichtfeld" data-minlength-error="Der Name muss mindestens 2 Zeichen haben" data-match-error="Der Name darf höchstens 255 Zeichen haben" type="text" name="item-name" value="{{ item.name }}">
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label for="item-description">Beschreibung:</label>
+                <textarea id="item-description" class="form-control" rows="5" name="item-description">{{ item.description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="item-url">URL:</label>
+                <input id="item-url" class="form-control" pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" data-minlength="11" minlength="11" maxlength="255" type="text"  data-error="Validierungsfehler" data-minlength-error="Die URL muss mindestens 11 Zeichen haben" data-match-error="Die URL darf höchstens 255 Zeichen haben" data-pattern-error="Die URL muss gültig sein und mit http:// oder https:// beginnen" name="item-url" value="{{ item.url }}">
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label for="item-due-date">Benötigt bis:</label>
+                {%  if item.due is empty %}
+                <div id="due-date-toggle">
+                    <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none" checked="checked">ohne Termin</label>
+                </div>
+                <div id="due-date-input" class="form-group" style="display: none">
+                    <div class='input-group date' id='item-due-date-input'>
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('m/d/Y') }}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                {% else %}
+                <div id="due-date-toggle">
+                    <label class="checkbox-inline"><input id="item-due-date-none" type="checkbox" name="item-due-date-none">no due date</label>
+                </div>
+                <div id="due-date-input" class="form-group">
+                    <div class='input-group date' id='item-due-date-input'>
+                        <input id="item-due-date" type='text' class="form-control" name="item-due-date" data-default-date="{{ item.due|date('m/d/Y') }}" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="item-contributor">Contributor:</label>
+                <select class="form-control" id="item-contributor" name="item-contributor">
+                    {% if item.contributor is empty %}
+                        <option value="0" selected="selected">- not pledged yet -</option>
+                    {% else %}
+                        <option value="0">- not pledged yet -</option>
+                    {% endif %}
+                    {% for user in users %}
+                        {% if item.contributor is not empty and user.username == item.contributor.username %}
+                        <option value="{{ user.id }}" selected="selected">{{ getDisplayName(user) }}</option>
+                        {% else %}
+                        <option value="{{ user.id }}">{{ getDisplayName(user) }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default btn-primary">Abschicken</button>
+        </div>
+    </div>
+</form>
+{% endblock body %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('assets/vendor/bootstrap-validator/dist/validator.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/moment/min/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        var editItemForm = $('#edit-item-form');
+        editItemForm.validator();
+        editItemForm.validator().on('submit', function (e) {});
+        $('#item-due-date-input').datetimepicker({
+            locale: '{{ app.request.getLocale() }}',
+            format: 'L',
+            defaultDate: $('#item-due-date').attr('data-default-date')
+        });
+        $('#item-due-date-none').change(function () {
+            var itemDueInput = $('#due-date-input');
+            if (itemDueInput.is(":visible")) {
+                itemDueInput.hide();
+            } else {
+                itemDueInput.show();
+            }
+        });
+    });
+</script>
+{% endblock %}

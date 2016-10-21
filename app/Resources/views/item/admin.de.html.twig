@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form id="administrate-items-form" name="administrate-items-form" method="post" action="{{ path('item_delete') }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('administrate-items') }}">
+        <input type="hidden" name="current-data-id" id="current-data-id">
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <span id="add-item">
+                        <a href="{{ path('item_add') }}" title="hinzufügen" class="btn btn-primary item-add" role="button"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <a href="{{ path('item_add') }}">Eintrag hinzufügen</a>
+                    </span>
+                </p>
+                <table class="table table-bordered table-striped typed-style">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Beschreibung</th>
+                            <th>Spender</th>
+                            <th>Benötigt bis</th>
+                            <th><i class="fa fa-cog" aria-hidden="true"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            {% if item.url is empty %}
+                            <td>{{ item.name }}</td>
+                            {% else %}
+                            <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
+                            {% endif %}
+                            <td>{{ item.description }}</td>
+                            <td>
+                                {% if item.contributor is not empty %}
+                                    <a href="#">{{ getDisplayName(item.contributor) }}</a>
+                                {% else %}
+                                    - noch nicht gespendet -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.due is not empty and date(item.due) < date() %}
+                                    <strong><span class="text-danger">{{ item.due|date("d.m.Y")}}</span></strong>
+                                {% elseif item.due is not empty %}
+                                    {{ item.due|date("d.m.Y") }}
+                                {% else %}
+                                    - ohne Termin -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="ändern" class="btn btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                <button id="delete-{{ item.id }}" title="löschen" class="btn btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <input type="hidden" id="delete-item-id" name="delete-item-id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="delete-modal-label" class="modal-title">Eintrag löschen</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Möchtest Du wirklich den Eintrag löschen?</p>
+                </div>
+                <div class="modal-footer">
+                    <p>
+                        <button id="delete-submit-yes" class="btn btn-danger">Eintrag löschen</button>
+                        <button id="delete-submit-no" class="btn btn-success">Eintrag behalten</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('.item-delete').click(function () {
+                $('#current-data-id').val($(this).attr('data-id'));
+                $('#delete-modal').modal('show');
+                return false;
+            });
+            $('#delete-submit-no').click(function () {
+                $('#delete-modal').modal('hide');
+            });
+            $('#delete-submit-yes').click(function () {
+                var administrateItemsForm = $('#administrate-items-form');
+                administrateItemsForm.submit();
+            });
+        });
+    </script>
+{% endblock javascripts %}
