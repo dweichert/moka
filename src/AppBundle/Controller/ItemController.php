@@ -328,7 +328,7 @@ class ItemController extends Controller
             {
                 $errors[] = 'Item name must be set';
             }
-            if (strlen($itemName < 2))
+            if (strlen($itemName) < 2)
             {
                 $errors[] = 'Item name must be at least 2 characters.';
             }
