@@ -40,6 +40,141 @@ div#smallprint {
     font-weight: bold;
 }
 
+/* Jigsaw pieces on home page */
+
+.jigsaw-piece {
+    font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+    line-height: 1.5px;
+    vertical-align: middle;
+    text-align: center;
+    letter-spacing: 1.5px;
+    width: 75px;
+    height: 90px;
+    margin: 20px 2px;
+    position: relative;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.jigsaw-piece .jigsaw-piece-t {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.jigsaw-piece .jigsaw-piece-r {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 25px;
+    left: 71px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.jigsaw-piece .jigsaw-piece-b {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 75px;
+    left: 30px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.jigsaw-piece .jigsaw-piece-l {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 25px;
+    left: -4px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+div.jigsaw-piece .jigsaw-label-missing {
+    display: block;
+    width: 75px;
+    height: 90px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 90px;
+    position: absolute;
+    background: transparent !important;
+}
+
+div.jigsaw-piece .jigsaw-label-pledged {
+    display: block;
+    width: 75px;
+    height: 90px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 90px;
+    position: absolute;
+    background: transparent !important;
+}
+
+div#the-puzzle a:link, div#the-puzzle a:visited {
+    color: black;
+    background-color: transparent;
+    text-underline: none;
+}
+
+div#the-puzzle a:active, div#the-puzzle a:hover {
+    color: #FF3333;
+    background-color: transparent;
+    text-underline: none;
+}
+
+.jigsaw-red {
+    background: rgba(255, 0, 0, 0.5);
+}
+
+.jigsaw-grey {
+    background: rgba(204, 204, 204, 1);
+}
+
+.jigsaw-green {
+    background: rgba(0, 255, 0, 0.5);
+}
+
+.jigsaw-white {
+    background: rgba(255, 255, 255, 1);
+}
+
+.piece-pledged {
+    background: rgba(0, 255, 0, 1);
+    background: -moz-linear-gradient( top ,
+        rgba(255, 0, 0, 0.5) 0%,
+        rgba(255, 255, 0, 0.5) 15%,
+        rgba(0, 255, 0, 0.5) 30%,
+        rgba(0, 255, 255, 0.5) 50%,
+        rgba(0, 0, 255, 0.5) 65%,
+        rgba(255, 0, 255, 0.5) 80%,
+        rgba(255, 0, 0, 0.5) 100%);
+    background: -webkit-gradient(linear,  left top,  left bottom,
+        color-stop(0%, rgba(255, 0, 0, 0.5)),
+        color-stop(15%, rgba(255, 255, 0, 0.5)),
+        color-stop(30%, rgba(0, 255, 0, 0.5)),
+        color-stop(50%, rgba(0, 255, 255, 0.5)),
+        color-stop(65%, rgba(0, 0, 255, 0.5)),
+        color-stop(80%, rgba(255, 0, 255, 0.5)),
+        color-stop(100%, rgba(255, 0, 0, 0.5)));
+}
+
+.piece-missing {
+    background-color: #CCCCCC;
+}
+
 /* Used in copy text on home page as visual reference to menu item */
 .pledge-button-like-link {
     color: #FCFCCC;
