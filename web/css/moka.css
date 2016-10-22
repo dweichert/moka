@@ -1,15 +1,19 @@
 /* Google Fonts */
 @import url(//fonts.googleapis.com/css?family=Special+Elite);
-@import url(//fonts.googleapis.com/css?family=Lobster);
-@import url(//fonts.googleapis.com/css?family=Droid+Sans);
+@import url(//fonts.googleapis.com/css?family=Aladin);
 
 /* General Appearance */
 body {
-    font-family: "Droid Sans", sans-serif;
+    font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Lobster, cursive;
+    font-family:  'Unicorn', 'Aladin', 'Open Sans', sans-serif;
+}
+
+div.page-header h1 {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 /* Smallprint on home page */
@@ -53,7 +57,7 @@ div#smallprint {
 
 /* Tables */
 table.typed-style td, table.typed-style th {
-    font-family: 'Special Elite', monospace;
+    font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     line-height: 1.5px;
     height: 1.7em;
     letter-spacing: 1.5px;
@@ -73,7 +77,7 @@ a.cancel-pledge {
 }
 
 .jigsaw {
-    font-family: 'Special Elite', monospace;
+    font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     line-height: 1.5px;
     vertical-align: middle;
     text-align: center;
