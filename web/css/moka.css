@@ -191,6 +191,13 @@ div#the-puzzle a.pledge-button-like-link:hover, div#the-puzzle a.pledge-button-l
 }
 
 /* Tables */
+
+.table-controls {
+    height: 3em;
+    line-height: 3em;
+    margin-bottom: 1em;
+}
+
 table.typed-style td, table.typed-style th {
     font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     line-height: 1.5px;

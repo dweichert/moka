@@ -33,20 +33,97 @@ class ItemController extends Controller
         if (!$user) {
             $request->getSession()->set('_security.main.target_path', $this->generateUrl('missing_items'));
         }
+
         switch ($filter) {
             case 'missing':
                 $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor($order);
+                $filterLinks = sprintf(
+                    '<a href="%s">Show all items</a>',
+                    $this->generateUrl('missing_items', ['filter' => 'none', 'order' => $order])
+                );
                 break;
             case 'none':
             default:
                 $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll($order);
+                $filterLinks = sprintf(
+                    '<a href="%s">Filter pledged items</a>',
+                    $this->generateUrl('missing_items', ['filter' => 'missing', 'order' => $order])
+                );
                 break;
         }
+
+        $orderLinks = 'Order by: ';
+        switch ($order) {
+            case 'name-desc':
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
+                );
+                $orderLinks .= '<em>Name (descending)</em> | ';
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (descending)</a>',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
+                );
+                break;
+            case 'due-asc':
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (descending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
+                );
+                $orderLinks .= '<em>Due Date (ascending)</em> | ';
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (descending)</a>',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
+                );
+                break;
+            case 'due-desc':
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (descending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
+                );
+                $orderLinks .= '<em>Due Date (descending)</em>';
+                break;
+            case 'name-asc':
+            default:
+                $orderLinks .= '<em>Name (ascending)</em> | ';
+                $orderLinks .= sprintf(
+                    '<a href="%s">Name (descending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (ascending)</a> | ',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
+                );
+                $orderLinks .= sprintf(
+                    '<a href="%s">Due Date (descending)</a>',
+                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
+                );
+                break;
+        }
+
         return $this->render(
             $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
                 'items' => $items,
                 'user' => $user,
-                'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false)
+                'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false),
+                'filter' => $filterLinks,
+                'order' => $orderLinks,
             ]
         );
     }

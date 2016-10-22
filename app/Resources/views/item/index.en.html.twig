@@ -7,6 +7,18 @@
             <h1>Horkos is Waiting…</h1>
             <p>Hi! How nice of you to check out what we need to get the show going.
                 Please help us: contribute your piece of the puzzle and pledge an item.</p>
+        </div>
+    </div>
+    <div class="row table-controls">
+        <div class="col-md-4">
+            {{ filter|raw }}
+        </div>
+        <div class="col-md-8">
+            {{ order|raw }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
             <input type="hidden" id="pledged-item" name="pledged-item">
             <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
