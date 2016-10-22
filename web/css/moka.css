@@ -176,7 +176,7 @@ div#the-puzzle a:active, div#the-puzzle a:hover {
 }
 
 /* Used in copy text on home page as visual reference to menu item */
-.pledge-button-like-link {
+div#the-puzzle a.pledge-button-like-link:link, div#the-puzzle a.pledge-button-like-link:visited {
     color: #FCFCCC;
     background-color: #FF3333;
     font-weight: bold;
@@ -184,7 +184,7 @@ div#the-puzzle a:active, div#the-puzzle a:hover {
     padding: 0.2em;
 }
 
-.pledge-button-like-link:hover, .pledge-button-like-link:active {
+div#the-puzzle a.pledge-button-like-link:hover, div#the-puzzle a.pledge-button-like-link:active {
     color: #FF3333;
     background-color: #FCFCCC;
     font-weight: bold;
