@@ -17,21 +17,47 @@ use Doctrine\ORM\EntityRepository;
 class ItemRepository extends EntityRepository
 {
     /**
+     * @param string $order
      * @return Item[]
      */
-    public function findAll()
+    public function findAll($order = 'name-asc')
     {
-        return $this->findBy([], ['name' => 'ASC']);
+        switch ($order) {
+            case 'name-desc':
+                return $this->findBy([], ['name' => 'DESC']);
+            case 'due-asc':
+                return $this->findBy([], ['due' => 'ASC']);
+            case 'due-desc':
+                return $this->findBy([], ['due' => 'DESC']);
+            case 'name-asc':
+            default:
+                return $this->findBy([], ['name' => 'ASC']);
+        }
     }
 
     /**
+     * @param string $order
      * @return Item[]
      */
-    public function findAllWithNoContributor()
+    public function findAllWithNoContributor($order = 'name-asc')
     {
         $qb = $this->createQueryBuilder('i');
         $qb->where('i.contributor IS NULL');
-        $qb->orderBy('i.name', 'ASC');
+        switch ($order) {
+            case 'name-desc':
+                $qb->orderBy('i.name', 'DESC');
+                break;
+            case 'due-asc':
+                $qb->orderBy('i.due', 'ASC');
+                break;
+            case 'due-desc':
+                $qb->orderBy('i.due', 'DESC');
+                break;
+            case 'name-asc':
+            default:
+                $qb->orderBy('i.name', 'ASC');
+                break;
+        }
 
         return $qb
             ->getQuery()

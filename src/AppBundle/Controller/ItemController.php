@@ -24,18 +24,27 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 class ItemController extends Controller
 {
     /**
-     * @Route("/{_locale}/item/list", requirements={"_locale" = "en|de"}, name="missing_items")
+     * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing", "order" = "name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $filter = 'none', $order = 'name-asc')
     {
         $user = $this->getUser();
         if (!$user) {
             $request->getSession()->set('_security.main.target_path', $this->generateUrl('missing_items'));
         }
+        switch ($filter) {
+            case 'missing':
+                $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor($order);
+                break;
+            case 'none':
+            default:
+                $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll($order);
+                break;
+        }
         return $this->render(
             $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
-                'items' => $this->getDoctrine()->getRepository('AppBundle:Item')->findAll(),
+                'items' => $items,
                 'user' => $user,
                 'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false)
             ]
