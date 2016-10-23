@@ -49,7 +49,7 @@ class DefaultController extends Controller
             $puzzle[] = sprintf(
                 '%1$s
                 <a href="' . $this->generateUrl('missing_items') . '">
-                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3" title="%2$s">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4" title="%2$s">
                     <div class="jigsaw-piece %3$s">
                         <span class="jigsaw-piece-t %4$s"></span>
                         <span class="jigsaw-piece-l jigsaw-white"></span>

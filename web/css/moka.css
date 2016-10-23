@@ -136,7 +136,7 @@ div#the-puzzle a:active, div#the-puzzle a:hover {
 }
 
 .jigsaw-red {
-    background: rgba(255, 0, 0, 0.5);
+    background: rgba(255, 0, 0, 1);
 }
 
 .jigsaw-grey {
@@ -144,7 +144,7 @@ div#the-puzzle a:active, div#the-puzzle a:hover {
 }
 
 .jigsaw-green {
-    background: rgba(0, 255, 0, 0.5);
+    background: rgba(0, 255, 0, 1);
 }
 
 .jigsaw-white {
@@ -154,21 +154,21 @@ div#the-puzzle a:active, div#the-puzzle a:hover {
 .piece-pledged {
     background: rgba(0, 255, 0, 1);
     background: -moz-linear-gradient( top ,
-        rgba(255, 0, 0, 0.5) 0%,
-        rgba(255, 255, 0, 0.5) 15%,
-        rgba(0, 255, 0, 0.5) 30%,
-        rgba(0, 255, 255, 0.5) 50%,
-        rgba(0, 0, 255, 0.5) 65%,
-        rgba(255, 0, 255, 0.5) 80%,
-        rgba(255, 0, 0, 0.5) 100%);
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 255, 0, 1) 15%,
+        rgba(0, 255, 0, 1) 30%,
+        rgba(0, 255, 255, 1) 50%,
+        rgba(0, 0, 255, 1) 65%,
+        rgba(255, 0, 255, 1) 80%,
+        rgba(255, 0, 0, 1) 100%);
     background: -webkit-gradient(linear,  left top,  left bottom,
-        color-stop(0%, rgba(255, 0, 0, 0.5)),
-        color-stop(15%, rgba(255, 255, 0, 0.5)),
-        color-stop(30%, rgba(0, 255, 0, 0.5)),
-        color-stop(50%, rgba(0, 255, 255, 0.5)),
-        color-stop(65%, rgba(0, 0, 255, 0.5)),
-        color-stop(80%, rgba(255, 0, 255, 0.5)),
-        color-stop(100%, rgba(255, 0, 0, 0.5)));
+        color-stop(0%, rgba(255, 0, 0, 1)),
+        color-stop(15%, rgba(255, 255, 0, 1)),
+        color-stop(30%, rgba(0, 255, 0, 1)),
+        color-stop(50%, rgba(0, 255, 255, 1)),
+        color-stop(65%, rgba(0, 0, 255, 1)),
+        color-stop(80%, rgba(255, 0, 255, 1)),
+        color-stop(100%, rgba(255, 0, 0, 1)));
 }
 
 .piece-missing {
