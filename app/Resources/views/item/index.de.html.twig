@@ -4,36 +4,43 @@
 <form id="missing-items-form" name="missing-items" method="post" action="{{ path('pledge') }}">
     <div class="row">
         <div class="col-md-12">
-            <h1>Horkos is Waiting…</h1>
-            <p>Hi! How nice of you to check out what we need to get the show going.
-                Please help us: contribute your piece of the puzzle and pledge an item.</p>
+            <h1>Horkos erwartet Dich…</h1>
+            <p>Hallo! Wie nett von Dir, dass Du Dich informierst, was noch fehlt, um die Show auf
+                die Bühne zu bringen. Bitte hilf uns: Füge Dein Teil in das Puzzle ein und spende
+                etwas.</p>
         </div>
     </div>
-    <div class="row table-controls">
-        <div class="col-md-4">
-            {{ filter|raw }}
+    <div class="row item-filter-and-order-controls">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <label for="select-filter">Filter:</label>
+             <select class="form-control" id="select-filter">
+                {{ filter|raw }}
+            </select>
         </div>
-        <div class="col-md-8">
-            {{ order|raw }}
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <label for="select-orderby">Sortierung:</label>
+             <select class="form-control" id="select-orderby">
+                {{ order|raw }}
+            </select>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
-            <input type="hidden" id="pledged-item" name="pledged-item">
-            <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
-            {% if user is not empty %}
-            <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
-            <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
-            <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
-            <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
-            <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
-            <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
-            <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
-            {% else %}
-            <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
-            {% endif %}
-            <table class="table table-bordered table-striped typed-style">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
+        <input type="hidden" id="pledged-item" name="pledged-item">
+        <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
+        {% if user is not empty %}
+        <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
+        <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
+        <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
+        <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
+        <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
+        <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
+        <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
+        {% else %}
+        <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
+        {% endif %}
+        <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
+            <table class="table table-bordered table-striped item-table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -65,7 +72,7 @@
                               <span class="r pledge"></span>
                               <span class="b pledge-inverse"></span>
                               <span class="l pledge-inverse"></span>
-                          <span class="text" title="Spende ein Teil des Puzzles">Spenden</span>
+                          <span class="text" title="Füge Dein Teil in das Puzzle ein">Spenden</span>
                         </div>
                         {% else %}
                         <div class="jigsaw pledged">
@@ -81,6 +88,28 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
+            {% for item in items %}
+                <div class="pledge-list-item {% if loop.index  is odd%}odd{% else %}even{% endif %}">
+                    <div>
+                        {% if item.url is empty %}
+                            <strong>Name:</strong> {{ item.name }}
+                        {% else %}
+                            <strong>Name:</strong> <a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a>
+                        {% endif %}
+                    </div>
+                    {% if item.description is not empty %}<div><strong>Beschreibung:</strong> {{ item.description }}</div>{% endif %}
+                    <div><strong>Benötigt bis:</strong> {% if item.due is not empty %}{{ item.due|date("m/d/Y") }}{% else %}- ohne Termin -{% endif %}</div>
+                    <div>
+                        {% if item.contributor is empty %}
+                            <strong><a href="#" id="pledge-link-{{ item.id }}" class="item-pledge-link" data-id="{{ item.id }}">Füge Dein Teil in das Puzzle ein</a></strong>
+                        {% else %}
+                            Gespendet von {{ getDisplayName(item.contributor, 1) }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">
@@ -172,6 +201,15 @@
                     $('#missing-items-form').submit();
                 }
             });
+            $('.item-pledge-link').click(function () {
+                $('#pledged-item').val($(this).attr('data-id'));
+                if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
+                    $('#contact-modal').modal('show');
+                    return false;
+                } else {
+                    $('#missing-items-form').submit();
+                }
+            });
             $('#street-address-1').change(function () {
                 $('#user-street-address-1').val(($(this).val()));
             });
@@ -196,8 +234,13 @@
             $('.data-confirm').click(function () {
                 $('#data-confirmed').val(true);
             });
-            $('.item-modal-close').click(function () {
-                $(".dw-loaded-img").remove();
+            $('#select-filter').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $(this).val() + "/" + $('#select-orderby').val();
+                window.location.assign(path);
+            });
+            $('#select-orderby').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $('#select-filter').val() + "/" + $(this).val();
+                window.location.assign(path);
             });
         });
     </script>
