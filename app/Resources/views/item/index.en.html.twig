@@ -113,7 +113,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="my-modal-label">Please confirm you contact data</h4>
                 </div>
-                <div class="modal-body" id="dw-enlarged-img-container">
+                <div class="modal-body" id="contact-data-modal">
                     <div class="form-group has-feedback">
                         <label for="street-address-1">Street address</label>
                         <input required data-minlength="2" minlength="2" maxlength="255" data-error="Validation error" data-required-error="Street address is required" data-minlength-error="Street address must have at least 2 characters" data-match-error="Steet address must have no more than 255 characters" type="text" class="form-control" id="street-address-1" placeholder="1400 E Martin Luther King Jr" value="{{ user.streetAddress }}">
@@ -204,9 +204,6 @@
             });
             $('.data-confirm').click(function () {
                 $('#data-confirmed').val(true);
-            });
-            $('.item-modal-close').click(function () {
-                $(".dw-loaded-img").remove(); // <= THIS IS LIKELY WRONG
             });
             $('#select-filter').change(function () {
                 var path = "{{ path('missing_items') }}" + "/" + $(this).val() + "/" + $('#select-orderby').val();
