@@ -192,14 +192,14 @@ div#the-puzzle a.pledge-button-like-link:hover, div#the-puzzle a.pledge-button-l
 
 /* Tables */
 
-table.typed-style td, table.typed-style th {
+table.item-table td, table.item-table th {
     font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     line-height: 1.5px;
     height: 1.7em;
     letter-spacing: 1.5px;
 }
 
-table.typed-style > tbody > tr > td {
+table.item-table > tbody > tr > td {
     vertical-align: middle;
 }
 
