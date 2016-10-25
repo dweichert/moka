@@ -206,7 +206,15 @@
                 $('#data-confirmed').val(true);
             });
             $('.item-modal-close').click(function () {
-                $(".dw-loaded-img").remove();
+                $(".dw-loaded-img").remove(); // <= THIS IS LIKELY WRONG
+            });
+            $('#select-filter').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $(this).val() + "/" + $('#select-orderby').val();
+                window.location.assign(path);
+            });
+            $('#select-orderby').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $('#select-filter').val() + "/" + $(this).val();
+                window.location.assign(path);
             });
         });
     </script>
