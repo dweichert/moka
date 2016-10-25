@@ -38,7 +38,11 @@ class ItemController extends Controller
 
     private $translations = [
         'Show All' => 'Alle anzeigen',
-        'Filter Pledged' => 'Gespendete filtern'
+        'Filter Pledged' => 'Nur noch nicht gespendete',
+        'Name (ascending)' => 'Name (aufsteigend)',
+        'Name (descending)' => 'Name (absteigend)',
+        'Required by (ascending)' => 'Benötigt bis (aufsteigend)',
+        'Required by (descending)' => 'Benötigt bis (absteigend)',
     ];
 
     /**
@@ -61,71 +65,6 @@ class ItemController extends Controller
             $request->getSession()->set('_security.main.target_path', $this->generateUrl('missing_items'));
         }
 
-        $orderLinks = 'Order by: ';
-        switch ($order) {
-            case 'name-desc':
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
-                );
-                $orderLinks .= '<em>Name (descending)</em> | ';
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (descending)</a>',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
-                );
-                break;
-            case 'due-asc':
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (descending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
-                );
-                $orderLinks .= '<em>Due Date (ascending)</em> | ';
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (descending)</a>',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
-                );
-                break;
-            case 'due-desc':
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-asc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (descending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
-                );
-                $orderLinks .= '<em>Due Date (descending)</em>';
-                break;
-            case 'name-asc':
-            default:
-                $orderLinks .= '<em>Name (ascending)</em> | ';
-                $orderLinks .= sprintf(
-                    '<a href="%s">Name (descending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'name-desc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (ascending)</a> | ',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-asc'])
-                );
-                $orderLinks .= sprintf(
-                    '<a href="%s">Due Date (descending)</a>',
-                    $this->generateUrl('missing_items', ['filter' => $filter, 'order' => 'due-desc'])
-                );
-                break;
-        }
-
         $locale = $request->getLocale();
 
         return $this->render(
@@ -133,8 +72,8 @@ class ItemController extends Controller
                 'items' => $this->getItems($filter, $order),
                 'user' => $user,
                 'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false),
-                'filter' => $this->getItemListFilterOptions($filter, $locale),
-                'order' => $orderLinks,
+                'filter' => $this->getFilterOptions($filter, $locale),
+                'order' => $this->getOrderOptions($order, $locale),
             ]
         );
     }
@@ -486,7 +425,7 @@ class ItemController extends Controller
      * @param string $filter
      * @return string
      */
-    private function getItemListFilterOptions($filter, $locale)
+    private function getFilterOptions($filter, $locale)
     {
         return sprintf(
             '<option value="%1$s"%2$s>'
@@ -499,6 +438,39 @@ class ItemController extends Controller
             $filter == self::FILTER_NONE ?  ' selected="selected"' : '',
             self::FILTER_MISSING_ITEMS,
             $filter == self::FILTER_MISSING_ITEMS ?  ' selected="selected"' : ''
+        );
+    }
+
+    /**
+     * Get item list order options.
+     *
+     * @param $order
+     * @param $locale
+     * @return string
+     */
+    private function getOrderOptions($order, $locale)
+    {
+        return sprintf(
+            '<option value="%1$s"%2$s>'
+            . $this->getLabel('Name (ascending)', $locale)
+            . '</option>'
+            . '<option value="%3$s"%4$s>'
+            . $this->getLabel('Name (descending)', $locale)
+            . '</option>'
+            . '<option value="%5$s"%6$s>'
+            . $this->getLabel('Required by (ascending)', $locale)
+            . '</option>'
+            . '<option value="%7$s"%8$s>'
+            . $this->getLabel('Required by (descending)', $locale)
+            . '</option>',
+            self::ORDER_NAME_ASC,
+            $order == self::ORDER_NAME_ASC ? ' selected="selected"' : '',
+            self::ORDER_NAME_DESC,
+            $order == self::ORDER_NAME_DESC ? ' selected="selected"' : '',
+            self::ORDER_DUE_DATE_ASC,
+            $order == self::ORDER_DUE_DATE_ASC ? ' selected="selected"' : '',
+            self::ORDER_DUE_DATE_DESC,
+            $order == self::ORDER_DUE_DATE_DESC ? ' selected="selected"' : ''
         );
     }
 

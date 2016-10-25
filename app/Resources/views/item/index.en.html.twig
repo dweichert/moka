@@ -19,10 +19,7 @@
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <label for="select-orderby">Order by:</label>
              <select class="form-control" id="select-orderby">
-                <option>Name (ascending)</option>
-                <option>Name (descending)</option>
-                <option>Due Date (ascending)</option>
-                <option>Due Date (descending)</option>
+                {{ order|raw }}
             </select>
         </div>
     </div>
