@@ -192,6 +192,10 @@ div#the-puzzle a.pledge-button-like-link:hover, div#the-puzzle a.pledge-button-l
 
 /* Tables */
 
+.item-filter-and-order-controls {
+    margin-bottom: 1em;
+}
+
 table.item-table td, table.item-table th {
     font-family: 'Special Elite', 'Courier New', 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
     line-height: 1.5px;
