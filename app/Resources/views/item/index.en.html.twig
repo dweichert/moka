@@ -9,30 +9,39 @@
                 Please help us: contribute your piece of the puzzle and pledge an item.</p>
         </div>
     </div>
-    <div class="row table-controls">
-        <div class="col-md-4">
-            {{ filter|raw }}
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <label for="select-filter">Filter:</label>
+             <select class="form-control" id="select-filter">
+                {{ filter|raw }}
+            </select>
         </div>
-        <div class="col-md-8">
-            {{ order|raw }}
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <label for="select-orderby">Order by:</label>
+             <select class="form-control" id="select-orderby">
+                <option>Name (ascending)</option>
+                <option>Name (descending)</option>
+                <option>Due Date (ascending)</option>
+                <option>Due Date (descending)</option>
+            </select>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
-            <input type="hidden" id="pledged-item" name="pledged-item">
-            <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
-            {% if user is not empty %}
-            <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
-            <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
-            <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
-            <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
-            <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
-            <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
-            <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
-            {% else %}
-            <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
-            {% endif %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('missing_items') }}">
+        <input type="hidden" id="pledged-item" name="pledged-item">
+        <input type="hidden" id="data-confirmed" name="data-confirmed" value="{{ address_confirmed }}">
+        {% if user is not empty %}
+        <input type="hidden" id="user-street-address-1" name="user-street-address-1" value="{{ user.streetAddress }}">
+        <input type="hidden" id="user-street-address-1" name="user-street-address-2" value="{{ user.streetAddress2 }}">
+        <input type="hidden" id="user-postal-code" name="user-postal-code" value="{{ user.postalCode }}">
+        <input type="hidden" id="user-city" name="user-city" value="{{ user.city }}">
+        <input type="hidden" id="user-country" name="user-country" value="{{ user.country }}">
+        <input type="hidden" id="user-phone" name="user-phone" value="{{ user.phone }}">
+        <input type="hidden" id="user-mobile" name="user-mobile" value="{{ user.mobile }}">
+        {% else %}
+        <input type="hidden" id="user-not-authenticated" name="user-not-authenticated" value="true">
+        {% endif %}
+        <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
             <table class="table table-bordered table-striped typed-style">
                 <thead>
                     <tr>
@@ -81,6 +90,9 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
+            Create an alternative here!
         </div>
     </div>
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">

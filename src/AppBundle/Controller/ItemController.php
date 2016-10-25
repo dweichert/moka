@@ -19,37 +19,46 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 class ItemController extends Controller
 {
+    const FILTER_NONE = 'none';
+    const FILTER_MISSING_ITEMS = 'missing';
+    const ORDER_NAME_ASC = 'name-asc';
+    const ORDER_NAME_DESC = 'name-desc';
+    const ORDER_DUE_DATE_ASC = 'due-asc';
+    const ORDER_DUE_DATE_DESC = 'due-desc';
+
     /**
+     * @var Item[]
+     */
+    private $items;
+
+    private $translations = [
+        'Show All' => 'Alle anzeigen',
+        'Filter Pledged' => 'Gespendete filtern'
+    ];
+
+    /**
+     * Item list, aka "Pledge" list.
+     *
+     * List shown to users to allow them to pledge items.
+     *
      * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing", "order" = "name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
      * @Method("GET")
+     *
+     * @param Request $request
+     * @param string $filter
+     * @param string $order
+     * @return Response
      */
     public function indexAction(Request $request, $filter = 'none', $order = 'name-asc')
     {
         $user = $this->getUser();
         if (!$user) {
             $request->getSession()->set('_security.main.target_path', $this->generateUrl('missing_items'));
-        }
-
-        switch ($filter) {
-            case 'missing':
-                $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor($order);
-                $filterLinks = sprintf(
-                    '<a href="%s">Show all items</a>',
-                    $this->generateUrl('missing_items', ['filter' => 'none', 'order' => $order])
-                );
-                break;
-            case 'none':
-            default:
-                $items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll($order);
-                $filterLinks = sprintf(
-                    '<a href="%s">Filter pledged items</a>',
-                    $this->generateUrl('missing_items', ['filter' => 'missing', 'order' => $order])
-                );
-                break;
         }
 
         $orderLinks = 'Order by: ';
@@ -117,12 +126,14 @@ class ItemController extends Controller
                 break;
         }
 
+        $locale = $request->getLocale();
+
         return $this->render(
-            $request->getLocale() == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
-                'items' => $items,
+            $locale == 'de' ? 'item/index.de.html.twig' : 'item/index.en.html.twig', [
+                'items' => $this->getItems($filter, $order),
                 'user' => $user,
                 'address_confirmed' => (bool)$request->getSession()->get('address_confirmed', false),
-                'filter' => $filterLinks,
+                'filter' => $this->getItemListFilterOptions($filter, $locale),
                 'order' => $orderLinks,
             ]
         );
@@ -440,5 +451,71 @@ class ItemController extends Controller
         }
 
         return $errors;
+    }
+
+    /**
+     * Get items.
+     *
+     * @param string $filter
+     * @param string $order
+     *
+     * @return Item[]
+     */
+    private function getItems($filter, $order)
+    {
+        if (!is_null($this->items)) {
+            return $this->items;
+        }
+
+        switch ($filter) {
+            case self::FILTER_MISSING_ITEMS:
+                $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor($order);
+
+                return $this->items;
+            case self::FILTER_NONE:
+            default:
+                $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll($order);
+
+                return $this->items;
+        }
+    }
+
+    /**
+     * Get item list filter options.
+     *
+     * @param string $filter
+     * @return string
+     */
+    private function getItemListFilterOptions($filter, $locale)
+    {
+        return sprintf(
+            '<option value="%1$s"%2$s>'
+            . $this->getLabel('Show All', $locale)
+            . '</option>'
+            . '<option value="%3$s"%4$s>'
+            . $this->getLabel('Filter Pledged', $locale)
+            . '</option>',
+            self::FILTER_NONE,
+            $filter == self::FILTER_NONE ?  ' selected="selected"' : '',
+            self::FILTER_MISSING_ITEMS,
+            $filter == self::FILTER_MISSING_ITEMS ?  ' selected="selected"' : ''
+        );
+    }
+
+
+    /**
+     * Get translated label.
+     *
+     * @param string $string
+     * @param string $locale
+     * @return string
+     */
+    private function getLabel($string, $locale) {
+        if ('de' == $locale && isset($this->translations[$string])) {
+
+            return $this->translations[$string];
+        }
+
+        return $string;
     }
 }
