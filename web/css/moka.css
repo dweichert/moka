@@ -207,6 +207,23 @@ table.item-table > tbody > tr > td {
     vertical-align: middle;
 }
 
+.pledge-list-item {
+    padding: .5em;
+    margin: .3em;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    border: solid .1em black;
+}
+
+.pledge-list-item.odd {
+    background-color: #ddd;
+}
+
+.pledge-list-item.even {
+    background-color: transparent;
+}
+
 /* Jigsaw-shaped controls */
 a.cancel-pledge {
     text-decoration: none;

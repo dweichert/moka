@@ -59,7 +59,7 @@
                     <td>{{ item.description }}</td>
                     <td>
                     {% if item.due is not empty %}
-                    {{ item.due|date("d.m.Y")}}
+                    {{ item.due|date("m/d/Y")}}
                     {% else %}
                     - no due date -
                     {% endif %}
@@ -89,7 +89,26 @@
             </table>
         </div>
         <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
-            Create an alternative here!
+            {% for item in items %}
+                <div class="pledge-list-item {% if loop.index  is odd%}odd{% else %}even{% endif %}">
+                    <div>
+                        {% if item.url is empty %}
+                            <strong>Name:</strong> {{ item.name }}
+                        {% else %}
+                            <strong>Name:</strong> <a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a>
+                        {% endif %}
+                    </div>
+                    {% if item.description is not empty %}<div><strong>Description:</strong> {{ item.description }}</div>{% endif %}
+                    <div><strong>Required by:</strong> {% if item.due is not empty %}{{ item.due|date("m/d/Y") }}{% else %}- no due date -{% endif %}</div>
+                    <div>
+                        {% if item.contributor is empty %}
+                            <strong><a href="#" id="pledge-link-{{ item.id }}" class="item-pledge-link" data-id="{{ item.id }}">Pledge your piece of the puzzle</a></strong>
+                        {% else %}
+                            Pledged by {{ getDisplayName(item.contributor, 1) }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">
@@ -173,6 +192,15 @@
                 }
             });
             $('.item-pledge').click(function () {
+                $('#pledged-item').val($(this).attr('data-id'));
+                if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
+                    $('#contact-modal').modal('show');
+                    return false;
+                } else {
+                    $('#missing-items-form').submit();
+                }
+            });
+            $('.item-pledge-link').click(function () {
                 $('#pledged-item').val($(this).attr('data-id'));
                 if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
                     $('#contact-modal').modal('show');

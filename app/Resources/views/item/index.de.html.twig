@@ -72,7 +72,7 @@
                               <span class="r pledge"></span>
                               <span class="b pledge-inverse"></span>
                               <span class="l pledge-inverse"></span>
-                          <span class="text" title="Spende ein Teil des Puzzles">Spenden</span>
+                          <span class="text" title="Füge Dein Teil in das Puzzle ein">Spenden</span>
                         </div>
                         {% else %}
                         <div class="jigsaw pledged">
@@ -90,7 +90,26 @@
             </table>
         </div>
         <div class="hidden-lg hidden-md col-sm-12 col-xs-12">
-            Create an alternative here!
+            {% for item in items %}
+                <div class="pledge-list-item {% if loop.index  is odd%}odd{% else %}even{% endif %}">
+                    <div>
+                        {% if item.url is empty %}
+                            <strong>Name:</strong> {{ item.name }}
+                        {% else %}
+                            <strong>Name:</strong> <a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a>
+                        {% endif %}
+                    </div>
+                    {% if item.description is not empty %}<div><strong>Beschreibung:</strong> {{ item.description }}</div>{% endif %}
+                    <div><strong>Benötigt bis:</strong> {% if item.due is not empty %}{{ item.due|date("m/d/Y") }}{% else %}- ohne Termin -{% endif %}</div>
+                    <div>
+                        {% if item.contributor is empty %}
+                            <strong><a href="#" id="pledge-link-{{ item.id }}" class="item-pledge-link" data-id="{{ item.id }}">Füge Dein Teil in das Puzzle ein</a></strong>
+                        {% else %}
+                            Gespendet von {{ getDisplayName(item.contributor, 1) }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-label" aria-hidden="true">
@@ -182,6 +201,15 @@
                     $('#missing-items-form').submit();
                 }
             });
+            $('.item-pledge-link').click(function () {
+                $('#pledged-item').val($(this).attr('data-id'));
+                if (!$('#data-confirmed').val() || $('#user-not-authenticated').val()) {
+                    $('#contact-modal').modal('show');
+                    return false;
+                } else {
+                    $('#missing-items-form').submit();
+                }
+            });
             $('#street-address-1').change(function () {
                 $('#user-street-address-1').val(($(this).val()));
             });
@@ -206,8 +234,13 @@
             $('.data-confirm').click(function () {
                 $('#data-confirmed').val(true);
             });
-            $('.item-modal-close').click(function () {
-                $(".dw-loaded-img").remove();
+            $('#select-filter').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $(this).val() + "/" + $('#select-orderby').val();
+                window.location.assign(path);
+            });
+            $('#select-orderby').change(function () {
+                var path = "{{ path('missing_items') }}" + "/" + $('#select-filter').val() + "/" + $(this).val();
+                window.location.assign(path);
             });
         });
     </script>
