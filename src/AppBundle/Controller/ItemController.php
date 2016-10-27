@@ -181,17 +181,15 @@ class ItemController extends Controller
 
         $item->setName($request->get('item-name'));
 
-        if ($item->getDescription() != $request->get('item-description')) {
-            $item->setDescription($request->get('item-description'));
-        }
+        $item->setDescription($request->get('item-description', ''));
 
-        if ($item->getUrl() != $request->get('item-url')) {
-            $item->setUrl($request->get('item-url'));
-        }
+        $item->setUrl($request->get('item-url', ''));
 
         if (!$request->get('item-due-date-none')) {
             $this->setDueDate($item, $request);
         }
+
+        $item->setWeight($request->get('item-weight'));
 
         if ($request->get('item-contributor')) {
             $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
@@ -274,6 +272,10 @@ class ItemController extends Controller
                 $this->addFlash('error', $error);
             }
             return $this->redirectToRoute('item_list');
+        }
+
+        if ($item->getWeight() != $request->get('item-weight')) {
+            $item->setWeight($request->get('item-weight'));
         }
 
         $this->updateContributor($item, $request);
