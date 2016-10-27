@@ -26,6 +26,7 @@ class ItemController extends Controller
 {
     const FILTER_NONE = 'none';
     const FILTER_MISSING_ITEMS = 'missing';
+    const ORDER_WEIGHT_DESC = 'weight-asc';
     const ORDER_NAME_ASC = 'name-asc';
     const ORDER_NAME_DESC = 'name-desc';
     const ORDER_DUE_DATE_ASC = 'due-asc';
@@ -39,6 +40,7 @@ class ItemController extends Controller
     private $translations = [
         'Show All' => 'Alle anzeigen',
         'Filter Pledged' => 'Nur noch nicht gespendete',
+        'Weight (ascending)' => 'Gewicht (aufsteigend)',
         'Name (ascending)' => 'Name (aufsteigend)',
         'Name (descending)' => 'Name (absteigend)',
         'Required by (ascending)' => 'Benötigt bis (aufsteigend)',
