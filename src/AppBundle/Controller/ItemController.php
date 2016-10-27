@@ -26,7 +26,7 @@ class ItemController extends Controller
 {
     const FILTER_NONE = 'none';
     const FILTER_MISSING_ITEMS = 'missing';
-    const ORDER_WEIGHT_DESC = 'weight-asc';
+    const ORDER_WEIGHT_ASC = 'weight-asc';
     const ORDER_NAME_ASC = 'name-asc';
     const ORDER_NAME_DESC = 'name-desc';
     const ORDER_DUE_DATE_ASC = 'due-asc';
@@ -52,7 +52,7 @@ class ItemController extends Controller
      *
      * List shown to users to allow them to pledge items.
      *
-     * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing", "order" = "name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
+     * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing", "order" = "weight-asc|name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
      * @Method("GET")
      *
      * @param Request $request
@@ -60,7 +60,7 @@ class ItemController extends Controller
      * @param string $order
      * @return Response
      */
-    public function indexAction(Request $request, $filter = 'none', $order = 'name-asc')
+    public function indexAction(Request $request, $filter = 'none', $order = 'weight-asc')
     {
         $user = $this->getUser();
         if (!$user) {
@@ -456,17 +456,22 @@ class ItemController extends Controller
     {
         return sprintf(
             '<option value="%1$s"%2$s>'
-            . $this->getLabel('Name (ascending)', $locale)
+            . $this->getLabel('Weight (ascending)', $locale)
             . '</option>'
             . '<option value="%3$s"%4$s>'
-            . $this->getLabel('Name (descending)', $locale)
+            . $this->getLabel('Name (ascending)', $locale)
             . '</option>'
             . '<option value="%5$s"%6$s>'
-            . $this->getLabel('Required by (ascending)', $locale)
+            . $this->getLabel('Name (descending)', $locale)
             . '</option>'
             . '<option value="%7$s"%8$s>'
+            . $this->getLabel('Required by (ascending)', $locale)
+            . '</option>'
+            . '<option value="%9$s"%10$s>'
             . $this->getLabel('Required by (descending)', $locale)
             . '</option>',
+            self::ORDER_WEIGHT_ASC,
+            $order == self::ORDER_WEIGHT_ASC ? 'selected="selected"' : '',
             self::ORDER_NAME_ASC,
             $order == self::ORDER_NAME_ASC ? ' selected="selected"' : '',
             self::ORDER_NAME_DESC,
