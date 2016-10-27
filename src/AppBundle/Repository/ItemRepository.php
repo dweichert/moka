@@ -20,7 +20,7 @@ class ItemRepository extends EntityRepository
      * @param string $order
      * @return Item[]
      */
-    public function findAll($order = 'name-asc')
+    public function findAll($order = 'weight-asc')
     {
         switch ($order) {
             case 'name-desc':
@@ -30,8 +30,10 @@ class ItemRepository extends EntityRepository
             case 'due-desc':
                 return $this->findBy([], ['due' => 'DESC']);
             case 'name-asc':
-            default:
                 return $this->findBy([], ['name' => 'ASC']);
+            case 'weight-asc':
+            default:
+                return $this->findBy([], ['weight' => 'ASC']);
         }
     }
 
@@ -54,8 +56,11 @@ class ItemRepository extends EntityRepository
                 $qb->orderBy('i.due', 'DESC');
                 break;
             case 'name-asc':
-            default:
                 $qb->orderBy('i.name', 'ASC');
+                break;
+            case 'weight-asc':
+            default:
+                $qb->orderBy('i.weight', 'ASC');
                 break;
         }
 

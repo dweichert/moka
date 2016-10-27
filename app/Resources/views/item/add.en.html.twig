@@ -45,6 +45,11 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="item-weight-input">Weight:</label>
+                <input class="form-control" placeholder="23" pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validation error" data-pattern-error="Weight must be a number" data-match-error="Weight must have no more than 6 digits" type="text" name="item-weight">
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
                 <select class="form-control" id="item-contributor" name="item-contributor">
                     <option value="0" selected="selected">- not pledged yet -</option>

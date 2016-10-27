@@ -66,6 +66,18 @@ class Item
     private $contributor;
 
     /**
+     * Weight allows to influence the order of items.
+     *
+     * The higher the number, the higher the weight. Heavier items sink to the
+     * bottom of the item list, lighter items float at the top.
+     *
+     * @var int
+     *
+     * @ORM\Column(name="weight", type="integer")
+     */
+    private $weight;
+
+    /**
      * Get id
      *
      * @return int
@@ -194,5 +206,27 @@ class Item
     {
         return $this->contributor;
     }
+
+    /**
+     * Get weight.
+     *
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Set weight.
+     *
+     * @param int $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+
+
 }
 
