@@ -16,6 +16,11 @@ div.page-header h1 {
     text-transform: uppercase;
 }
 
+/* Well containing copy on home page */
+.homepage-copy {
+    margin-top: 25px;
+}
+
 /* Smallprint on home page */
 div#smallprint {
     margin-top: 2em;
