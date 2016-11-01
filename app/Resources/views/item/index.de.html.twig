@@ -171,7 +171,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary data-confirm" data-dismiss="modal">Best&auml;tigen</button>
+                    <button id="contact-details-confirmation-button" type="button" class="btn btn-primary data-confirm disabled">Best&auml;tigen</button>
                 </div>
                 {% endif %}
             </div>
@@ -186,7 +186,14 @@
     <script type="text/javascript">
         $( document ).ready(function() {
             var missingItemsForm = $('#missing-items-form');
-            missingItemsForm.validator();
+            function isValidMissingItemsForm() {
+                return !(missingItemsForm.validator('validate').has('.has-error').length);
+            }
+            function tryEnableConfirmationButton() {
+                if (isValidMissingItemsForm()) {
+                    $('#contact-details-confirmation-button').removeClass('disabled');
+                }
+            }
             missingItemsForm.validator().on('submit', function (e) {
                 if (e.isDefaultPrevented()) {
                     $('#contact-modal').modal('show');
@@ -212,18 +219,22 @@
             });
             $('#street-address-1').change(function () {
                 $('#user-street-address-1').val(($(this).val()));
+                tryEnableConfirmationButton();
             });
             $('#street-address-2').change(function () {
                 $('#user-street-address-2').val(($(this).val()));
             });
             $('#postal-code').change(function () {
                 $('#user-postal-code').val(($(this).val()));
+                tryEnableConfirmationButton();
             });
             $('#city').change(function () {
                 $('#user-city').val(($(this).val()));
+                tryEnableConfirmationButton();
             });
             $('#country').change(function () {
                 $('#user-country').val(($(this).val()));
+                tryEnableConfirmationButton();
             });
             $('#phone').change(function () {
                 $('#user-phone').val(($(this).val()));
@@ -232,7 +243,10 @@
                 $('#user-mobile').val(($(this).val()));
             });
             $('.data-confirm').click(function () {
-                $('#data-confirmed').val(true);
+                if (isValidMissingItemsForm()) {
+                    $('#data-confirmed').val(true);
+                    $('#contact-modal').modal('hide');
+                }
             });
             $('#select-filter').change(function () {
                 var path = "{{ path('missing_items') }}" + "/" + $(this).val() + "/" + $('#select-orderby').val();
