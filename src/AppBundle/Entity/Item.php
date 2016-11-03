@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
-    const UNLIMITED_QUANTITY = -1;
+    const SPAWN_UNLIMITED = -1;
 
     /**
      * @var int
@@ -83,8 +83,7 @@ class Item
      * Class ID.
      *
      * Items of the same class come into existence as copies of the original
-     * item of this class, this is the case if the quantity required is
-     * greater than one.
+     * item of this class are spawned.
      *
      * @var string
      *
@@ -93,13 +92,13 @@ class Item
     private $class;
 
     /**
-     * Number of items of this class required.
+     * Number of times an item of this class can spawn.
      *
      * @var int
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="spawn", type="integer")
      */
-    private $quantity;
+    private $spawn;
 
     /**
      * Get id
@@ -287,44 +286,41 @@ class Item
     }
 
     /**
-     * Get quantity.
+     * Get number of spawn events left.
      *
      * Returns either a positive integer specifying the number of times this
-     * item can be pledged or 'unlimited' to indicate that this item can be
-     * pledged any number of times.
+     * item can be spawned or 'unlimited' to indicate that this item can be
+     * spawned any number of times.
      *
      * @return int|string
      */
-    public function getQuantity()
+    public function getSpawn()
     {
-        if ($this->quantity == self::UNLIMITED_QUANTITY) {
+        if ($this->spawn == self::SPAWN_UNLIMITED) {
             return 'unlimited';
         }
-        if ($this->quantity == 0) {
-            return 1;
-        }
 
-        return $this->quantity;
+        return $this->spawn;
     }
 
     /**
-     * Set quantity.
+     * Set number of spawn events left.
      *
      * Allows for either a positive integer specifying the number of times this
-     * item can be pledged or 'unlimited' to indicate that this item can be
-     * pledged any number of times.
+     * item can be spawned or 'unlimited' to indicate that this item can be
+     * spawned any number of times.
      *
-     * @param int|string $quantity OPTIONAL defaults to 1
+     * @param int|string $spawn OPTIONAL defaults to 0
      *
      * @return Item
      */
-    public function setQuantity($quantity = 1)
+    public function setSpawn($spawn = 0)
     {
-        if ($quantity == 'unlimited') {
-            $this->quantity = self::UNLIMITED_QUANTITY;
+        if ($spawn == 'unlimited') {
+            $this->quantity = self::SPAWN_UNLIMITED;
         }
 
-        $this->quantity = $quantity;
+        $this->quantity = $spawn;
 
         return $this;
     }
