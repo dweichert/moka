@@ -64,6 +64,23 @@
                 <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
+                <label for="item-spawn">Can be pledged:</label>
+                <select class="form-control" id="item-spawn" name="item-spawn">
+                    {% for i in 0..22 %}
+                        {% if item.spawn == i %}
+                        <option value="{{ i }}" selected="selected">{{ i|numOPledges('en') }}</option>
+                        {% else %}
+                        <option value="{{ i }}">{{ i|numOPledges('en') }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    {% if item.spawn == '-1' %}
+                    <option value="-1" selected="selected">unlimited</option>
+                    {% else %}
+                    <option value="-1">unlimited</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
                 <select class="form-control" id="item-contributor" name="item-contributor">
                     {% if item.contributor is empty %}

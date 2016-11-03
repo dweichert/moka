@@ -22,8 +22,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
-    const SPAWN_UNLIMITED = -1;
-
     /**
      * @var int
      *
@@ -289,17 +287,13 @@ class Item
      * Get number of spawn events left.
      *
      * Returns either a positive integer specifying the number of times this
-     * item can be spawned or 'unlimited' to indicate that this item can be
-     * spawned any number of times.
+     * item can be spawned or -1 for unlimited to indicate that this item can be
+     * spawned any number of times. 0 indicates the item cannot spawn.
      *
-     * @return int|string
+     * @return int
      */
     public function getSpawn()
     {
-        if ($this->spawn == self::SPAWN_UNLIMITED) {
-            return 'unlimited';
-        }
-
         return $this->spawn;
     }
 
@@ -307,19 +301,15 @@ class Item
      * Set number of spawn events left.
      *
      * Allows for either a positive integer specifying the number of times this
-     * item can be spawned or 'unlimited' to indicate that this item can be
-     * spawned any number of times.
+     * item can be spawned or -1 for unlimited to indicate that this item can be
+     * spawned any number of times. 0 indicates the item cannot spawn.
      *
-     * @param int|string $spawn OPTIONAL defaults to 0
+     * @param int $spawn OPTIONAL defaults to 0
      *
      * @return Item
      */
     public function setSpawn($spawn = 0)
     {
-        if ($spawn == 'unlimited') {
-            $this->spawn = self::SPAWN_UNLIMITED;
-        }
-
         $this->spawn = $spawn;
 
         return $this;

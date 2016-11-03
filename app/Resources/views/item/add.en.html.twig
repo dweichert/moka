@@ -46,8 +46,18 @@
             </div>
             <div class="form-group">
                 <label for="item-weight-input">Weight:</label>
-                <input class="form-control" placeholder="23" pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validation error" data-pattern-error="Weight must be a number" data-match-error="Weight must have no more than 6 digits" type="text" name="item-weight">
+                <input class="form-control" placeholder="23" required pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validation error" data-required-error="The item must have a weight" data-pattern-error="Weight must be a number" data-match-error="Weight must have no more than 6 digits" type="text" name="item-weight">
                 <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label for="item-spawn">Kann gespendet werden:</label>
+                <select class="form-control" id="item-spawn" name="item-spawn">
+                    <option value="0" selected="selected">{{ 0|numOPledges('de') }}</option>
+                    {% for i in 1..22 %}
+                        <option value="{{ i }}">{{ i|numOPledges('de') }}</option>
+                    {% endfor %}
+                    <option value="-1">unbegrenzt</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>

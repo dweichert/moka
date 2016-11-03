@@ -20,6 +20,7 @@
                             <th>Contributor</th>
                             <th>Required by</th>
                             <th>Weight <i class="fa fa-question-circle" aria-hidden="true" title="Weight allows you to specify the order of items. Heavier items will sink to the bottom of the list. While lighter ones float to the top."></i></th>
+                            <th>Can be pledged</th>
                             <th><i class="fa fa-cog" aria-hidden="true"></i></th>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ item.weight }}</td>
+                            <td>{{ item.spawn|numOPledges('en') }}</td>
                             <td>
                                 <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="edit" class="btn btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <button id="delete-{{ item.id }}" title="delete" class="btn btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
