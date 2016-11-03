@@ -317,10 +317,10 @@ class Item
     public function setSpawn($spawn = 0)
     {
         if ($spawn == 'unlimited') {
-            $this->quantity = self::SPAWN_UNLIMITED;
+            $this->spawn = self::SPAWN_UNLIMITED;
         }
 
-        $this->quantity = $spawn;
+        $this->spawn = $spawn;
 
         return $this;
     }
