@@ -46,13 +46,23 @@
             </div>
             <div class="form-group">
                 <label for="item-weight-input">Gewicht:</label>
-                <input class="form-control" placeholder="23"  pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validierungsfehler" data-pattern-error="Gewicht muss eine Zahl sein" data-match-error="Das Gewicht darf nicht aus mehr als 6 Ziffern bestehen" type="text" name="item-weight">
+                <input class="form-control" placeholder="23" required pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validierungsfehler" data-required-error="Gewicht ist ein Pflichtfeld" data-pattern-error="Gewicht muss eine Zahl sein" data-match-error="Das Gewicht darf nicht aus mehr als 6 Ziffern bestehen" type="text" name="item-weight">
                 <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
-                <label for="item-contributor">Contributor:</label>
+                <label for="item-spawn">Kann gespendet werden:</label>
+                <select class="form-control" id="item-spawn" name="item-spawn">
+                    <option value="0" selected="selected">{{ 0|numOPledges('de') }}</option>
+                    {% for i in 1..22 %}
+                        <option value="{{ i }}">{{ i|numOPledges('de') }}</option>
+                    {% endfor %}
+                    <option value="-1">unbegrenzt</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="item-contributor">Spender:</label>
                 <select class="form-control" id="item-contributor" name="item-contributor">
-                    <option value="0" selected="selected">- not pledged yet -</option>
+                    <option value="0" selected="selected">- noch nicht gespendet -</option>
                     {% for user in users %}
                     <option value="{{ user.id }}">{{ getDisplayName(user) }}</option>
                     {% endfor %}

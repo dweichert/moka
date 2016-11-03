@@ -193,6 +193,10 @@ class ItemController extends Controller
 
         $item->setWeight($request->get('item-weight'));
 
+        $item->setSpawn($request->get('item-spawn'));
+
+        $item->setClass();
+
         if ($request->get('item-contributor')) {
             $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
             if (is_null($user)) {
@@ -278,6 +282,14 @@ class ItemController extends Controller
 
         if ($item->getWeight() != $request->get('item-weight')) {
             $item->setWeight($request->get('item-weight'));
+        }
+
+        if ($item->getSpawn() != $request->get('item-spawn')) {
+            $item->setSpawn((int)$request->get('item-spawn'));
+        }
+
+        if ('' == $item->getClass()) {
+            $item->setClass();
         }
 
         $this->updateContributor($item, $request);

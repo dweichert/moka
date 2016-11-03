@@ -20,6 +20,7 @@
                             <th>Spender</th>
                             <th>Benötigt bis</th>
                             <th>Gewicht <i class="fa fa-question-circle" aria-hidden="true" title="Das Gewicht erlaubt es, die Reihenfolge der Einträge zu bestimmen. Schwere Einträge sinken nach unten, während leichtere in der Liste nach oben steigen."></i></th>
+                            <th>Kann gespendet werden</th>
                             <th><i class="fa fa-cog" aria-hidden="true"></i></th>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ item.weight }}</td>
+                            <td>{{ item.spawn|numOPledges('de') }}</td>
                             <td>
                                 <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="ändern" class="btn btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <button id="delete-{{ item.id }}" title="löschen" class="btn btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>

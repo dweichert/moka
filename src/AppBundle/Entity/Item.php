@@ -78,6 +78,27 @@ class Item
     private $weight;
 
     /**
+     * Class ID.
+     *
+     * Items of the same class come into existence as copies of the original
+     * item of this class are spawned.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=20)
+     */
+    private $class;
+
+    /**
+     * Number of times an item of this class can spawn.
+     *
+     * @var int
+     *
+     * @ORM\Column(name="spawn", type="integer")
+     */
+    private $spawn;
+
+    /**
      * Get id
      *
      * @return int
@@ -221,12 +242,78 @@ class Item
      * Set weight.
      *
      * @param int $weight
+     *
+     * @return Item
      */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+
+        return $this;
     }
 
+    /**
+     * Get class.
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set class.
+     *
+     * Sets class name to unique id if no name is given. Maximum 20 characters
+     * allowed, longer class names will be truncated to 20 characters.
+     *
+     * @param string $name OPTIONAL
+     *
+     * @return Item
+     */
+    public function setClass($name = null)
+    {
+        if ($name) {
+            $this->class = substr($name, 0, 19);
+        } else {
+            $this->class = uniqid();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get number of spawn events left.
+     *
+     * Returns either a positive integer specifying the number of times this
+     * item can be spawned or -1 for unlimited to indicate that this item can be
+     * spawned any number of times. 0 indicates the item cannot spawn.
+     *
+     * @return int
+     */
+    public function getSpawn()
+    {
+        return $this->spawn;
+    }
+
+    /**
+     * Set number of spawn events left.
+     *
+     * Allows for either a positive integer specifying the number of times this
+     * item can be spawned or -1 for unlimited to indicate that this item can be
+     * spawned any number of times. 0 indicates the item cannot spawn.
+     *
+     * @param int $spawn OPTIONAL defaults to 0
+     *
+     * @return Item
+     */
+    public function setSpawn($spawn = 0)
+    {
+        $this->spawn = $spawn;
+
+        return $this;
+    }
 
 }
 
