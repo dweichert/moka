@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SpawnCommand extends ContainerAwareCommand
 {
-    const CAN_SPAWN_UNLIMITED = 1;
+    const CAN_SPAWN_UNLIMITED = -1;
 
     protected function configure()
     {
@@ -54,6 +54,9 @@ class SpawnCommand extends ContainerAwareCommand
                 $this->spawn($item);
             }
             if (self::CAN_SPAWN_UNLIMITED == $item->getSpawn()) {
+                $output->writeln(
+                    sprintf('<fg=green>Spawning %s.</>', $item->getName())
+                );
                 $this->spawn($item);
             }
         }
