@@ -98,6 +98,14 @@ class Item
      */
     private $spawn;
 
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="fertile", type="boolean", nullable=false)
+     */
+    private $fertile;
+
     /**
      * Get id
      *
@@ -314,6 +322,27 @@ class Item
 
         return $this;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isFertile()
+    {
+        return $this->fertile;
+    }
+
+    /**
+     * @param boolean $fertile
+     * @return Item
+     */
+    public function setFertile($fertile)
+    {
+        $this->fertile = $fertile;
+
+        return $this;
+    }
+
+
 
 }
 
