@@ -69,6 +69,18 @@ class ItemRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findAllItemsThatCanSpawn()
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb
+            ->where('i.fertile = 1')
+            ->andWhere('i.spawn <> 0');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return int
      */

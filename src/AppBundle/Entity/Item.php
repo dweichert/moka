@@ -306,6 +306,16 @@ class Item
     }
 
     /**
+     * Get maximum allowed number of items of this class.
+     *
+     * @return int
+     */
+    public function getMaxNumber()
+    {
+        return $this->spawn + 1;
+    }
+
+    /**
      * Set number of spawn events left.
      *
      * Allows for either a positive integer specifying the number of times this
