@@ -197,6 +197,8 @@ class ItemController extends Controller
 
         $item->setClass();
 
+        $item->setFertile(true);
+
         if ($request->get('item-contributor')) {
             $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($request->get('item-contributor'));
             if (is_null($user)) {
