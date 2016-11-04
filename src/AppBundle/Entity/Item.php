@@ -324,6 +324,8 @@ class Item
     }
 
     /**
+     * Fertile items can spawn.
+     *
      * @return boolean
      */
     public function isFertile()
@@ -332,6 +334,8 @@ class Item
     }
 
     /**
+     * Fertile items can spawn.
+     *
      * @param boolean $fertile
      * @return Item
      */
