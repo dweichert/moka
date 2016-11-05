@@ -28,9 +28,11 @@ class SpawnCommand extends ContainerAwareCommand
     }
 
     /**
-     * Gets all items that can spawn, checks if there are no items of the same
-     * class that have not been pledged and of those it spawns the ones that
-     * have not reached their maximum spawn number or can spawn unlimited.
+     * Gets all items that can spawn. Then checks if there are no items of the
+     * same class that have not been pledged. If this is the case no items of
+     * that class are spawned. Otherwise spawn a new item of this class if
+     * either the maximum number of items allowed is not reached or if the
+     * maximum number of items is unlimited.
      *
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -53,6 +55,7 @@ class SpawnCommand extends ContainerAwareCommand
                 );
                 $this->spawn($item);
             }
+            // spawn if item can spawn an unlimited number of times
             if (self::CAN_SPAWN_UNLIMITED == $item->getSpawn()) {
                 $output->writeln(
                     sprintf('<fg=green>Spawning %s.</>', $item->getName())
