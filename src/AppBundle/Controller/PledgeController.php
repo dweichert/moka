@@ -71,8 +71,10 @@ class PledgeController extends Controller
         }
 
         $item->setContributor(null);
-        $this->getDoctrine()->getManager()->persist($item);
-        $this->getDoctrine()->getManager()->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($item);
+        $em->flush();
+        $this->removeExcessUnpledgedItems($item->getClass());
 
         return $this->redirectToRoute('pledge_list');
     }
@@ -166,5 +168,27 @@ class PledgeController extends Controller
         if ($changed) {
             $objectManager->persist($user);
         }
+    }
+
+    /**
+     * Remove unpledged items of given class in excess of one.
+     *
+     * @param string $itemClass
+     */
+    private function removeExcessUnpledgedItems($itemClass)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var Item[] $itemsOfSameClass */
+        $itemsOfSameClass = $this->getDoctrine()->getRepository('AppBundle:Item')->findBy('class', $itemClass);
+        $unpledged = 0;
+        foreach ($itemsOfSameClass as $itemOfSameClass) {
+            if (!$itemOfSameClass->getContributor()) {
+                $unpledged++;
+            }
+            if ($unpledged > 1) {
+                $em->remove($itemOfSameClass);
+            }
+        };
+        $em->flush();
     }
 }
