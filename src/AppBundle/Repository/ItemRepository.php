@@ -69,6 +69,9 @@ class ItemRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Item[]
+     */
     public function findAllItemsThatCanSpawn()
     {
         $qb = $this->createQueryBuilder('i');
