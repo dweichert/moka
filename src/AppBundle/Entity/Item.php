@@ -98,6 +98,14 @@ class Item
      */
     private $spawn;
 
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="fertile", type="boolean", nullable=false)
+     */
+    private $fertile;
+
     /**
      * Get id
      *
@@ -298,6 +306,16 @@ class Item
     }
 
     /**
+     * Get maximum allowed number of items of this class.
+     *
+     * @return int
+     */
+    public function getMaxNumber()
+    {
+        return $this->spawn + 1;
+    }
+
+    /**
      * Set number of spawn events left.
      *
      * Allows for either a positive integer specifying the number of times this
@@ -314,6 +332,31 @@ class Item
 
         return $this;
     }
+
+    /**
+     * Fertile items can spawn.
+     *
+     * @return boolean
+     */
+    public function isFertile()
+    {
+        return $this->fertile;
+    }
+
+    /**
+     * Fertile items can spawn.
+     *
+     * @param boolean $fertile
+     * @return Item
+     */
+    public function setFertile($fertile)
+    {
+        $this->fertile = $fertile;
+
+        return $this;
+    }
+
+
 
 }
 
