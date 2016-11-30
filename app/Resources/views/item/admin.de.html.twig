@@ -26,11 +26,16 @@
                     </thead>
                     <tbody>
                         {% for item in items %}
+                        {% set fertile = item.fertile %}
                         <tr>
-                            {% if item.url is empty %}
+                            {% if item.url is empty and fertile %}
                             <td>{{ item.name }}</td>
-                            {% else %}
+                            {% elseif item.url is empty and not fertile %}
+                            <td><i title="Kopie eines Originals" class="fa fa-files-o" aria-hidden="true"></i> {{ item.name }}</td>
+                            {% elseif item.url is not empty and fertile %}
                             <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank">{{ item.name }}</a></td>
+                            {% else %}
+                            <td><a href="{{ item.url }}" title="{{ item.url }}" target="_blank"><i title="Kopie eines Originals" class="fa fa-files-o" aria-hidden="true"></i>{{ item.name }}</a></td>
                             {% endif %}
                             <td>{{ item.description }}</td>
                             <td>
@@ -50,7 +55,7 @@
                                 {% endif %}
                             </td>
                             <td>{{ item.weight }}</td>
-                            <td>{{ item.spawn|numOPledges('de') }}</td>
+                            <td>{{ item.spawn|numOPledges('de', fertile) }}</td>
                             <td>
                                 <a href="{{ path('item_edit', {'id': item.id}) }}" id="edit-{{ item.id }}" title="ändern" class="btn btn-success item-edit" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 <button id="delete-{{ item.id }}" title="löschen" class="btn btn-danger item-delete" data-id="{{ item.id }}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>

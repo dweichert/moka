@@ -45,6 +45,7 @@ class AppExtension extends Twig_Extension
             'twenty-three times' => 'dreiundzwanzigmal',
             'unlimited' => 'unbegrenzt',
             ' times' => ' Mal',
+            '[see original]' => '[siehe Original]',
         ]
     ];
 
@@ -127,7 +128,10 @@ class AppExtension extends Twig_Extension
      * @param string $locale OPTIONAL
      * @return string
      */
-    public function numOPledgesFilter($string, $locale = 'en') {
+    public function numOPledgesFilter($string, $locale = 'en', $fertile = 0) {
+        if (!$fertile) {
+            return $this->translate('[see original]', $locale);
+        }
         switch ($string) {
             case '0':
                 return $this->translate('once', $locale);
