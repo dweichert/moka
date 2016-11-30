@@ -179,7 +179,7 @@ class PledgeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         /** @var Item[] $itemsOfSameClass */
-        $itemsOfSameClass = $this->getDoctrine()->getRepository('AppBundle:Item')->findBy('class', $itemClass);
+        $itemsOfSameClass = $this->getDoctrine()->getRepository('AppBundle:Item')->findBy(['class' => $itemClass]);
         $unpledged = 0;
         foreach ($itemsOfSameClass as $itemOfSameClass) {
             if (!$itemOfSameClass->getContributor()) {
