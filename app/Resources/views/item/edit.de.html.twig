@@ -63,14 +63,15 @@
                 <input class="form-control" pattern="^[0-9]*$" maxlength="6" id="item-weight-input" data-error="Validierungsfehler" data-pattern-error="Gewicht muss eine Zahl sein" data-match-error="Das Gewicht darf nicht aus mehr als 6 Ziffern bestehen" type="text" name="item-weight" value="{{ item.weight }}">
                 <div class="help-block with-errors"></div>
             </div>
+            {% if item.fertile %}
             <div class="form-group">
                 <label for="item-spawn">Kann gespendet werden:</label>
                 <select class="form-control" id="item-spawn" name="item-spawn">
                     {% for i in 0..22 %}
                         {% if item.spawn == i %}
-                        <option value="{{ i }}" selected="selected">{{ i|numOPledges('de') }}</option>
+                        <option value="{{ i }}" selected="selected">{{ i|numOPledges('de', 1) }}</option>
                         {% else %}
-                        <option value="{{ i }}">{{ i|numOPledges('de') }}</option>
+                        <option value="{{ i }}">{{ i|numOPledges('de', 1) }}</option>
                         {% endif %}
                     {% endfor %}
                     {% if item.spawn == '-1' %}
@@ -80,6 +81,7 @@
                     {% endif %}
                 </select>
             </div>
+            {% endif %}
             <div class="form-group">
                 <label for="item-contributor">Contributor:</label>
                 <select class="form-control" id="item-contributor" name="item-contributor">
