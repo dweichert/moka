@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <strong>Name:</strong> {{ user.firstname }} {{ user.lastname }} ({{ user.username }})
+            </p>
+            <p>
+                <strong>Anschrift:</strong><br>
+                {{ user.streetAddress }}<br>
+                {% if user.streetAddress2 is not empty %}
+                {{ user.streetAddress2 }}<br>
+                {% endif %}
+                {{ user.postalCode }}<br>
+                {{ user.city }}<br>
+                {{ user.country }}
+            </p>
+            <p>
+                <strong>Telefon:</strong> {{ user.phone }}<br>
+                <strong>Mobil:</strong> {{ user.mobile }}<br>
+                <strong>E-Mail:</strong> <a href="mailto:{{ user.email }}">{{ user.email }}</a><br>
+                {% if  user.url is not empty %}
+                <strong>Web:</strong> <a href="{{ user.url }}">{{ user.url }}</a><br>
+                {% endif %}
+                {% if user.twitter is not empty %}
+                <strong>Twitter:</strong> <a href="https://twitter.com/{{ user.twitter }}">@{{ user.twitter }}</a><br>
+                {% endif %}
+                {% if user.birthday is not empty %}
+                <strong>Geburtstag:</strong> {{ user.birthday|date("d. m. Y") }}<br>
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-md-12">
+            <a href="/de/admin/item/list" title="zurück zu Administration &gt;&gt; Beitr&auml;ge" class="btn btn-primary item-add" role="button">Zurück</a>
+        </div>
+    </div>
+
+{% endblock body %}

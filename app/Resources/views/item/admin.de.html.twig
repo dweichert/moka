@@ -40,7 +40,7 @@
                             <td>{{ item.description }}</td>
                             <td>
                                 {% if item.contributor is not empty %}
-                                    <a href="#">{{ getDisplayName(item.contributor) }}</a>
+                                    <a href="{{ path('user_details', {'id': item.contributor.id}) }}">{{ getDisplayName(item.contributor) }}</a>
                                 {% else %}
                                     - noch nicht gespendet -
                                 {% endif %}

@@ -11,6 +11,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,7 +25,13 @@ class UserController extends Controller
      */
     public function detailsAction(Request $request, $id)
     {
-        //@todo complete action.
-        return $this->redirectToRoute('item_list');
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->find($id);
+
+        $view = $request->getLocale() == 'de' ? ':user:details.de.html.twig' : ':user:details.en.html.twig';
+
+        return $this->render(
+            $view,
+            ['user' => $user]
+        );
     }
 }

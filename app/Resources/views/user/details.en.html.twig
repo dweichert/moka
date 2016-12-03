@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <strong>Name:</strong> {{ user.firstname }} {{ user.lastname }} ({{ user.username }})
+            </p>
+            <p>
+                <strong>Address:</strong><br>
+                {{ user.streetAddress }}<br>
+                {% if user.streetAddress2 is not empty %}
+                {{ user.streetAddress2 }}<br>
+                {% endif %}
+                {{ user.postalCode }}<br>
+                {{ user.city }}<br>
+                {{ user.country }}
+            </p>
+            <p>
+                <strong>Phone:</strong> {{ user.phone }}<br>
+                <strong>Mobile:</strong> {{ user.mobile }}<br>
+                <strong>Email:</strong> <a href="mailto:{{ user.email }}">{{ user.email }}</a><br>
+                {% if  user.url is not empty %}
+                <strong>Web:</strong> <a href="{{ user.url }}">{{ user.url }}</a><br>
+                {% endif %}
+                {% if user.twitter is not empty %}
+                <strong>Twitter:</strong> <a href="https://twitter.com/{{ user.twitter }}">@{{ user.twitter }}</a><br>
+                {% endif %}
+                {% if user.birthday is not empty %}
+                <strong>Birthday:</strong> {{ user.birthday|date("d. M. Y") }}<br>
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-md-12">
+            <a href="/en/admin/item/list" title="back to Administration &gt;&gt; Items" class="btn btn-primary item-add" role="button">Back</a>
+        </div>
+    </div>
+
+{% endblock body %}
