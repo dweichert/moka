@@ -70,6 +70,78 @@ class ItemRepository extends EntityRepository
     }
 
     /**
+     * @param string $order
+     * @return Item[]
+     */
+    public function findAllNotExpired($order = 'name-asc')
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->where('i.due > :today')->setParameter('today', date('Y-m-d'));
+        $qb->orWhere('i.due IS NULL');
+        switch ($order) {
+            case 'name-desc':
+                $qb->orderBy('i.name', 'DESC');
+                break;
+            case 'due-asc':
+                $qb->orderBy('i.due', 'ASC');
+                break;
+            case 'due-desc':
+                $qb->orderBy('i.due', 'DESC');
+                break;
+            case 'name-asc':
+                $qb->orderBy('i.name', 'ASC');
+                break;
+            case 'weight-asc':
+            default:
+                $qb->orderBy('i.weight', 'ASC');
+                break;
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param string $order
+     * @return Item[]
+     */
+    public function findAllWithNoContributorAndNotExpired($order = 'name-asc')
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->setParameter('today', date('Y-m-d'));
+        $contributorIsNull = $qb->expr()->isNull('i.contributor');
+        $dueIsGreaterThanToday = $qb->expr()->gt('i.due', ':today');
+        $dueIsNull = $qb->expr()->isNull('i.due');
+        $dueIsNullOrGreaterThanToday = $qb->expr()->orX($dueIsGreaterThanToday, $dueIsNull);
+        $whereClause = $qb->expr()->andX($contributorIsNull, $dueIsNullOrGreaterThanToday);
+        $qb->where($whereClause);
+
+        switch ($order) {
+            case 'name-desc':
+                $qb->addOrderBy('i.name', 'DESC');
+                break;
+            case 'due-asc':
+                $qb->addOrderBy('i.due', 'ASC');
+                break;
+            case 'due-desc':
+                $qb->addOrderBy('i.due', 'DESC');
+                break;
+            case 'name-asc':
+                $qb->addOrderBy('i.name', 'ASC');
+                break;
+            case 'weight-asc':
+            default:
+                $qb->addOrderBy('i.weight', 'ASC');
+                break;
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return Item[]
      */
     public function findAllItemsThatCanSpawn()

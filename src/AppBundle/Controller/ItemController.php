@@ -26,6 +26,8 @@ class ItemController extends Controller
 {
     const FILTER_NONE = 'none';
     const FILTER_MISSING_ITEMS = 'missing';
+    const FILTER_NOT_EXPIRED = 'not-expired';
+    const FILTER_MISSING_NOT_EXPIRED = 'missing-not-expired';
     const ORDER_WEIGHT_ASC = 'weight-asc';
     const ORDER_NAME_ASC = 'name-asc';
     const ORDER_NAME_DESC = 'name-desc';
@@ -40,6 +42,8 @@ class ItemController extends Controller
     private $translations = [
         'Show All' => 'Alle anzeigen',
         'Filter Pledged' => 'Nur noch nicht gespendete',
+        'Filter Expired' => 'Nur noch nicht abgelaufene',
+        'Filter Pledged and Expired' => 'Nur noch nicht gespendete oder abgelaufene',
         'Weight (ascending)' => 'Gewicht (aufsteigend)',
         'Name (ascending)' => 'Name (aufsteigend)',
         'Name (descending)' => 'Name (absteigend)',
@@ -52,7 +56,7 @@ class ItemController extends Controller
      *
      * List shown to users to allow them to pledge items.
      *
-     * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing", "order" = "weight-asc|name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
+     * @Route("/{_locale}/item/list/{filter}/{order}", requirements={"_locale" = "en|de", "filter" = "none|missing|not-expired|missing-not-expired", "order" = "weight-asc|name-asc|name-desc|due-asc|due-desc"}, name="missing_items")
      * @Method("GET")
      *
      * @param Request $request
@@ -429,6 +433,14 @@ class ItemController extends Controller
                 $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributor($order);
 
                 return $this->items;
+            case self::FILTER_NOT_EXPIRED:
+                $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllNotExpired($order);
+
+                return $this->items;
+            case self::FILTER_MISSING_NOT_EXPIRED:
+                $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAllWithNoContributorAndNotExpired($order);
+
+                return $this->items;
             case self::FILTER_NONE:
             default:
                 $this->items = $this->getDoctrine()->getRepository('AppBundle:Item')->findAll($order);
@@ -445,18 +457,38 @@ class ItemController extends Controller
      */
     private function getFilterOptions($filter, $locale)
     {
-        return sprintf(
-            '<option value="%1$s"%2$s>'
-            . $this->getLabel('Show All', $locale)
-            . '</option>'
-            . '<option value="%3$s"%4$s>'
-            . $this->getLabel('Filter Pledged', $locale)
-            . '</option>',
-            self::FILTER_NONE,
-            $filter == self::FILTER_NONE ?  ' selected="selected"' : '',
-            self::FILTER_MISSING_ITEMS,
-            $filter == self::FILTER_MISSING_ITEMS ?  ' selected="selected"' : ''
-        );
+        return
+            $this->getIndividualFilterOption(self::FILTER_NONE, $locale, $filter == self::FILTER_NONE)
+            . $this->getIndividualFilterOption(self::FILTER_MISSING_ITEMS, $locale, $filter == self::FILTER_MISSING_ITEMS)
+            . $this->getIndividualFilterOption(self::FILTER_NOT_EXPIRED, $locale, $filter == self::FILTER_NOT_EXPIRED)
+            . $this->getIndividualFilterOption(self::FILTER_MISSING_NOT_EXPIRED, $locale, $filter == self::FILTER_MISSING_NOT_EXPIRED);
+    }
+
+    /**
+     * Returns <option>-Tag for given filter name.
+     *
+     * @param string $name
+     * @param string $locale
+     * @param bool $selected
+     * @return string
+     */
+    private function getIndividualFilterOption($name, $locale, $selected)
+    {
+        if ($selected) {
+            $selected = ' selected="selected"';
+        } else {
+            $selected = '';
+        }
+        switch($name) {
+            case self::FILTER_NONE:
+                return sprintf('<option value="%s"' . $selected . '>', self::FILTER_NONE) . $this->getLabel('Show All', $locale) . '</option>';
+            case self::FILTER_MISSING_ITEMS:
+                return sprintf('<option value="%s"' . $selected . '>', self::FILTER_MISSING_ITEMS) . $this->getLabel('Filter Pledged', $locale) . '</option>';
+            case self::FILTER_NOT_EXPIRED:
+                return sprintf('<option value="%s"' . $selected . '>', self::FILTER_NOT_EXPIRED) . $this->getLabel('Filter Expired', $locale) . '</option>';
+            case self::FILTER_MISSING_NOT_EXPIRED:
+                return sprintf('<option value="%s"' . $selected . '>', self::FILTER_MISSING_NOT_EXPIRED) . $this->getLabel('Filter Pledged and Expired', $locale) . '</option>';
+        }
     }
 
     /**
