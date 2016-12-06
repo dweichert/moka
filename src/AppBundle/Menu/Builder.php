@@ -58,7 +58,11 @@ class Builder implements ContainerAwareInterface
         $menu
             ->addChild('Cosmic Trigger', ['route' => 'missing_items', 'label' => $this->getLabel('PLEDGE')])
             ->setLinkAttributes(['class' => 'pledge-menu-item', 'title' => 'Horkos is Waiting…']);
-        $menu->addChild('Background', ['uri' => 'http://cosmictriggerplay.com', 'label' => $this->getLabel('Background')]);
+        $backgroundMenuItem = $menu->addChild('Background', ['label' => $this->getLabel('Background')])
+            ->setAttribute('dropdown', true);
+        $backgroundMenuItem->addChild(
+            'Cosmic Trigger Play', ['uri' => 'http://cosmictriggerplay.com', 'label' => 'Cosmic Trigger | The Play']
+        );
         $this->addAdminMenu($menu);
 
         return $menu;
