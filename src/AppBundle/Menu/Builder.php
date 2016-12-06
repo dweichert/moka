@@ -61,8 +61,9 @@ class Builder implements ContainerAwareInterface
         $backgroundMenuItem = $menu->addChild('Background', ['label' => $this->getLabel('Background')])
             ->setAttribute('dropdown', true);
         $backgroundMenuItem->addChild(
-            'Cosmic Trigger Play', ['uri' => 'http://cosmictriggerplay.com', 'label' => 'Cosmic Trigger | The Play']
-        );
+                'Cosmic Trigger Play', ['uri' => 'http://cosmictriggerplay.com', 'label' => 'Cosmic Trigger | The Play']
+            )
+            ->setAttribute('icon', 'fa fa-external-link');
         $this->addAdminMenu($menu);
 
         return $menu;
